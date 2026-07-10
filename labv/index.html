@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Laboratório Virtual DS: terminais simulados e seguros para aulas de Desenvolvimento de Sistemas." />
+  <meta name="theme-color" content="#060914" />
+  <title>Laboratório Virtual DS</title>
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+  <div class="bg-grid" aria-hidden="true"></div>
+
+  <main id="home" class="home screen active">
+    <header class="site-header">
+      <a class="brand" href="#" aria-label="Página inicial do Laboratório Virtual DS">
+        <span class="brand-symbol">&gt;_</span>
+        <span>Laboratório Virtual DS</span>
+      </a>
+      <span class="safe-chip">100% simulado no navegador</span>
+    </header>
+
+    <section class="hero">
+      <div>
+        <span class="badge"><span class="dot"></span> Ambiente seguro emulado</span>
+        <h1>Laboratório<br /><span>Virtual DS</span></h1>
+        <p>Pratique comandos e explore ferramentas profissionais em ambientes virtuais independentes. Nenhum comando acessa arquivos, programas ou configurações reais do equipamento.</p>
+        <div class="hero-actions">
+          <a class="btn primary" href="#terminais">Explorar terminais</a>
+          <button id="importAllBtn" class="btn ghost" type="button">Importar ambiente</button>
+          <input id="importAllInput" type="file" accept="application/json" hidden />
+        </div>
+      </div>
+      <div class="hero-panel" aria-label="Recursos disponíveis">
+        <div class="hero-terminal">
+          <span class="hero-terminal-bar"><i></i><i></i><i></i></span>
+          <code><b>aluno@laboratorio-ds</b>:~$ mkdir projeto<br /><b>aluno@laboratorio-ds</b>:~$ cd projeto<br /><b>aluno@laboratorio-ds</b>:~/projeto$ <span class="typing">_</span></code>
+        </div>
+        <div class="feature-list">
+          <span>✓ arquivos e pastas persistentes</span>
+          <span>✓ histórico e autocomplete</span>
+          <span>✓ exportação e restauração</span>
+          <span>✓ comandos de rede apenas simulados</span>
+        </div>
+      </div>
+    </section>
+
+    <section id="terminais" class="category">
+      <div class="section-title">
+        <div>
+          <span class="eyebrow">FERRAMENTAS DISPONÍVEIS</span>
+          <h2>Terminais de comando</h2>
+          <p>Cada terminal possui identidade visual, estrutura de arquivos e histórico próprios.</p>
+        </div>
+        <div class="home-tools">
+          <button id="exportAllBtn" class="btn ghost" type="button">Exportar tudo</button>
+          <button id="clearAllBtn" class="btn danger-soft" type="button">Excluir dados virtuais</button>
+        </div>
+      </div>
+      <div id="toolGrid" class="tool-grid"></div>
+    </section>
+
+    <footer class="site-footer">
+      <strong>Laboratório Virtual DS</strong>
+      <span>Todos os sistemas, arquivos, processos e redes exibidos são simulações didáticas.</span>
+    </footer>
+  </main>
+
+  <main id="terminalScreen" class="screen terminal-screen">
+    <section id="terminalWindow" class="terminal-window" aria-label="Janela do terminal">
+      <header class="titlebar">
+        <div class="window-controls">
+          <button id="closeWindowBtn" class="window-dot close-dot" type="button" aria-label="Fechar terminal"></button>
+          <button id="minimizeWindowBtn" class="window-dot min-dot" type="button" aria-label="Minimizar terminal"></button>
+          <button id="maximizeWindowBtn" class="window-dot max-dot" type="button" aria-label="Maximizar terminal"></button>
+        </div>
+        <div class="title-info">
+          <strong id="terminalTitle">Terminal</strong>
+          <small id="terminalSubtitle">Ambiente virtual</small>
+        </div>
+        <div class="title-actions">
+          <button id="guideBtn" title="Guia de comandos" class="icon-btn" type="button">Comandos</button>
+          <button id="fontMinusBtn" title="Diminuir fonte" class="icon-btn" type="button">A−</button>
+          <button id="fontPlusBtn" title="Aumentar fonte" class="icon-btn" type="button">A+</button>
+          <button id="exportBtn" title="Exportar este ambiente" class="icon-btn" type="button">Exportar</button>
+          <label title="Importar ambiente" class="icon-btn import-label">Importar<input id="importInput" type="file" accept="application/json" hidden /></label>
+          <button id="resetBtn" title="Restaurar este terminal" class="icon-btn" type="button">Restaurar</button>
+          <button id="fullscreenBtn" title="Tela cheia" class="icon-btn" type="button">⛶</button>
+          <button id="backBtn" title="Voltar à central" class="icon-btn" type="button">Início</button>
+        </div>
+      </header>
+
+      <div class="terminal-workspace">
+        <section class="terminal-console">
+          <div id="terminalOutput" class="terminal-output" aria-label="Saída do terminal" tabindex="0"></div>
+          <form id="terminalForm" class="terminal-input-row" autocomplete="off" spellcheck="false">
+            <span id="promptLabel" class="prompt-label"></span>
+            <input id="commandInput" class="command-input" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" aria-label="Digite um comando" />
+            <span class="cursor" aria-hidden="true"></span>
+          </form>
+        </section>
+
+        <aside id="guidePanel" class="guide-panel" aria-label="Guia de comandos">
+          <div class="guide-head">
+            <div><span class="eyebrow">REFERÊNCIA RÁPIDA</span><h2>Comandos</h2></div>
+            <button id="closeGuideBtn" class="icon-btn" type="button" aria-label="Fechar guia">×</button>
+          </div>
+          <input id="guideSearch" class="guide-search" type="search" placeholder="Pesquisar comando..." autocomplete="off" />
+          <div id="guideContent" class="guide-content"></div>
+          <div class="shortcut-card">
+            <strong>Atalhos</strong>
+            <span><kbd>↑</kbd>/<kbd>↓</kbd> histórico</span>
+            <span><kbd>Tab</kbd> autocomplete</span>
+            <span><kbd>Ctrl</kbd>+<kbd>L</kbd> limpar</span>
+            <span><kbd>Ctrl</kbd>+<kbd>C</kbd> cancelar entrada</span>
+          </div>
+        </aside>
+      </div>
+
+      <footer class="terminal-statusbar">
+        <span id="statusShell">Terminal simulado</span>
+        <span id="statusPath">/</span>
+        <span class="status-safe"><i></i> sem acesso ao sistema real</span>
+      </footer>
+    </section>
+  </main>
+
+  <div id="exportModal" class="modal-overlay hidden" role="dialog" aria-modal="true" aria-labelledby="exportModalTitle">
+    <section class="export-modal">
+      <header class="export-modal-head">
+        <div>
+          <span class="eyebrow">EXPORTAR SESSÃO</span>
+          <h2 id="exportModalTitle">Escolha o formato</h2>
+          <p id="exportModalDescription">Exporte o conteúdo da ferramenta atual.</p>
+        </div>
+        <button id="closeExportModalBtn" class="icon-btn export-close" type="button" aria-label="Fechar opções de exportação">×</button>
+      </header>
+
+      <div class="export-options">
+        <button class="export-option" type="button" data-export-format="txt">
+          <span class="export-icon">TXT</span>
+          <strong>Relatório em texto</strong>
+          <small>Baixa o histórico completo da sessão em um arquivo .txt.</small>
+        </button>
+
+        <button class="export-option" type="button" data-export-format="pdf">
+          <span class="export-icon">PDF</span>
+          <strong>Relatório em PDF</strong>
+          <small>Abre uma versão organizada para imprimir ou salvar como PDF.</small>
+        </button>
+
+        <button class="export-option featured" type="button" data-export-format="native">
+          <span id="nativeExportIcon" class="export-icon">.SH</span>
+          <strong id="nativeExportTitle">Arquivo da ferramenta</strong>
+          <small id="nativeExportDescription">Exporta os comandos na extensão adequada ao terminal atual.</small>
+        </button>
+
+        <button class="export-option" type="button" data-export-format="backup">
+          <span class="export-icon">JSON</span>
+          <strong>Backup do ambiente</strong>
+          <small>Salva arquivos, pastas e configurações para importar novamente depois.</small>
+        </button>
+      </div>
+
+      <footer class="export-modal-footer">
+        <span>O PDF utiliza a janela de impressão do navegador. Escolha “Salvar como PDF”.</span>
+        <button id="cancelExportBtn" class="btn ghost" type="button">Cancelar</button>
+      </footer>
+    </section>
+  </div>
+
+  <div id="toast" class="toast hidden" role="status" aria-live="polite"></div>
+
+  <script src="js/config.js"></script>
+  <script src="js/command-catalog.js"></script>
+  <script src="js/fs.js"></script>
+  <script src="js/shells.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
