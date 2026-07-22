@@ -1,0 +1,14 @@
+{
+  "name": "Laboratório Virtual DS",
+  "short_name": "Lab Virtual DS",
+  "description": "Terminais, programação, SQL, redes, máquinas virtuais, hardware e computação gráfica no navegador.",
+  "start_url": "./",
+  "display": "standalone",
+  "background_color": "#07101c",
+  "theme_color": "#07111f",
+  "lang": "pt-BR",
+  "orientation": "any",
+  "icons": [
+    {"src":"assets/icon.svg","sizes":"any","type":"image/svg+xml","purpose":"any maskable"}
+  ]
+}
