@@ -1,0 +1,194 @@
+
+> laboratorio-virtual-ds@8.2.3 test
+> node --test tests/*.test.mjs
+
+TAP version 13
+# Subtest: IARA boot announces frame load and ready state with the active boot token
+ok 1 - IARA boot announces frame load and ready state with the active boot token
+  ---
+  duration_ms: 1.707177
+  type: 'test'
+  ...
+# Subtest: IARA is a native Lab Virtual DS tool with validated messaging
+ok 2 - IARA is a native Lab Virtual DS tool with validated messaging
+  ---
+  duration_ms: 6.883257
+  type: 'test'
+  ...
+# Subtest: IARA keeps the original encrypted knowledge base and adds Lab context
+ok 3 - IARA keeps the original encrypted knowledge base and adds Lab context
+  ---
+  duration_ms: 4.086117
+  type: 'test'
+  ...
+# Subtest: all encrypted IARA modules authenticate and decrypt
+ok 4 - all encrypted IARA modules authenticate and decrypt
+  ---
+  duration_ms: 118.09424
+  type: 'test'
+  ...
+# Subtest: IARA rendering avoids unsafe HTML and eval-like execution
+ok 5 - IARA rendering avoids unsafe HTML and eval-like execution
+  ---
+  duration_ms: 5.43452
+  type: 'test'
+  ...
+# Subtest: IARA answers portal catalog and recommends valid tools
+ok 6 - IARA answers portal catalog and recommends valid tools
+  ---
+  duration_ms: 21.525351
+  type: 'test'
+  ...
+# Subtest: IARA handshake tolerates stale cached clients and generic learning panel is disabled
+ok 7 - IARA handshake tolerates stale cached clients and generic learning panel is disabled
+  ---
+  duration_ms: 2.864669
+  type: 'test'
+  ...
+# Subtest: new and empty profiles start with 500 tokens exactly once
+ok 8 - new and empty profiles start with 500 tokens exactly once
+  ---
+  duration_ms: 1.115593
+  type: 'test'
+  ...
+# Subtest: legacy zero balances receive the one-time 500-token migration without reducing positive balances
+ok 9 - legacy zero balances receive the one-time 500-token migration without reducing positive balances
+  ---
+  duration_ms: 0.221478
+  type: 'test'
+  ...
+# Subtest: teacher recharge codes map to the requested one-time token amounts
+ok 10 - teacher recharge codes map to the requested one-time token amounts
+  ---
+  duration_ms: 6.030532
+  type: 'test'
+  ...
+# Subtest: starter VoxelCraft action remains available even while contextual catalog is degraded
+ok 11 - starter VoxelCraft action remains available even while contextual catalog is degraded
+  ---
+  duration_ms: 0.947991
+  type: 'test'
+  ...
+# Subtest: block restore discards injected labels, colors and events
+ok 12 - block restore discards injected labels, colors and events
+  ---
+  duration_ms: 1.538831
+  type: 'test'
+  ...
+# Subtest: backup rejects prototype pollution and unknown top-level state
+ok 13 - backup rejects prototype pollution and unknown top-level state
+  ---
+  duration_ms: 1.731383
+  type: 'test'
+  ...
+# Subtest: web state keeps code as text and drops runtime console
+ok 14 - web state keeps code as text and drops runtime console
+  ---
+  duration_ms: 0.294847
+  type: 'test'
+  ...
+# Subtest: service worker uses v8.2.3 and network-first navigation
+ok 15 - service worker uses v8.2.3 and network-first navigation
+  ---
+  duration_ms: 0.615627
+  type: 'test'
+  ...
+# Subtest: application source avoids eval-like execution and document.write
+ok 16 - application source avoids eval-like execution and document.write
+  ---
+  duration_ms: 55.801926
+  type: 'test'
+  ...
+# Subtest: backup allowlist rejects arbitrary lab keys and accepts v8 modules
+ok 17 - backup allowlist rejects arbitrary lab keys and accepts v8 modules
+  ---
+  duration_ms: 3.649375
+  type: 'test'
+  ...
+# Subtest: arcade is play-first and educational
+ok 18 - arcade is play-first and educational
+  ---
+  duration_ms: 1.87549
+  type: 'test'
+  ...
+# Subtest: removed notebook and notification states are no longer accepted
+ok 19 - removed notebook and notification states are no longer accepted
+  ---
+  duration_ms: 2.124373
+  type: 'test'
+  ...
+# Subtest: static entry, GitHub Pages files and responsive hero exist
+ok 20 - static entry, GitHub Pages files and responsive hero exist
+  ---
+  duration_ms: 7.531148
+  type: 'test'
+  ...
+# Subtest: all module references have local files and expanded catalog
+ok 21 - all module references have local files and expanded catalog
+  ---
+  duration_ms: 12.161109
+  type: 'test'
+  ...
+# Subtest: html ids are unique
+ok 22 - html ids are unique
+  ---
+  duration_ms: 1.316672
+  type: 'test'
+  ...
+# Subtest: direct routes, clean mobile landing and accessibility surfaces are wired
+ok 23 - direct routes, clean mobile landing and accessibility surfaces are wired
+  ---
+  duration_ms: 1.925927
+  type: 'test'
+  ...
+# Subtest: language step requires valid region and allowlisted options
+ok 24 - language step requires valid region and allowlisted options
+  ---
+  duration_ms: 1.891503
+  type: 'test'
+  ...
+# Subtest: cancel installer powers off without advancing
+ok 25 - cancel installer powers off without advancing
+  ---
+  duration_ms: 0.283683
+  type: 'test'
+  ...
+# Subtest: double transition lock is enforced
+ok 26 - double transition lock is enforced
+  ---
+  duration_ms: 0.202987
+  type: 'test'
+  ...
+# Subtest: VoxelCraft is registered as a native Lab Virtual DS tool
+ok 27 - VoxelCraft is registered as a native Lab Virtual DS tool
+  ---
+  duration_ms: 4.82308
+  type: 'test'
+  ...
+# Subtest: VoxelCraft static files and responsive controls exist
+ok 28 - VoxelCraft static files and responsive controls exist
+  ---
+  duration_ms: 2.619356
+  type: 'test'
+  ...
+# Subtest: VoxelCraft save schema rejects malformed edits and clamps state
+ok 29 - VoxelCraft save schema rejects malformed edits and clamps state
+  ---
+  duration_ms: 3.935027
+  type: 'test'
+  ...
+# Subtest: VoxelCraft engine has cleanup, queue limits and no eval-like execution
+ok 30 - VoxelCraft engine has cleanup, queue limits and no eval-like execution
+  ---
+  duration_ms: 1.682796
+  type: 'test'
+  ...
+1..30
+# tests 30
+# suites 0
+# pass 30
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 270.137935

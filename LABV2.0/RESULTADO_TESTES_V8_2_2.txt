@@ -1,0 +1,188 @@
+
+> laboratorio-virtual-ds@8.2.3 package:pages
+> npm run check:syntax && npm test && npm run build && npm run validate:artifact
+
+
+> laboratorio-virtual-ds@8.2.3 check:syntax
+> find public/lab -name '*.js' -print0 | xargs -0 -n1 node --check
+
+
+> laboratorio-virtual-ds@8.2.3 test
+> node --test tests/*.test.mjs
+
+TAP version 13
+# Subtest: IARA boot announces frame load and ready state with the active boot token
+ok 1 - IARA boot announces frame load and ready state with the active boot token
+  ---
+  duration_ms: 1.718982
+  type: 'test'
+  ...
+# Subtest: IARA is a native Lab Virtual DS tool with validated messaging
+ok 2 - IARA is a native Lab Virtual DS tool with validated messaging
+  ---
+  duration_ms: 4.566224
+  type: 'test'
+  ...
+# Subtest: IARA keeps the original encrypted knowledge base and adds Lab context
+ok 3 - IARA keeps the original encrypted knowledge base and adds Lab context
+  ---
+  duration_ms: 2.16672
+  type: 'test'
+  ...
+# Subtest: all encrypted IARA modules authenticate and decrypt
+ok 4 - all encrypted IARA modules authenticate and decrypt
+  ---
+  duration_ms: 105.8653
+  type: 'test'
+  ...
+# Subtest: IARA rendering avoids unsafe HTML and eval-like execution
+ok 5 - IARA rendering avoids unsafe HTML and eval-like execution
+  ---
+  duration_ms: 3.338146
+  type: 'test'
+  ...
+# Subtest: IARA answers portal catalog and recommends valid tools
+ok 6 - IARA answers portal catalog and recommends valid tools
+  ---
+  duration_ms: 22.838382
+  type: 'test'
+  ...
+# Subtest: IARA handshake tolerates stale cached clients and generic learning panel is disabled
+ok 7 - IARA handshake tolerates stale cached clients and generic learning panel is disabled
+  ---
+  duration_ms: 2.436323
+  type: 'test'
+  ...
+# Subtest: block restore discards injected labels, colors and events
+ok 8 - block restore discards injected labels, colors and events
+  ---
+  duration_ms: 1.310735
+  type: 'test'
+  ...
+# Subtest: backup rejects prototype pollution and unknown top-level state
+ok 9 - backup rejects prototype pollution and unknown top-level state
+  ---
+  duration_ms: 1.445726
+  type: 'test'
+  ...
+# Subtest: web state keeps code as text and drops runtime console
+ok 10 - web state keeps code as text and drops runtime console
+  ---
+  duration_ms: 0.304095
+  type: 'test'
+  ...
+# Subtest: service worker uses v8.2.3 and network-first navigation
+ok 11 - service worker uses v8.2.3 and network-first navigation
+  ---
+  duration_ms: 0.683062
+  type: 'test'
+  ...
+# Subtest: application source avoids eval-like execution and document.write
+ok 12 - application source avoids eval-like execution and document.write
+  ---
+  duration_ms: 24.705701
+  type: 'test'
+  ...
+# Subtest: backup allowlist rejects arbitrary lab keys and accepts v8 modules
+ok 13 - backup allowlist rejects arbitrary lab keys and accepts v8 modules
+  ---
+  duration_ms: 1.597464
+  type: 'test'
+  ...
+# Subtest: arcade is play-first and educational
+ok 14 - arcade is play-first and educational
+  ---
+  duration_ms: 1.388476
+  type: 'test'
+  ...
+# Subtest: removed notebook and notification states are no longer accepted
+ok 15 - removed notebook and notification states are no longer accepted
+  ---
+  duration_ms: 1.225722
+  type: 'test'
+  ...
+# Subtest: static entry, GitHub Pages files and responsive hero exist
+ok 16 - static entry, GitHub Pages files and responsive hero exist
+  ---
+  duration_ms: 4.401953
+  type: 'test'
+  ...
+# Subtest: all module references have local files and expanded catalog
+ok 17 - all module references have local files and expanded catalog
+  ---
+  duration_ms: 7.885932
+  type: 'test'
+  ...
+# Subtest: html ids are unique
+ok 18 - html ids are unique
+  ---
+  duration_ms: 0.925708
+  type: 'test'
+  ...
+# Subtest: direct routes, clean mobile landing and accessibility surfaces are wired
+ok 19 - direct routes, clean mobile landing and accessibility surfaces are wired
+  ---
+  duration_ms: 1.469083
+  type: 'test'
+  ...
+# Subtest: language step requires valid region and allowlisted options
+ok 20 - language step requires valid region and allowlisted options
+  ---
+  duration_ms: 2.068302
+  type: 'test'
+  ...
+# Subtest: cancel installer powers off without advancing
+ok 21 - cancel installer powers off without advancing
+  ---
+  duration_ms: 0.338472
+  type: 'test'
+  ...
+# Subtest: double transition lock is enforced
+ok 22 - double transition lock is enforced
+  ---
+  duration_ms: 0.219161
+  type: 'test'
+  ...
+# Subtest: VoxelCraft is registered as a native Lab Virtual DS tool
+ok 23 - VoxelCraft is registered as a native Lab Virtual DS tool
+  ---
+  duration_ms: 6.480625
+  type: 'test'
+  ...
+# Subtest: VoxelCraft static files and responsive controls exist
+ok 24 - VoxelCraft static files and responsive controls exist
+  ---
+  duration_ms: 3.864568
+  type: 'test'
+  ...
+# Subtest: VoxelCraft save schema rejects malformed edits and clamps state
+ok 25 - VoxelCraft save schema rejects malformed edits and clamps state
+  ---
+  duration_ms: 6.334624
+  type: 'test'
+  ...
+# Subtest: VoxelCraft engine has cleanup, queue limits and no eval-like execution
+ok 26 - VoxelCraft engine has cleanup, queue limits and no eval-like execution
+  ---
+  duration_ms: 1.337927
+  type: 'test'
+  ...
+1..26
+# tests 26
+# suites 0
+# pass 26
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 209.782574
+
+> laboratorio-virtual-ds@8.2.3 build
+> node scripts/build-static.mjs
+
+Build estático concluído em /mnt/data/lab_virtual_ds_v8_2_2_iara_reliable/dist
+
+> laboratorio-virtual-ds@8.2.3 validate:artifact
+> node scripts/validate-static.mjs
+
+Artefato válido: 225 arquivos, 1.30 MiB, 25 laboratórios modulares.
