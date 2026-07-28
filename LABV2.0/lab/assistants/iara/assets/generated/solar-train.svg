@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 400" role="img" aria-label="Trem Solar">
+<defs>
+  <linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#ffb23f"/><stop offset="1" stop-color="#ff5b30"/></linearGradient>
+  <radialGradient id="r"><stop stop-color="#ffb23f" stop-opacity=".7"/><stop offset="1" stop-color="#0d0a08" stop-opacity="0"/></radialGradient>
+  <filter id="glow"><feGaussianBlur stdDeviation="8" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+</defs>
+<rect width="640" height="400" fill="#0d0a08"/>
+<path d="M0 320 C140 260 210 390 350 315 S530 250 640 310 V400 H0Z" fill="url(#g)" opacity=".16"/>
+<circle cx="211" cy="139" r="150" fill="url(#r)"/>
+<g fill="none" stroke="url(#g)" stroke-width="3" opacity=".85" filter="url(#glow)" transform="rotate(51 320 200)">
+  <rect x="185" y="75" width="270" height="250" rx="42"/>
+  <circle cx="320" cy="200" r="74"/>
+  <circle cx="320" cy="200" r="28" fill="url(#g)" opacity=".65"/>
+  <path d="M75 200 H245 M395 200 H565 M320 30 V126 M320 274 V370"/>
+</g>
+<g fill="#ffb23f" opacity=".85">
+  <circle cx="75" cy="200" r="7"/><circle cx="565" cy="200" r="7"/>
+  <circle cx="320" cy="30" r="7"/><circle cx="320" cy="370" r="7"/>
+</g>
+<text x="32" y="355" fill="#f4f7fb" font-family="system-ui,Segoe UI,sans-serif" font-size="28" font-weight="700">Trem Solar</text>
+<text x="32" y="382" fill="#92a0b3" font-family="system-ui,Segoe UI,sans-serif" font-size="15">SIMULAÇÃO VISUAL • IARA DS</text>
+</svg>
