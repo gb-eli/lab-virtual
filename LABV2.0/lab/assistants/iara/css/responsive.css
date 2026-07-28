@@ -1,0 +1,10 @@
+@media(max-width:600px){.app-header{padding-inline:10px}.chat{padding-inline:12px}.starter-grid{grid-template-columns:1fr 1fr}.starter-grid button{padding:11px;font-size:.82rem}.hero{min-height:calc(100dvh - 190px)}.token-pill{padding-right:9px}.token-pill small{display:none}.segmented{grid-template-columns:1fr 1fr}.sheet{border-radius:24px 24px 0 0}.image-stage{min-height:230px}}@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.001ms!important;animation-iteration-count:1!important;scroll-behavior:auto!important}}
+
+
+@media (min-width:700px){
+  .bank-grid{grid-template-columns:repeat(3,minmax(0,1fr))}
+}
+@media (max-width:380px){
+  .bank-grid{grid-template-columns:1fr}
+  .bank-status{display:grid}
+}
