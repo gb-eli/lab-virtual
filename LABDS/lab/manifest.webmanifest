@@ -1,0 +1,131 @@
+{
+  "name": "Lab Virtual DS V4.0 Consolidado",
+  "short_name": "Lab DS V4.0",
+  "description": "Plataforma educacional modular com simuladores, Cyber Ops, tutoriais, organização escolar, ciências, áudio, jogos, produtividade e progressão local. Módulos pesados são carregados sob demanda.",
+  "start_url": "./index.html?v=4.0.0-pages",
+  "display": "standalone",
+  "background_color": "#07101c",
+  "theme_color": "#07111f",
+  "lang": "pt-BR",
+  "orientation": "any",
+  "icons": [
+    {
+      "src": "assets/icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ],
+  "id": "./",
+  "scope": "./",
+  "shortcuts": [
+    {
+      "name": "Cyber Ops — Shadow Grid",
+      "short_name": "Cyber Ops",
+      "url": "./index.html?tool=cyber-ops",
+      "icons": [
+        {
+          "src": "assets/icon.svg",
+          "sizes": "any",
+          "type": "image/svg+xml"
+        }
+      ]
+    },
+    {
+      "name": "Central de Tutoriais",
+      "short_name": "Tutoriais",
+      "url": "./index.html?tool=tutorial-center",
+      "icons": [
+        {
+          "src": "assets/icon.svg",
+          "sizes": "any",
+          "type": "image/svg+xml"
+        }
+      ]
+    },
+    {
+      "name": "Explorar Tecnologia",
+      "short_name": "Explorar",
+      "url": "./index.html?tool=tech-explorer",
+      "icons": [
+        {
+          "src": "assets/icon.svg",
+          "sizes": "any",
+          "type": "image/svg+xml"
+        }
+      ]
+    },
+    {
+      "name": "Sistema Solar",
+      "short_name": "Sistema Solar",
+      "url": "./index.html?tool=solar-system",
+      "icons": [
+        {
+          "src": "assets/icon.svg",
+          "sizes": "any",
+          "type": "image/svg+xml"
+        }
+      ]
+    },
+    {
+      "name": "Python",
+      "short_name": "Python",
+      "url": "./index.html?tool=python",
+      "icons": [
+        {
+          "src": "assets/icon.svg",
+          "sizes": "any",
+          "type": "image/svg+xml"
+        }
+      ]
+    },
+    {
+      "name": "VoxelCraft DS 3D",
+      "short_name": "VoxelCraft",
+      "url": "./index.html?tool=voxelcraft-3d",
+      "icons": [
+        {
+          "src": "assets/icon.svg",
+          "sizes": "any",
+          "type": "image/svg+xml"
+        }
+      ]
+    },
+    {
+      "name": "Sorteios escolares",
+      "short_name": "Sorteios",
+      "url": "./index.html?tool=school-randomizer",
+      "icons": [
+        {
+          "src": "assets/icon.svg",
+          "sizes": "any",
+          "type": "image/svg+xml"
+        }
+      ]
+    },
+    {
+      "name": "Clima Extremo",
+      "short_name": "Temperatura",
+      "url": "./index.html?tool=thermal-panel",
+      "icons": [
+        {
+          "src": "assets/icon.svg",
+          "sizes": "any",
+          "type": "image/svg+xml"
+        }
+      ]
+    },
+    {
+      "name": "AudioLab",
+      "short_name": "AudioLab",
+      "url": "./index.html?tool=audio-lab",
+      "icons": [
+        {
+          "src": "assets/icon.svg",
+          "sizes": "any",
+          "type": "image/svg+xml"
+        }
+      ]
+    }
+  ]
+}

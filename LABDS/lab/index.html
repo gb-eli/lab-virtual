@@ -1,0 +1,325 @@
+<!doctype html>
+<html lang="pt-BR" data-boot="loading">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="description" content="Lab Virtual DS V4.0: versão consolidada com 51 ferramentas, 42 módulos, jogos 3D, Cyber Ops, emuladores, gráficos e animações preservados." />
+  <meta name="theme-color" content="#07111f" />
+  <meta name="color-scheme" content="dark light" />
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://cdn.jsdelivr.net 'wasm-unsafe-eval' blob:; worker-src 'self' blob:; connect-src 'self' https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; font-src 'self' data:; frame-src 'self' blob:; media-src 'self' data: blob:; manifest-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self';" />
+  <title>Laboratório Virtual DS</title>
+  <meta name="application-version" content="4.0.0">
+  <link rel="manifest" href="manifest.webmanifest" />
+  <link rel="stylesheet" href="css/boot.css" />
+  <script src="js/core/bootstrap.js" defer></script>
+</head>
+<body>
+  <div class="app-backdrop" aria-hidden="true"></div>
+
+  <header class="app-header">
+    <a class="brand" href="#inicio" data-home-link aria-label="Ir para o início">
+      <span class="brand-mark">&gt;_</span>
+      <span><strong>Laboratório Virtual DS</strong><small>prática segura no navegador</small></span>
+    </a>
+    <div class="header-actions">
+      <div id="sessionHeader" class="session-header hidden" aria-live="polite">
+        <button id="sessionIdentityBtn" class="session-identity" type="button" title="Ver dados da sessão"><span id="sessionStudentName">Estudante</span><small id="sessionStudentClass">Turma</small></button>
+        <button id="sessionHistoryBtn" class="icon-btn" type="button">Histórico</button>
+        <button id="sessionExportBtn" class="icon-btn" type="button">Exportar sessão</button>
+        <button class="icon-btn classroom-btn classroom-locked" type="button" data-classroom-delivery aria-disabled="true"><span data-classroom-label>Classroom bloqueado</span></button>
+        <button id="sessionFinishBtn" class="icon-btn danger-soft" type="button">Finalizar</button>
+      </div>
+      <button id="searchToggle" class="icon-btn mobile-only" type="button" aria-label="Buscar laboratórios">⌕</button>
+      <span id="appVersionBadge" class="version-badge">V4.0</span>
+      <button id="settingsBtn" class="icon-btn" type="button" aria-label="Acessibilidade e configurações">⚙</button>
+      <button id="themeToggle" class="icon-btn" type="button" aria-label="Alternar tema">◐</button>
+      <button id="installAppBtn" class="btn subtle hidden" type="button">Instalar</button>
+      <button id="allToolsBtn" class="btn primary compact-cta" type="button">Laboratórios</button>
+    </div>
+  </header>
+
+  <aside id="updateBanner" class="update-banner hidden" role="status" aria-live="polite">
+    <span><strong>Nova versão disponível.</strong> Atualize para evitar cache antigo nos laboratórios.</span>
+    <button id="updateNowBtn" class="btn primary" type="button">Atualizar agora</button>
+  </aside>
+
+  <main id="homeScreen" class="screen active" aria-labelledby="homeTitle">
+    <section class="home-intro-v31" aria-labelledby="homeTitle">
+      <div class="home-intro-copy">
+        <span class="hero-kicker"><i></i> LAB VIRTUAL DS • TESTES CONTROLADOS NO NAVEGADOR</span>
+        <h1 id="homeTitle">O que você precisa<br><em>fazer hoje?</em></h1>
+        <p>Use simuladores quando o equipamento oficial não estiver disponível, acompanhe tutoriais passo a passo ou explore linguagens, carreiras e tecnologias.</p>
+        <div class="home-intro-status" aria-label="Características da plataforma">
+          <span><b>51</b> ferramentas integradas</span>
+          <span><b>Local</b> progresso no aparelho</span>
+          <span><b>Multi-tela</b> celular a Smart TV</span>
+        </div>
+      </div>
+      <div class="home-intro-visual" aria-hidden="true">
+        <img src="assets/hero-tech-lab.svg" alt="" width="620" height="500" decoding="async" />
+      </div>
+    </section>
+
+    <section class="goal-selector" aria-labelledby="goalTitle">
+      <div class="goal-heading"><span class="eyebrow">ESCOLHA UM CAMINHO</span><h2 id="goalTitle">Qual é seu objetivo?</h2><p>A página mostra somente o necessário para a escolha atual.</p></div>
+      <div class="goal-grid" role="list">
+        <button class="goal-card simulator" type="button" data-home-goal="simulators" role="listitem">
+          <span class="goal-number">01</span><span class="goal-icon">▦</span><div><strong>Usar simuladores</strong><p>Terminais, programação, redes, hardware, jogos, sistemas, produtividade, sensores e ciência.</p><small>Abrir catálogo de laboratórios →</small></div>
+        </button>
+        <button class="goal-card tutorial" type="button" data-home-goal="tutorials" role="listitem">
+          <span class="goal-number">02</span><span class="goal-icon">✓</span><div><strong>Seguir um tutorial</strong><p>Classroom, Gmail, arquivos, VS Code, Git, planilhas, apresentações, hospedagem e muito mais.</p><small>Aprender com checklist →</small></div>
+        </button>
+        <button class="goal-card explore" type="button" data-home-goal="explore" role="listitem">
+          <span class="goal-number">03</span><span class="goal-icon">◇</span><div><strong>Explorar tecnologia</strong><p>Mais de 70 linguagens, carreiras, salários, IA, história, exemplos, NASA e documentação.</p><small>Descobrir possibilidades →</small></div>
+        </button>
+      </div>
+    </section>
+
+    <section id="dynamicShowcase" class="dynamic-showcase" aria-labelledby="showcaseTitle">
+      <div class="showcase-heading">
+        <div><span class="eyebrow">DESCOBERTA DINÂMICA</span><h2 id="showcaseTitle">Ferramentas em destaque agora</h2><p>A seleção muda automaticamente sem recarregar a página. Use os controles para pausar ou avançar.</p></div>
+        <div class="showcase-controls" aria-label="Controles da vitrine">
+          <button id="showcasePrev" class="icon-btn" type="button" aria-label="Ferramentas anteriores">←</button>
+          <button id="showcasePause" class="icon-btn" type="button" aria-label="Pausar vitrine">Ⅱ</button>
+          <button id="showcaseNext" class="icon-btn" type="button" aria-label="Próximas ferramentas">→</button>
+          <button id="showcaseSurprise" class="btn secondary" type="button">Surpreenda-me</button>
+          <button id="showcaseAll" class="btn secondary" type="button">Ver todas</button>
+        </div>
+      </div>
+      <div id="showcaseProgress" class="showcase-progress running" aria-hidden="true"><i></i></div>
+      <div id="showcaseGrid" class="showcase-grid" aria-live="off"></div>
+      <div class="showcase-indicator"><span id="showcaseIndicator">Seleção 1</span> • rotação a cada 7 segundos</div>
+    </section>
+
+    <section class="home-resume-strip" aria-label="Ações rápidas">
+      <div><span class="eyebrow">CONTINUAR</span><strong>Retome de onde parou ou pesquise diretamente.</strong></div>
+      <div class="button-row"><button id="resumeToolBtn" class="btn secondary hidden" type="button">Retomar última ferramenta</button><button id="heroExploreBtn" class="btn secondary" type="button">Ver todos os simuladores</button><button type="button" class="btn secondary" data-open-tool="help-center">Ajuda rápida</button></div>
+    </section>
+
+    <section id="homeSearchWrap" class="home-search-wrap hidden" aria-label="Busca e filtros">
+      <div class="catalog-return"><button id="closeCatalogBtn" type="button" class="btn secondary">← Voltar aos objetivos</button><div><span class="eyebrow">CATÁLOGO DE SIMULADORES</span><strong>Encontre a ferramenta adequada para a atividade.</strong></div></div>
+      <div class="search-box">
+        <span>⌕</span>
+        <input id="toolSearch" type="search" placeholder="Buscar terminal, Python, SQL, rede, relógio, planeta..." autocomplete="off" />
+        <kbd>/</kbd>
+      </div>
+      <div id="quickFilters" class="quick-filters" role="tablist" aria-label="Categorias">
+        <button class="filter-chip active" role="tab" aria-selected="true" data-filter="all" type="button">Todas</button>
+        <button class="filter-chip" role="tab" aria-selected="false" data-filter="terminal" type="button">Terminais</button>
+        <button class="filter-chip" role="tab" aria-selected="false" data-filter="programming" type="button">Programação</button>
+        <button class="filter-chip" role="tab" aria-selected="false" data-filter="database" type="button">Banco de dados</button>
+        <button class="filter-chip" role="tab" aria-selected="false" data-filter="network" type="button">Redes</button>
+        <button class="filter-chip" role="tab" aria-selected="false" data-filter="systems" type="button">Sistemas</button>
+        <button class="filter-chip" role="tab" aria-selected="false" data-filter="graphics" type="button">Gráficos e games</button>
+        <button class="filter-chip" role="tab" aria-selected="false" data-filter="devops" type="button">Git/DevOps</button>
+        <button class="filter-chip" role="tab" aria-selected="false" data-filter="security" type="button">Segurança</button>
+        <button class="filter-chip" role="tab" aria-selected="false" data-filter="games" type="button">Jogos</button>
+        <button class="filter-chip" role="tab" aria-selected="false" data-filter="fintech" type="button">Fintech</button>
+        <button class="filter-chip" role="tab" aria-selected="false" data-filter="automation" type="button">Automação</button>
+        <button class="filter-chip" role="tab" aria-selected="false" data-filter="emerging" type="button">IA</button>
+        <button class="filter-chip" role="tab" aria-selected="false" data-filter="exploration" type="button">Explorar tecnologia</button>
+        <button class="filter-chip" role="tab" aria-selected="false" data-filter="science" type="button">Ciência</button>
+        <button class="filter-chip" role="tab" aria-selected="false" data-filter="organization" type="button">Organização escolar</button>
+        <button class="filter-chip" role="tab" aria-selected="false" data-filter="media" type="button">Mídia</button>
+        <button class="filter-chip" role="tab" aria-selected="false" data-filter="productivity" type="button">Produtividade</button>
+        <button class="filter-chip" role="tab" aria-selected="false" data-filter="fabrication" type="button">Fabricação 3D</button>
+        <button class="filter-chip" role="tab" aria-selected="false" data-filter="energy" type="button">Energia</button>
+        <button class="filter-chip" role="tab" aria-selected="false" data-filter="utilities" type="button">Utilitários</button>
+        <button class="filter-chip" role="tab" aria-selected="false" data-filter="support" type="button">Ajuda e tutoriais</button>
+      </div>
+    </section>
+
+    <section id="catalogSection" class="tools-section catalog-section hidden" data-tools-catalog aria-labelledby="catalogTitle">
+      <div class="section-heading">
+        <div><span class="eyebrow">FERRAMENTAS DISPONÍVEIS</span><h2 id="catalogTitle">Escolha um laboratório</h2><p>Use a busca e os filtros para encontrar a ferramenta por área, sistema ou complexidade.</p></div>
+        <div class="catalog-actions">
+          <span id="toolResultCount" class="result-count" role="status" aria-live="polite"></span>
+          <select id="osFilter" aria-label="Filtrar por sistema operacional"><option value="all">Todos os sistemas</option><option value="windows">Windows</option><option value="linux">Linux</option><option value="macos">macOS</option><option value="browser">Navegador</option><option value="multi">Multiplataforma</option></select>
+          <select id="levelFilter" aria-label="Filtrar por complexidade"><option value="all">Todos os níveis</option><option value="basic">Básico</option><option value="intermediate">Intermediário</option><option value="advanced">Avançado</option></select>
+          <select id="experienceFilter" aria-label="Filtrar por tipo de experiência"><option value="all">Todos os tipos</option><option value="game">Jogos</option><option value="emulator">Emuladores</option><option value="sensor">Sensores</option><option value="simulator">Simuladores</option><option value="executor">Executores de código</option><option value="tutorial">Tutoriais e biblioteca</option><option value="creator">Criação e produtividade</option><option value="utility">Utilitários</option></select>
+          <button id="clearCatalogFilters" class="btn subtle" type="button">Limpar filtros</button>
+        </div>
+      </div>
+      <div id="allTools" class="tool-grid"></div>
+      <div id="emptyTools" class="empty-state hidden"><strong>Nenhuma ferramenta encontrada.</strong><span>Tente outro termo ou remova os filtros.</span></div>
+    </section>
+
+    <details class="maintenance-v8">
+      <summary><span>Manutenção e dados locais</span><small>Backup, restauração e limpeza do dispositivo</small></summary>
+      <section class="data-management">
+        <div><span class="eyebrow">DADOS LOCAIS</span><h2>Backup do laboratório</h2><p>Exporte ou restaure os ambientes salvos neste navegador.</p></div>
+        <div class="button-row"><button id="backupAllBtn" class="btn secondary" type="button">Exportar backup</button><button id="restoreAllBtn" class="btn secondary" type="button">Importar backup</button><input id="restoreAllFile" type="file" accept="application/json" hidden><button id="clearAllDataBtn" class="btn subtle" type="button">Limpar dados locais</button></div>
+      </section>
+    </details>
+  </main>
+
+  <main id="terminalScreen" class="screen terminal-screen" aria-label="Central de terminais">
+    <section id="terminalWindow" class="terminal-window">
+      <header class="window-titlebar">
+        <div class="window-dots" aria-hidden="true"><button id="terminalCloseDot" class="dot close" type="button" tabindex="-1"></button><button id="terminalMinDot" class="dot minimize" type="button" tabindex="-1"></button><button id="terminalMaxDot" class="dot maximize" type="button" tabindex="-1"></button></div>
+        <div class="window-title"><strong id="terminalTitle">Terminal</strong><small id="terminalSubtitle">Simulação avançada</small></div>
+        <div class="window-actions">
+          <button id="networkProfileBtn" class="icon-btn" type="button" title="Perfil da rede">Rede</button>
+          <button id="terminalHelpBtn" class="icon-btn" type="button">Comandos</button>
+          <button id="terminalFontDown" class="icon-btn" type="button" aria-label="Diminuir fonte">A−</button>
+          <button id="terminalFontUp" class="icon-btn" type="button" aria-label="Aumentar fonte">A+</button>
+          <button id="terminalCopyBtn" class="icon-btn" type="button">Copiar saída</button><button id="terminalExportBtn" class="icon-btn" type="button">Exportar</button><button id="terminalImportBtn" class="icon-btn" type="button">Importar</button><input id="terminalImportFile" type="file" accept="application/json" hidden>
+          <button id="terminalResetBtn" class="icon-btn" type="button">Restaurar</button>
+          <button id="terminalFullscreenBtn" class="icon-btn" type="button" aria-label="Tela cheia">⛶</button>
+          <button class="icon-btn" type="button" data-catalog-link>Ferramentas</button><button class="icon-btn" type="button" data-home-link>Início</button>
+        </div>
+      </header>
+      <div class="terminal-layout">
+        <section class="terminal-console-area">
+          <div id="terminalOutput" class="terminal-output" tabindex="0" aria-live="polite"></div>
+          <form id="terminalForm" class="terminal-input-line" autocomplete="off" spellcheck="false">
+            <span id="terminalPrompt" class="terminal-prompt"></span>
+            <input id="terminalInput" type="text" aria-label="Comando" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" />
+          </form>
+          <div class="mobile-keybar" aria-label="Teclas auxiliares"><button data-key="Tab" type="button">Tab</button><button data-key="Escape" type="button">Esc</button><button data-key="ArrowUp" type="button">↑</button><button data-key="ArrowDown" type="button">↓</button><button data-insert="/" type="button">/</button><button data-insert="\\" type="button">\</button><button data-insert="-" type="button">-</button><button data-insert="|" type="button">|</button><button data-insert=":" type="button">:</button><button data-action="interrupt" type="button">Ctrl+C</button></div>
+        </section>
+        <aside id="terminalSidePanel" class="terminal-side-panel">
+          <div class="side-panel-head"><div><span class="eyebrow">AJUDA RÁPIDA</span><h2>Comandos</h2></div><button id="closeTerminalSide" class="icon-btn" type="button">×</button></div>
+          <input id="terminalHelpSearch" type="search" placeholder="Pesquisar comando..." autocomplete="off" />
+          <div id="terminalHelpContent" class="command-list"></div>
+          <div class="shortcut-panel"><b>Atalhos</b><span><kbd>↑</kbd><kbd>↓</kbd> histórico</span><span><kbd>Tab</kbd> completar</span><span><kbd>Ctrl</kbd>+<kbd>L</kbd> limpar</span><span><kbd>Ctrl</kbd>+<kbd>C</kbd> interromper</span></div>
+        </aside>
+      </div>
+      <footer class="terminal-statusbar"><span id="terminalStatusType">Simulação avançada</span><span id="terminalStatusPath">/</span><span id="terminalOperationStatus">pronto</span><span class="safe-state"><i></i> isolado do sistema real</span></footer>
+    </section>
+  </main>
+
+  <main id="labScreen" class="screen lab-screen" aria-label="Laboratório">
+    <section class="lab-shell">
+      <header class="lab-header">
+        <div class="lab-heading"><nav class="lab-breadcrumb" aria-label="Navegação do laboratório"><button id="labBreadcrumbHome" type="button">Início</button><span>›</span><button id="labBreadcrumbCatalog" type="button">Ferramentas</button><span>›</span><strong id="labBreadcrumbCurrent">Laboratório</strong></nav><span id="labEyebrow" class="eyebrow">LABORATÓRIO</span><h1 id="labTitle">Carregando...</h1><p id="labDescription"></p></div>
+        <div class="lab-header-actions"><span id="labRuntimeBadge" class="runtime-badge">Simulação</span><button id="labHelpBtn" class="icon-btn" type="button">Ajuda</button><button id="labExportBtn" class="icon-btn" type="button">Exportar</button><button class="icon-btn classroom-btn classroom-locked" type="button" data-classroom-delivery aria-disabled="true"><span data-classroom-label>Classroom bloqueado</span></button><button id="labFullscreenBtn" class="icon-btn" type="button">⛶</button><button id="labBackCatalogBtn" class="icon-btn" type="button">Ferramentas</button><button id="labHomeBtn" class="icon-btn" type="button">Início</button></div>
+      </header>
+      <section id="learningPanel" class="learning-panel hidden" aria-label="Modos de aprendizagem"></section>
+      <div id="labLoading" class="lab-loading"><span class="spinner"></span><strong>Carregando laboratório...</strong><small>O módulo é carregado somente quando necessário.</small></div>
+      <div id="labHost" class="lab-host"></div>
+    </section>
+  </main>
+
+  <dialog id="exportDialog" class="app-dialog export-dialog">
+    <form method="dialog">
+      <header><div><span class="eyebrow">EXPORTAR</span><h2>Salvar sessão</h2><p id="exportDialogDescription">Escolha o formato desejado.</p></div><button class="icon-btn" value="cancel" aria-label="Fechar">×</button></header>
+      <div class="export-grid">
+        <button type="button" data-export-format="txt"><span>TXT</span><strong>Relatório textual</strong><small>Histórico e resultados em texto.</small></button>
+        <button type="button" data-export-format="pdf"><span>PDF</span><strong>Relatório em PDF</strong><small>Abre a impressão para salvar.</small></button>
+        <button type="button" data-export-format="native" class="featured"><span id="nativeExportExtension">.TXT</span><strong id="nativeExportName">Arquivo da ferramenta</strong><small id="nativeExportHelp">Formato adequado ao laboratório.</small></button>
+        <button type="button" data-export-format="backup"><span>JSON</span><strong>Backup restaurável</strong><small>Estado completo do ambiente.</small></button>
+      </div>
+    </form>
+  </dialog>
+
+  <dialog id="networkProfileDialog" class="app-dialog compact-dialog">
+    <form method="dialog">
+      <header><div><span class="eyebrow">REDE SIMULADA</span><h2>Perfil da conexão</h2></div><button class="icon-btn" value="cancel">×</button></header>
+      <label>Perfil<select id="terminalNetworkProfile"></select></label>
+      <label>Semente opcional<input id="terminalNetworkSeed" type="text" maxlength="32" placeholder="Ex.: turma-2ds" /></label>
+      <p>O perfil altera latência, jitter, perda de pacotes, DNS e rota apenas dentro da simulação.</p>
+      <menu><button class="btn secondary" value="cancel">Cancelar</button><button id="saveNetworkProfileBtn" class="btn primary" value="default">Aplicar</button></menu>
+    </form>
+  </dialog>
+
+  <dialog id="helpDialog" class="app-dialog help-dialog"><form method="dialog"><header><div><span class="eyebrow">AJUDA</span><h2 id="helpDialogTitle">Sobre o laboratório</h2></div><button class="icon-btn" value="cancel">×</button></header><div id="helpDialogContent" class="help-dialog-content"></div><menu><button class="btn primary" value="default">Entendi</button></menu></form></dialog>
+
+
+  <dialog id="studentDialog" class="app-dialog student-dialog">
+    <form id="studentForm" method="dialog" novalidate>
+      <header><div><span class="eyebrow">IDENTIFICAÇÃO LOCAL</span><h2>Antes de abrir o laboratório</h2><p>Informe os dados que aparecerão no relatório da prática.</p></div></header>
+      <div class="student-session-benefits" aria-label="Recursos da sessão"><article><b>Perfil local</b><span>Nome, turma e progresso no aparelho</span></article><article><b>Evidência</b><span>Relatório exportável ao concluir</span></article><article><b>Classroom</b><span>Entrega liberada após a exportação</span></article></div>
+      <div class="form-stack">
+        <label>Nome completo<input id="studentNameInput" type="text" maxlength="80" autocomplete="name" placeholder="Nome completo do estudante" required /></label>
+        <label>Turma<select id="studentClassSelect" required></select></label>
+        <label id="otherClassField" class="hidden">Outra turma<input id="otherClassInput" type="text" maxlength="50" placeholder="Digite a turma" /></label>
+        <p id="studentFormError" class="form-error hidden" role="alert"></p>
+        <p class="privacy-note" id="studentPrivacyNotice"></p>
+      </div>
+      <menu><button id="studentCancelBtn" class="btn secondary" type="button">Cancelar</button><button class="btn primary" type="submit">Iniciar sessão</button></menu>
+    </form>
+  </dialog>
+
+  <dialog id="restoreSessionDialog" class="app-dialog compact-dialog">
+    <form method="dialog">
+      <header><div><span class="eyebrow">SESSÃO ANTERIOR</span><h2>Foi encontrada uma sessão em andamento</h2><p>Por privacidade, os dados do estudante anterior só serão exibidos após sua escolha.</p></div></header>
+      <div class="state-card warning"><p>Escolha continuar, exportar antes de descartar ou apagar completamente os dados desta sessão.</p></div>
+      <menu class="wrap-menu"><button id="restoreContinueBtn" class="btn primary" type="button">Continuar sessão</button><button id="restoreExportBtn" class="btn secondary" type="button">Exportar e descartar</button><button id="restoreDiscardBtn" class="btn danger" type="button">Descartar e limpar</button></menu>
+    </form>
+  </dialog>
+
+  <dialog id="historyDialog" class="app-dialog history-dialog">
+    <form method="dialog">
+      <header><div><span class="eyebrow">HISTÓRICO DA SESSÃO</span><h2 id="historyTitle">Atividades realizadas</h2><p id="historySummary"></p></div><button class="icon-btn" value="cancel" aria-label="Fechar">×</button></header>
+      <div class="history-toolbar">
+        <input id="historySearch" type="search" placeholder="Buscar comando, laboratório ou resultado..." />
+        <select id="historyLabFilter" aria-label="Filtrar laboratório"><option value="all">Todos os laboratórios</option></select>
+        <select id="historyTypeFilter" aria-label="Filtrar tipo"><option value="all">Todas as ações</option><option value="command_execution">Comandos</option><option value="code_execution">Execuções</option><option value="sql_execution">SQL</option><option value="network_test">Rede</option><option value="file_operation">Arquivos</option><option value="error">Erros</option><option value="export">Exportações</option></select>
+      </div>
+      <div id="historyTimeline" class="history-timeline"></div>
+      <menu class="history-actions"><button id="copyHistoryBtn" class="btn secondary" type="button">Copiar histórico</button><button class="btn secondary" type="button" data-session-export="txt">TXT</button><button class="btn secondary" type="button" data-session-export="pdf">PDF</button><button class="btn secondary" type="button" data-session-export="json">JSON</button><button class="btn primary" type="button" data-session-export="zip">Pacote ZIP</button></menu>
+    </form>
+  </dialog>
+
+  <dialog id="finishSessionDialog" class="app-dialog finish-dialog">
+    <form method="dialog">
+      <header><div><span class="eyebrow">FINALIZAR SESSÃO</span><h2>Revise e salve sua prática</h2><p id="finishSummary"></p></div><button class="icon-btn" value="cancel" aria-label="Fechar">×</button></header>
+      <div id="finishStats" class="finish-stats"></div>
+      <div class="finish-export-grid"><button type="button" data-session-export="pdf">Exportar PDF</button><button type="button" data-session-export="txt">Exportar TXT</button><button type="button" data-session-export="json">Exportar JSON</button><button type="button" data-session-export="zip" class="featured">Exportar pacote completo</button></div><div class="classroom-finish-row"><button class="btn classroom-btn classroom-locked" type="button" data-classroom-delivery aria-disabled="true"><span data-classroom-label>Classroom bloqueado</span></button><small>O botão é liberado depois que um relatório ou arquivo é exportado.</small></div>
+      <menu class="wrap-menu"><button class="btn secondary" value="cancel">Continuar trabalhando</button><button id="finishKeepBtn" class="btn primary" type="button">Finalizar e manter localmente</button><button id="finishClearBtn" class="btn danger" type="button">Finalizar e limpar dados pessoais</button></menu>
+    </form>
+  </dialog>
+
+  <dialog id="sessionInfoDialog" class="app-dialog compact-dialog">
+    <form method="dialog"><header><div><span class="eyebrow">SESSÃO ATUAL</span><h2>Identificação</h2></div><button class="icon-btn" value="cancel">×</button></header><div id="sessionInfoContent" class="session-info-content"></div><menu><button id="switchStudentBtn" class="btn danger" type="button">Trocar estudante</button><button class="btn primary" value="default">Fechar</button></menu></form>
+  </dialog>
+
+  <dialog id="exportProgressDialog" class="app-dialog compact-dialog export-progress-dialog">
+    <form method="dialog"><header><div><span class="eyebrow">EXPORTAÇÃO LOCAL</span><h2>Preparando arquivos</h2><p id="exportProgressText">Iniciando...</p></div></header><div class="export-progress"><i id="exportProgressBar"></i></div><menu><button id="cancelSessionExportBtn" class="btn secondary" type="button">Cancelar</button></menu></form>
+  </dialog>
+
+  <dialog id="settingsDialog" class="app-dialog settings-dialog">
+    <form method="dialog">
+      <header><div><span class="eyebrow">ACESSIBILIDADE E PREFERÊNCIAS</span><h2>Personalizar o laboratório</h2><p>As opções ficam salvas somente neste navegador.</p></div><button class="icon-btn" value="cancel" aria-label="Fechar">×</button></header>
+      <div class="settings-grid">
+        <fieldset><legend>Tema</legend>
+          <label><input type="radio" name="settingsTheme" value="system"> Usar o aparelho</label>
+          <label><input type="radio" name="settingsTheme" value="dark"> Escuro</label>
+          <label><input type="radio" name="settingsTheme" value="light"> Claro</label>
+          <label><input type="radio" name="settingsTheme" value="contrast"> Alto contraste</label>
+        </fieldset>
+        <label>Tamanho do texto<select id="settingsFontSize"><option value="normal">Normal</option><option value="large">Grande</option><option value="xlarge">Extragrande</option></select></label>
+        <label class="settings-check"><input id="settingsReducedMotion" type="checkbox"> Reduzir animações e transições</label>
+        <label class="settings-check"><input id="settingsHighContrast" type="checkbox"> Reforçar contraste</label>
+        <label class="settings-check"><input id="settingsSharedDevice" type="checkbox"> Este é um dispositivo compartilhado</label>
+        <div class="state-card info"><h3>Privacidade local</h3><p>Nome, turma, códigos e histórico ficam no navegador. Em equipamentos compartilhados, exporte antes de limpar.</p></div>
+      </div>
+      <menu class="wrap-menu"><button id="checkUpdateBtn" class="btn secondary" type="button">Verificar atualização</button><button id="settingsReset" class="btn secondary" type="button">Restaurar preferências</button><button id="settingsClearStudent" class="btn danger" type="button">Encerrar e limpar</button><button class="btn primary" value="default">Concluir</button></menu>
+    </form>
+  </dialog>
+
+  <dialog id="realWorldDialog" class="app-dialog real-world-dialog">
+    <form method="dialog"><header><div><span class="eyebrow">APLICAÇÃO PROFISSIONAL</span><h2 id="realWorldTitle">Como isso é usado?</h2></div><button class="icon-btn" value="cancel" aria-label="Fechar">×</button></header><div id="realWorldContent" class="real-world-content"></div><menu><button class="btn primary" value="default">Voltar ao laboratório</button></menu></form>
+  </dialog>
+
+
+  <dialog id="classroomDialog" class="app-dialog classroom-dialog">
+    <form method="dialog">
+      <header><div><span class="eyebrow">ENTREGA DA ATIVIDADE</span><h2>Enviar pelo Google Classroom</h2><p>O Lab Virtual DS prepara o arquivo localmente. O anexo deve ser selecionado pelo estudante no Classroom.</p></div><button class="icon-btn" value="cancel" aria-label="Fechar">×</button></header>
+      <div class="classroom-flow" aria-label="Etapas da entrega">
+        <article class="done"><b>1</b><div><strong>Arquivo exportado</strong><span id="classroomExportInfo">Arquivo preparado.</span></div></article>
+        <article><b>2</b><div><strong>Abrir o Classroom</strong><span id="classroomDestinationInfo">Página inicial do Google Classroom</span></div></article>
+        <article><b>3</b><div><strong>Anexar e entregar</strong><span>Selecione o arquivo baixado, confira a atividade e clique em Entregar.</span></div></article>
+      </div>
+      <details class="classroom-config"><summary>Configurar link específico da turma ou atividade</summary><label>Link do Google Classroom<input id="classroomUrlInput" type="url" inputmode="url" placeholder="https://classroom.google.com/..." maxlength="2048"></label><div class="button-row"><button id="saveClassroomUrlBtn" class="btn secondary" type="button">Salvar link neste navegador</button></div><small>Por segurança, somente endereços HTTPS de classroom.google.com são aceitos.</small></details>
+      <div class="state-card info"><p><strong>Importante:</strong> o navegador não permite anexar o arquivo automaticamente. Procure o arquivo recém-baixado na pasta Downloads.</p></div>
+      <menu class="wrap-menu"><button class="btn secondary" value="cancel">Fazer depois</button><button id="openClassroomBtn" class="btn primary classroom-open" type="button">Ir para o Google Classroom</button></menu>
+    </form>
+  </dialog>
+
+  <div id="toastRegion" class="toast-region" aria-live="polite" aria-atomic="true"></div>
+
+
+</body>
+</html>
