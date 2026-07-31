@@ -1,0 +1,4 @@
+/* Regras de renderização e redução adaptativa — Lab Virtual DS V4.0 */
+.tool-card,.showcase-card{content-visibility:auto;contain-intrinsic-size:280px}.screen:not(.active){content-visibility:hidden}
+html[data-performance="economy"] .app-backdrop::before,html[data-performance="economy"] body::after,html[data-performance="economy"] .dynamic-showcase::after{display:none!important}html[data-performance="economy"] .app-header,html[data-performance="economy"] .home-search-wrap,html[data-performance="economy"] .lab-header{backdrop-filter:none!important}html[data-performance="economy"] .tool-card-button,html[data-performance="economy"] .showcase-card{box-shadow:none!important}html[data-performance="economy"] .hero-kicker i{animation:none!important}html[data-performance="economy"] .showcase-progress i{animation-duration:12s!important}
+@media(max-width:720px){.tool-card,.showcase-card{contain-intrinsic-size:240px}}
