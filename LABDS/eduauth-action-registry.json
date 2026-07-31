@@ -1,0 +1,123 @@
+{
+  "schema": "eduauth-action-registry",
+  "schemaVersion": 1,
+  "platformId": "lab-virtual-ds",
+  "actions": [
+    {
+      "id": "lesson-start",
+      "numericCode": "01",
+      "label": "Iniciar atividade protegida",
+      "risk": "LOW",
+      "preferredMode": "CLASS_SHARED_PIN",
+      "pinLength": 8,
+      "ttlSeconds": 900,
+      "sharedAcrossClass": true,
+      "sessionBound": false,
+      "singleUse": false,
+      "requireReason": false,
+      "requireTeacherReauthentication": false,
+      "integrationPoints": [
+        {
+          "file": "lab/js/app.js",
+          "function": "authorizationOptionsForTool/openTool",
+          "lineApproximation": 53
+        },
+        {
+          "file": "lab/modules/teacher-lab/index.js",
+          "function": "activityLink",
+          "lineApproximation": 18
+        }
+      ]
+    },
+    {
+      "id": "challenge-start",
+      "numericCode": "02",
+      "label": "Iniciar desafio protegido",
+      "risk": "LOW",
+      "preferredMode": "CLASS_SHARED_PIN",
+      "pinLength": 8,
+      "ttlSeconds": 900,
+      "sharedAcrossClass": true,
+      "sessionBound": false,
+      "singleUse": false,
+      "requireReason": false,
+      "requireTeacherReauthentication": false,
+      "integrationPoints": [
+        {
+          "file": "lab/js/app.js",
+          "function": "authorizationOptionsForTool/openTool",
+          "lineApproximation": 53
+        },
+        {
+          "file": "lab/modules/teacher-lab/index.js",
+          "function": "activityLink",
+          "lineApproximation": 18
+        }
+      ]
+    },
+    {
+      "id": "teacher-mode-access",
+      "numericCode": "03",
+      "label": "Abrir o Modo Professor",
+      "risk": "MEDIUM",
+      "preferredMode": "SESSION_SCOPED_PIN",
+      "pinLength": 8,
+      "ttlSeconds": 300,
+      "sharedAcrossClass": false,
+      "sessionBound": true,
+      "singleUse": true,
+      "requireReason": false,
+      "requireTeacherReauthentication": false,
+      "integrationPoints": [
+        {
+          "file": "lab/js/app.js",
+          "function": "authorizationOptionsForTool",
+          "lineApproximation": 52
+        }
+      ]
+    },
+    {
+      "id": "vm-instructor-access",
+      "numericCode": "04",
+      "label": "Liberar o painel do instrutor da máquina virtual",
+      "risk": "MEDIUM",
+      "preferredMode": "SESSION_SCOPED_PIN",
+      "pinLength": 8,
+      "ttlSeconds": 300,
+      "sharedAcrossClass": false,
+      "sessionBound": true,
+      "singleUse": true,
+      "requireReason": false,
+      "requireTeacherReauthentication": false,
+      "integrationPoints": [
+        {
+          "file": "lab/modules/vm-lab/index.js",
+          "function": "unlockInstructor",
+          "lineApproximation": 184
+        }
+      ]
+    },
+    {
+      "id": "teacher-activity-delete",
+      "numericCode": "05",
+      "label": "Excluir uma atividade local do professor",
+      "risk": "HIGH",
+      "preferredMode": "SESSION_SCOPED_PIN",
+      "strongerMode": "SIGNED_GRANT",
+      "pinLength": 10,
+      "ttlSeconds": 180,
+      "sharedAcrossClass": false,
+      "sessionBound": true,
+      "singleUse": true,
+      "requireReason": true,
+      "requireTeacherReauthentication": false,
+      "integrationPoints": [
+        {
+          "file": "lab/modules/teacher-lab/index.js",
+          "function": "renderActivities/delete handler",
+          "lineApproximation": 55
+        }
+      ]
+    }
+  ]
+}

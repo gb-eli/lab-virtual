@@ -1,0 +1,295 @@
+{
+  "schema": "eduauth-test-vectors",
+  "schemaVersion": 1,
+  "protocolVersion": 1,
+  "environment": "development",
+  "warning": "DEVELOPMENT TEST KEY — DO NOT USE IN PRODUCTION",
+  "testKeys": {
+    "classHmacKeyBase64": "G4cY+1yxRvlq+pw6g34T9ZL76pQe+Q1xMHts8fsmdNQ=",
+    "sessionHmacKeyBase64": "SYXpUp3Z+zLMEoE9e5Axq4GeHZa2IhAeTcn3O3q4J+I=",
+    "signingPublicKeyJwk": {
+      "key_ops": [
+        "verify"
+      ],
+      "ext": true,
+      "kty": "EC",
+      "x": "bwyZXZhLUqm_4O_Mlow2BImSIXbg5uDhL3oqWyhIH7Y",
+      "y": "HyqXC_FF1ZN33s-EfggPSRfyibicHyNetUPiL1MlbXQ",
+      "crv": "P-256"
+    }
+  },
+  "vectors": [
+    {
+      "id": "class-valid",
+      "description": "Código coletivo válido",
+      "context": {
+        "protocol": "EDUAUTH",
+        "version": 1,
+        "mode": "CLASS_SHARED_PIN",
+        "keyId": "lab-virtual-ds-class-01",
+        "platformId": "lab-virtual-ds",
+        "classId": "2ds-manha",
+        "subjectId": "programacao-front-end",
+        "lessonId": "aula-03",
+        "activityId": "atividade-principal",
+        "actionId": "lesson-start",
+        "timeSlot": 1983712,
+        "policyVersion": 1,
+        "resourceIdHash": "e27955ee"
+      },
+      "canonicalContext": "{\"actionId\":\"lesson-start\",\"activityId\":\"atividade-principal\",\"classId\":\"2ds-manha\",\"keyId\":\"lab-virtual-ds-class-01\",\"lessonId\":\"aula-03\",\"mode\":\"CLASS_SHARED_PIN\",\"platformId\":\"lab-virtual-ds\",\"policyVersion\":1,\"protocol\":\"EDUAUTH\",\"resourceIdHash\":\"e27955ee\",\"subjectId\":\"programacao-front-end\",\"timeSlot\":1983712,\"version\":1}",
+      "requestCode": "EA1-C1-K01-040G-2082-081G-2080-3S2E-1RKS-AQQ0-2P1EWJG",
+      "hmacSha256Hex": "3911da9d1d9ae77a1bc13f752746d31997f176271ca339ffd75f187f210c00b4",
+      "pin": "96691066",
+      "validAtUnixMs": 1785341100000
+    },
+    {
+      "id": "class-expired",
+      "description": "Código coletivo expirado",
+      "source": "class-valid",
+      "invalidAtUnixMs": 1785342600000,
+      "expectedError": "expired"
+    },
+    {
+      "id": "class-other-class",
+      "description": "Código de outra turma",
+      "context": {
+        "protocol": "EDUAUTH",
+        "version": 1,
+        "mode": "CLASS_SHARED_PIN",
+        "keyId": "lab-virtual-ds-class-01",
+        "platformId": "lab-virtual-ds",
+        "classId": "1ds-manha",
+        "subjectId": "programacao-front-end",
+        "lessonId": "aula-03",
+        "activityId": "atividade-principal",
+        "actionId": "lesson-start",
+        "timeSlot": 1983712,
+        "policyVersion": 1,
+        "resourceIdHash": "e27955ee"
+      },
+      "expectedError": "context-mismatch"
+    },
+    {
+      "id": "class-other-lesson",
+      "description": "Código de outra aula",
+      "context": {
+        "protocol": "EDUAUTH",
+        "version": 1,
+        "mode": "CLASS_SHARED_PIN",
+        "keyId": "lab-virtual-ds-class-01",
+        "platformId": "lab-virtual-ds",
+        "classId": "2ds-manha",
+        "subjectId": "programacao-front-end",
+        "lessonId": "aula-04",
+        "activityId": "atividade-principal",
+        "actionId": "lesson-start",
+        "timeSlot": 1983712,
+        "policyVersion": 1,
+        "resourceIdHash": "e27955ee"
+      },
+      "expectedError": "context-mismatch"
+    },
+    {
+      "id": "class-other-platform",
+      "description": "Código de outra plataforma",
+      "requestCode": "EA2-C1-K01-040G-2082-081G-2080-3S2E-1RKS-AQQ0-2P1EWJG",
+      "expectedError": "protocol-prefix"
+    },
+    {
+      "id": "request-typo",
+      "description": "Erro de digitação no código-base",
+      "requestCode": "EB1-C1-K01-040G-2082-081G-2080-3S2E-1RKS-AQQ0-2P1EWJG",
+      "expectedError": "checksum-or-format"
+    },
+    {
+      "id": "checksum-invalid",
+      "description": "Checksum inválido",
+      "requestCode": "EA1-C1-K01-040G-2082-081G-2080-3S2E-1RKS-AQQ0-2P1EWJ0",
+      "expectedError": "checksum"
+    },
+    {
+      "id": "session-valid",
+      "description": "Código individual válido",
+      "context": {
+        "protocol": "EDUAUTH",
+        "version": 1,
+        "mode": "SESSION_SCOPED_PIN",
+        "keyId": "lab-virtual-ds-session-01",
+        "platformId": "lab-virtual-ds",
+        "classId": "2ds-manha",
+        "subjectId": "sistemas-operacionais",
+        "lessonId": "atividade-atual",
+        "activityId": "maquina-virtual-instrutor",
+        "actionId": "vm-instructor-access",
+        "timeSlot": 5951136,
+        "policyVersion": 1,
+        "resourceIdHash": "74317ec0",
+        "sessionId": "a1b2c3d4e5f6",
+        "requestId": "01020304",
+        "sessionNonce": "0a0b0c0d0e",
+        "profileIdHash": "112233",
+        "expiresAt": 1785341100000
+      },
+      "canonicalContext": "{\"actionId\":\"vm-instructor-access\",\"activityId\":\"maquina-virtual-instrutor\",\"classId\":\"2ds-manha\",\"expiresAt\":1785341100000,\"keyId\":\"lab-virtual-ds-session-01\",\"lessonId\":\"atividade-atual\",\"mode\":\"SESSION_SCOPED_PIN\",\"platformId\":\"lab-virtual-ds\",\"policyVersion\":1,\"profileIdHash\":\"112233\",\"protocol\":\"EDUAUTH\",\"requestId\":\"01020304\",\"resourceIdHash\":\"74317ec0\",\"sessionId\":\"a1b2c3d4e5f6\",\"sessionNonce\":\"0a0b0c0d0e\",\"subjectId\":\"sistemas-operacionais\",\"timeSlot\":5951136,\"version\":1}",
+      "requestCode": "EA1-S1-K01-0410-2082-1400-8100-BB7A-0X1H-FV0A-3CP3-TKJZ-C082-0C20-M2RC-1M71-28HK-0000-000-KP6C0AG",
+      "hmacSha256Hex": "4cac3946359049b2892eff66058949b8a37103859d34edb8df7b1f2935856039",
+      "pin": "88489733",
+      "validAtUnixMs": 1785341040000
+    },
+    {
+      "id": "session-other-session",
+      "description": "Código individual de outra sessão",
+      "context": {
+        "protocol": "EDUAUTH",
+        "version": 1,
+        "mode": "SESSION_SCOPED_PIN",
+        "keyId": "lab-virtual-ds-session-01",
+        "platformId": "lab-virtual-ds",
+        "classId": "2ds-manha",
+        "subjectId": "sistemas-operacionais",
+        "lessonId": "atividade-atual",
+        "activityId": "maquina-virtual-instrutor",
+        "actionId": "vm-instructor-access",
+        "timeSlot": 5951136,
+        "policyVersion": 1,
+        "resourceIdHash": "74317ec0",
+        "sessionId": "ffffffffffff",
+        "requestId": "01020304",
+        "sessionNonce": "0a0b0c0d0e",
+        "profileIdHash": "112233",
+        "expiresAt": 1785341100000
+      },
+      "expectedError": "context-mismatch"
+    },
+    {
+      "id": "session-expired",
+      "description": "Código individual expirado",
+      "source": "session-valid",
+      "invalidAtUnixMs": 1785341100001,
+      "expectedError": "expired"
+    },
+    {
+      "id": "session-reused",
+      "description": "Código individual reutilizado",
+      "source": "session-valid",
+      "expectedError": "consumed"
+    },
+    {
+      "id": "attempt-limit",
+      "description": "Cinco tentativas incorretas",
+      "source": "session-valid",
+      "wrongPins": [
+        "00000000",
+        "11111111",
+        "22222222",
+        "33333333",
+        "44444444"
+      ],
+      "expectedError": "blocked"
+    },
+    {
+      "id": "page-refresh",
+      "description": "Atualização invalida solicitação pendente não persistida",
+      "expected": "new-request-id"
+    },
+    {
+      "id": "session-close",
+      "description": "Encerramento da aba remove sessão EduAuth",
+      "expected": "sessionStorage-cleared"
+    },
+    {
+      "id": "clock-drift",
+      "description": "Diferença de relógio permitida somente conforme política",
+      "allowedClockDriftSlots": 1
+    },
+    {
+      "id": "unknown-registry",
+      "description": "Registro desconhecido",
+      "requestCode": "EA1-C1-K01-ZZZZ-ZZZZ-0000000",
+      "expectedError": "registry-or-checksum"
+    },
+    {
+      "id": "version-incompatible",
+      "description": "Versão incompatível",
+      "requestCode": "EA9-C1-K01-040G-2082-081G-2080-3S2E-1RKS-AQQ0-2P1EWJG",
+      "expectedError": "version"
+    },
+    {
+      "id": "unauthorized-action",
+      "description": "Ação não registrada",
+      "context": {
+        "protocol": "EDUAUTH",
+        "version": 1,
+        "mode": "CLASS_SHARED_PIN",
+        "keyId": "lab-virtual-ds-class-01",
+        "platformId": "lab-virtual-ds",
+        "classId": "2ds-manha",
+        "subjectId": "programacao-front-end",
+        "lessonId": "aula-03",
+        "activityId": "atividade-principal",
+        "actionId": "not-registered",
+        "timeSlot": 1983712,
+        "policyVersion": 1,
+        "resourceIdHash": "e27955ee"
+      },
+      "expectedError": "action"
+    },
+    {
+      "id": "high-session-valid",
+      "description": "PIN de alto risco com 10 dígitos e motivo",
+      "context": {
+        "protocol": "EDUAUTH",
+        "version": 1,
+        "mode": "SESSION_SCOPED_PIN",
+        "keyId": "lab-virtual-ds-session-01",
+        "platformId": "lab-virtual-ds",
+        "classId": "2ds-manha",
+        "subjectId": "sistemas-operacionais",
+        "lessonId": "atividade-atual",
+        "activityId": "atividade-professor-local",
+        "actionId": "teacher-activity-delete",
+        "timeSlot": 9918560,
+        "policyVersion": 1,
+        "resourceIdHash": "9fe6501a",
+        "sessionId": "0f1e2d3c4b5a",
+        "requestId": "05060708",
+        "sessionNonce": "1011121314",
+        "profileIdHash": "445566",
+        "expiresAt": 1785340980000,
+        "reasonHash": "e9797fda"
+      },
+      "canonicalContext": "{\"actionId\":\"teacher-activity-delete\",\"activityId\":\"atividade-professor-local\",\"classId\":\"2ds-manha\",\"expiresAt\":1785340980000,\"keyId\":\"lab-virtual-ds-session-01\",\"lessonId\":\"atividade-atual\",\"mode\":\"SESSION_SCOPED_PIN\",\"platformId\":\"lab-virtual-ds\",\"policyVersion\":1,\"profileIdHash\":\"445566\",\"protocol\":\"EDUAUTH\",\"reasonHash\":\"e9797fda\",\"requestId\":\"05060708\",\"resourceIdHash\":\"9fe6501a\",\"sessionId\":\"0f1e2d3c4b5a\",\"sessionNonce\":\"1011121314\",\"subjectId\":\"sistemas-operacionais\",\"timeSlot\":9918560,\"version\":1}",
+      "requestCode": "EA1-S1-K01-0410-2082-1400-A180-JXC6-17Z6-A0D0-Y7HD-7H5N-M186-0W41-048J-2CA4-8NB6-X5WQ-ZPG-6VWJ1ER",
+      "hmacSha256Hex": "4596f4bc291eec82b9fc64175ba99ba0f211e169717197e6fceccf4208843215",
+      "pin": "0518816441",
+      "reason": "Atividade criada por engano"
+    },
+    {
+      "id": "signed-valid",
+      "description": "Token assinado válido",
+      "grant": {
+        "protocol": "EDUAUTH",
+        "version": 1,
+        "mode": "SIGNED_GRANT",
+        "grantId": "test-grant-001",
+        "platformId": "lab-virtual-ds",
+        "actionId": "teacher-activity-delete",
+        "resourceId": "activity-test-001",
+        "sessionId": "0f1e2d3c4b5a",
+        "requestId": "05060708",
+        "issuedAt": 1785340800000,
+        "expiresAt": 4102444800000,
+        "reason": "Vetor de teste assinado"
+      },
+      "signedToken": "EA1-G1.eyJhY3Rpb25JZCI6InRlYWNoZXItYWN0aXZpdHktZGVsZXRlIiwiZXhwaXJlc0F0Ijo0MTAyNDQ0ODAwMDAwLCJncmFudElkIjoidGVzdC1ncmFudC0wMDEiLCJpc3N1ZWRBdCI6MTc4NTM0MDgwMDAwMCwibW9kZSI6IlNJR05FRF9HUkFOVCIsInBsYXRmb3JtSWQiOiJsYWItdmlydHVhbC1kcyIsInByb3RvY29sIjoiRURVQVVUSCIsInJlYXNvbiI6IlZldG9yIGRlIHRlc3RlIGFzc2luYWRvIiwicmVxdWVzdElkIjoiMDUwNjA3MDgiLCJyZXNvdXJjZUlkIjoiYWN0aXZpdHktdGVzdC0wMDEiLCJzZXNzaW9uSWQiOiIwZjFlMmQzYzRiNWEiLCJ2ZXJzaW9uIjoxfQ.R7f5uEFrAqDszzeMegSGGk1EQf-v7ZaqWmjtTXaseQB1n6sRI7JTvRxP2-dO-vdA8r8AZ_6H5T9yB4d8dYpWIA",
+      "expected": true
+    },
+    {
+      "id": "signed-altered",
+      "description": "Token assinado alterado",
+      "signedToken": "EA1-G1.eyJhY3Rpb25JZCI6InRlYWNoZXItYWN0aXZpdHktZGVsZXRlIiwiZXhwaXJlc0F0Ijo0MTAyNDQ0ODAwMDAwLCJncmFudElkIjoidGVzdC1ncmFudC0wMDEiLCJpc3N1ZWRBdCI6MTc4NTM0MDgwMDAwMCwibW9kZSI6IlNJR05FRF9HUkFOVCIsInBsYXRmb3JtSWQiOiJsYWItdmlydHVhbC1kcyIsInByb3RvY29sIjoiRURVQVVUSCIsInJlYXNvbiI6IlZldG9yIGRlIHRlc3RlIGFzc2luYWRvIiwicmVxdWVzdElkIjoiMDUwNjA3MDgiLCJyZXNvdXJjZUlkIjoiYWN0aXZpdHktdGVzdC0wMDEiLCJzZXNzaW9uSWQiOiIwZjFlMmQzYzRiNWEiLCJ2ZXJzaW9uIjoxfQ.R7f5uEFrAqDszzeMegSGGk1EQf-v7ZaqWmjtTXaseQBAn6sRI7JTvRxP2-dO-vdA8r8AZ_6H5T9yB4d8dYpWIA",
+      "expected": false
+    }
+  ]
+}

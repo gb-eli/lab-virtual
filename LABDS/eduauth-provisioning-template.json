@@ -1,0 +1,34 @@
+{
+  "schema": "eduauth-provisioning-template",
+  "schemaVersion": 1,
+  "platformId": "lab-virtual-ds",
+  "requiredKeys": [
+    {
+      "type": "CLASS_HMAC_KEY",
+      "keyId": "lab-virtual-ds-class-01",
+      "required": true
+    },
+    {
+      "type": "SESSION_HMAC_KEY",
+      "keyId": "lab-virtual-ds-session-01",
+      "required": true
+    },
+    {
+      "type": "SIGNING_PUBLIC_KEY",
+      "keyId": "teacher-signing-01",
+      "required": true
+    },
+    {
+      "type": "RECOVERY_PUBLIC_KEY",
+      "keyId": "teacher-recovery-01",
+      "required": false
+    }
+  ],
+  "environment": "development",
+  "productionProvisioned": false,
+  "instructions": [
+    "Substituir somente por pacote assinado gerado pelo EduAuth Professor.",
+    "Nunca inserir chave privada no repositório ou no frontend.",
+    "Executar novamente todos os vetores após o provisionamento."
+  ]
+}

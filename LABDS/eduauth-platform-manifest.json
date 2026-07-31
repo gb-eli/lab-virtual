@@ -1,0 +1,183 @@
+{
+  "schema": "eduauth-platform-manifest",
+  "schemaVersion": 1,
+  "protocolVersion": 1,
+  "platform": {
+    "id": "lab-virtual-ds",
+    "name": "Laboratório Virtual DS",
+    "version": "4.0.0-pages",
+    "repository": "gb-eli/lab-virtual",
+    "origin": "https://gb-eli.github.io/lab-virtual/"
+  },
+  "integration": {
+    "status": "complete-development",
+    "coreVersion": "1.0.0",
+    "offlineSupported": true,
+    "githubPagesSupported": true,
+    "productionProvisioned": false
+  },
+  "requestCode": {
+    "prefix": "EA1",
+    "encoding": "BASE32_CROCKFORD",
+    "checksum": "CRC32C",
+    "caseInsensitive": true,
+    "ignoreSeparators": true
+  },
+  "identifierRegistry": {
+    "platformCode": "01",
+    "classes": {
+      "01": "1ds-manha",
+      "02": "2ds-manha",
+      "03": "3ds-manha",
+      "04": "1adm-manha",
+      "05": "2adm-manha",
+      "06": "1portos-manha",
+      "07": "2ds-noite",
+      "08": "ds-subsequente-noite",
+      "09": "outra-turma"
+    },
+    "subjects": {
+      "01": "desenvolvimento-de-sistemas",
+      "02": "programacao-front-end",
+      "03": "introducao-programacao",
+      "04": "introducao-computacao",
+      "05": "informatica-empresarial",
+      "06": "programacao-ds",
+      "07": "computacao-grafica",
+      "08": "redes-e-comunicacao",
+      "09": "sistemas-operacionais",
+      "10": "outra-disciplina"
+    },
+    "lessons": {
+      "00": "atividade-atual",
+      "01": "aula-01",
+      "02": "aula-02",
+      "03": "aula-03",
+      "04": "aula-04",
+      "05": "aula-05",
+      "06": "aula-06",
+      "07": "aula-07",
+      "08": "aula-08",
+      "09": "aula-09",
+      "10": "aula-10",
+      "11": "aula-11",
+      "12": "aula-12",
+      "13": "aula-13",
+      "14": "aula-14",
+      "15": "aula-15",
+      "16": "aula-16",
+      "17": "aula-17",
+      "18": "aula-18",
+      "19": "aula-19",
+      "20": "aula-20",
+      "21": "aula-21",
+      "22": "aula-22",
+      "23": "aula-23",
+      "24": "aula-24",
+      "25": "aula-25",
+      "26": "aula-26",
+      "27": "aula-27",
+      "28": "aula-28",
+      "29": "aula-29",
+      "30": "aula-30"
+    },
+    "activities": {
+      "01": "atividade-principal",
+      "02": "desafio-principal",
+      "03": "modo-professor",
+      "04": "maquina-virtual-instrutor",
+      "05": "atividade-professor-local"
+    },
+    "actions": {
+      "01": "lesson-start",
+      "02": "challenge-start",
+      "03": "teacher-mode-access",
+      "04": "vm-instructor-access",
+      "05": "teacher-activity-delete"
+    }
+  },
+  "keyConfiguration": {
+    "classKeyId": "lab-virtual-ds-class-01",
+    "sessionKeyId": "lab-virtual-ds-session-01",
+    "signingPublicKeyId": "teacher-signing-01",
+    "recoveryPublicKeyId": "teacher-recovery-01",
+    "environment": "development"
+  },
+  "timePolicy": {
+    "useUtc": true,
+    "classWindowSeconds": 900,
+    "sessionWindowSeconds": 300,
+    "highRiskWindowSeconds": 180,
+    "allowedClockDriftSlots": 1
+  },
+  "contextSources": {
+    "classId": {
+      "source": "runtime",
+      "path": "LABDS.Session.get().studentClass"
+    },
+    "subjectId": {
+      "source": "activity-link-or-default",
+      "path": "URLSearchParams.subjectId"
+    },
+    "lessonId": {
+      "source": "activity-link-or-default",
+      "path": "URLSearchParams.lessonId"
+    },
+    "activityId": {
+      "source": "activity-link-or-integration",
+      "path": "URLSearchParams.activityId"
+    },
+    "profileIdHash": {
+      "source": "runtime-derived",
+      "path": "SHA-256(studentName|studentClass), truncated locally"
+    },
+    "sessionId": {
+      "source": "generated",
+      "storage": "sessionStorage"
+    }
+  },
+  "actions": [
+    "lesson-start",
+    "challenge-start",
+    "teacher-mode-access",
+    "vm-instructor-access",
+    "teacher-activity-delete"
+  ],
+  "storage": {
+    "sessionStore": "sessionStorage",
+    "authorizationStore": "sessionStorage",
+    "auditStore": "IndexedDB via lab storage"
+  },
+  "security": {
+    "maximumAttempts": 5,
+    "progressiveDelay": true,
+    "staticPasswordPresent": false,
+    "staticMasterPasswordPresent": false,
+    "privateKeyPresent": false
+  },
+  "ui": {
+    "publicRequestCode": true,
+    "copyButton": true,
+    "manualEntry": true,
+    "qrOptional": true,
+    "cameraRequired": false,
+    "reducedMotion": true,
+    "keyboardAccessible": true
+  },
+  "compatibility": {
+    "chromeAndroid": "not-tested",
+    "chromeChromebook": "not-tested",
+    "edgeWindows": "not-tested",
+    "offline": "automated-static-test"
+  },
+  "limitations": [
+    "As chaves HMAC atuais são chaves de desenvolvimento publicadas no frontend e não podem ser usadas em atividades reais.",
+    "Aplicações sem backend não impedem inspeção ou alteração do JavaScript por quem controla o navegador.",
+    "Auditoria local não é inviolável e não substitui registro central.",
+    "SIGNED_GRANT e PROFILE_RECOVERY_ENVELOPE possuem núcleo criptográfico, mas a plataforma atual não possui perfil protegido por senha para acionar recuperação."
+  ],
+  "pendingItems": [
+    "Provisionar chaves de produção pelo EduAuth Professor.",
+    "Executar testes físicos em Chrome Android, Chromebook e Edge Windows."
+  ]
+}

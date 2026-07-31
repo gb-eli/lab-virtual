@@ -1,0 +1,23 @@
+LAB VIRTUAL DS V4.0 — RESULTADO DE TESTES
+Data: 31/07/2026
+
+[PASS] Versão: 4.0.0-pages
+[PASS] Ferramentas no catálogo: 51
+[PASS] IDs únicos: 51
+[PASS] Módulos esperados: 42
+[PASS] Módulos registrados: 42
+[PASS] Falhas de registro: 0
+[PASS] JavaScript com sintaxe válida: 85 arquivos
+[PASS] HTML e referências locais: 4 arquivos HTML
+[PASS] JSON e manifestos válidos
+[PASS] Service Worker com núcleo mínimo
+[PASS] Cyber Ops presente e cache isolado
+[PASS] IARA ausente como módulo
+[PASS] Three.js 0.180.0 local: módulo e núcleo presentes
+[PASS] Import real do Three.js local: revisão 180
+[PASS] Import real de startGame: função encontrada
+[PASS] API de armazenamento do VoxelCraft: funções encontradas
+[PASS] HTTP smoke test: portal, bootstrap, índice, VoxelCraft, Three.js e Cyber Ops retornaram 200
+
+[PENDENTE EXTERNO] Teste visual automatizado em Chromium: binário não disponível no ambiente.
+[RECOMENDADO] Executar GUIA_DE_TESTES.md em Chrome/Edge e equipamento escolar antes da publicação definitiva.
