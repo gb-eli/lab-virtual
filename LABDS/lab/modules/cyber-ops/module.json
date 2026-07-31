@@ -1,0 +1,12 @@
+{
+  "id": "cyber-ops",
+  "name": "Cyber Ops — Shadow Grid",
+  "version": "6.1-integrated",
+  "host": "Lab Virtual DS 3.8.0",
+  "entry": "index.html",
+  "isolation": "iframe-sandbox",
+  "load": "on-demand",
+  "weight": "heavy",
+  "serviceWorkerInIntegratedMode": false,
+  "progressBridge": "assets/js/05-labds-bridge.js"
+}

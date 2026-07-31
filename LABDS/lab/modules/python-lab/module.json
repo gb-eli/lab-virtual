@@ -1,0 +1,14 @@
+{
+  "id": "python-lab",
+  "name": "Python",
+  "version": "3.8.0",
+  "weight": "medium",
+  "load": "on-demand",
+  "cache": "runtime",
+  "scripts": [
+    "modules/python-lab/index.js"
+  ],
+  "styles": [],
+  "bundles": [],
+  "timeoutMs": 60000
+}

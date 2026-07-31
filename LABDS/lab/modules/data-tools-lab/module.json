@@ -1,0 +1,13 @@
+{
+  "id": "data-tools-lab",
+  "name": "Data Tools",
+  "version": "3.8.0",
+  "weight": "light",
+  "load": "on-demand",
+  "cache": "runtime",
+  "scripts": [
+    "modules/data-tools-lab/index.js"
+  ],
+  "styles": [],
+  "bundles": []
+}

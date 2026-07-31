@@ -1,0 +1,13 @@
+{
+  "id": "graphics-lab",
+  "name": "Graphics",
+  "version": "3.8.0",
+  "weight": "heavy",
+  "load": "on-demand",
+  "cache": "runtime",
+  "scripts": [
+    "modules/graphics-lab/index.js"
+  ],
+  "styles": [],
+  "bundles": []
+}

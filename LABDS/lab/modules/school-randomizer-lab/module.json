@@ -1,0 +1,13 @@
+{
+  "id": "school-randomizer-lab",
+  "name": "School Randomizer",
+  "version": "3.8.0",
+  "weight": "light",
+  "load": "on-demand",
+  "cache": "runtime",
+  "scripts": [
+    "modules/school-randomizer-lab/index.js"
+  ],
+  "styles": [],
+  "bundles": []
+}

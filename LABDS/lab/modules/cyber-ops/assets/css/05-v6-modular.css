@@ -1,0 +1,147 @@
+/* V6 modular architecture, progressive intelligence and educational safeguards */
+.version-tag {
+  display: inline-flex; margin-left: 8px; padding: 4px 8px; border-radius: 999px;
+  vertical-align: middle; color: var(--module-color); border: 1px solid color-mix(in srgb, var(--module-color) 35%, transparent);
+  background: color-mix(in srgb, var(--module-color) 10%, transparent); font-size: .58rem; letter-spacing: .1em;
+}
+body[data-module="incident-response"] {
+  --module-color: #14dfff;
+  background: radial-gradient(circle at 18% 16%, rgba(20,223,255,.16), transparent 38%), radial-gradient(circle at 84% 8%, rgba(67,116,255,.1), transparent 34%), linear-gradient(180deg,#08111d,#04070d);
+}
+body[data-module="human-intelligence"] {
+  --module-color: #ffc857;
+  background: radial-gradient(circle at 20% 15%, rgba(255,200,87,.13), transparent 38%), radial-gradient(circle at 84% 10%, rgba(255,106,114,.09), transparent 34%), linear-gradient(180deg,#151008,#05070d);
+}
+body[data-module="cryptointel"] {
+  --module-color: #a77bff;
+  background: radial-gradient(circle at 22% 12%, rgba(167,123,255,.16), transparent 40%), radial-gradient(circle at 82% 12%, rgba(255,54,95,.09), transparent 34%), linear-gradient(180deg,#100b1e,#05070d);
+}
+.hq-screen { --theme-primary: var(--module-color); }
+.mission-screen { --theme-primary: var(--phase-color); --theme-secondary: var(--mission-color); }
+.mission-header, .mission-stage, .intel-sidebar {
+  border-color: color-mix(in srgb, var(--phase-color) 24%, var(--line));
+}
+.mission-backdrop {
+  background:
+    radial-gradient(circle at 48% 18%, color-mix(in srgb, var(--phase-color) 16%, transparent), transparent 42%),
+    linear-gradient(rgba(255,255,255,.025) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,.025) 1px, transparent 1px),
+    linear-gradient(180deg, color-mix(in srgb, var(--mission-color) 8%, rgba(5,12,24,.72)), rgba(3,8,16,.94));
+  background-size: auto, 36px 36px, 36px 36px, auto;
+  transition: background .45s ease, filter .25s ease;
+}
+.mission-backdrop::after { background: radial-gradient(ellipse, color-mix(in srgb, var(--phase-color) 13%, transparent), transparent 60%); }
+.tool-window { box-shadow: inset 0 0 48px color-mix(in srgb, var(--phase-color) 7%, transparent); }
+.map-node { border-color: var(--node-color, var(--module-color)); box-shadow: 0 0 0 8px color-mix(in srgb, var(--node-color, var(--module-color)) 8%, transparent), 0 0 22px color-mix(in srgb, var(--node-color, var(--module-color)) 60%, transparent); }
+.map-node::after { color: color-mix(in srgb, var(--node-color, var(--module-color)) 72%, white); }
+
+.module-nav { display: flex; gap: 8px; overflow-x: auto; padding: 2px 0 10px; scrollbar-width: thin; }
+.module-chip {
+  flex: 0 0 min(250px, 82%); display: grid; grid-template-columns: auto 1fr; align-items: center; gap: 10px;
+  text-align: left; padding: 11px 12px; border-radius: 14px; color: var(--text); cursor: pointer;
+  background: rgba(255,255,255,.025); border: 1px solid rgba(255,255,255,.07);
+}
+.module-chip:hover, .module-chip.active { border-color: color-mix(in srgb, var(--module-chip-color) 55%, rgba(255,255,255,.12)); background: color-mix(in srgb, var(--module-chip-color) 9%, rgba(255,255,255,.02)); }
+.module-chip.active { box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--module-chip-color) 24%, transparent); }
+.module-icon, .module-emblem { width: 38px; height: 38px; display: grid; place-items: center; border-radius: 12px; background: color-mix(in srgb, var(--module-chip-color, var(--module-color)) 12%, rgba(255,255,255,.02)); border: 1px solid color-mix(in srgb, var(--module-chip-color, var(--module-color)) 28%, transparent); }
+.module-chip strong { display: block; font-size: .78rem; }
+.module-chip small { display: block; margin-top: 4px; color: var(--muted); font-size: .65rem; }
+.module-brief-heading { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
+.module-brief-heading small { color: var(--module-color); letter-spacing: .12em; font-weight: 900; }
+.module-brief-heading h4 { margin: 3px 0 0; }
+.module-progress { height: 6px; border-radius: 999px; overflow: hidden; background: rgba(255,255,255,.06); margin: 10px 0; }
+.module-progress span { display: block; height: 100%; border-radius: inherit; box-shadow: 0 0 14px color-mix(in srgb, var(--module-color) 55%, transparent); transition: width .35s ease; }
+.simulation-notice { display: grid; gap: 4px; padding: 10px 12px; border-radius: 12px; background: rgba(86,255,176,.045); border: 1px solid rgba(86,255,176,.14); }
+.simulation-notice strong { color: var(--green); font-size: .68rem; letter-spacing: .1em; }
+.simulation-notice span { color: #c8dde8; font-size: .72rem; line-height: 1.45; }
+
+.mission-actions { grid-template-columns: repeat(2,minmax(0,1fr)); }
+.mission-actions .primary-button { grid-column: 1 / -1; }
+.mission-actions button { min-width: 0; padding-inline: 10px; font-size: .76rem; }
+
+.intercept-layout { display: grid; grid-template-columns: minmax(0,.9fr) minmax(0,1.1fr); min-height: 360px; }
+.intercept-console { padding: 20px; border-right: 1px solid rgba(255,255,255,.06); background: radial-gradient(circle at 30% 25%, color-mix(in srgb,var(--phase-color) 10%,transparent), transparent 48%); }
+.intercept-header { display: flex; justify-content: space-between; gap: 12px; color: var(--muted); font-size: .68rem; letter-spacing: .1em; }
+.intercept-header strong { color: var(--phase-color); }
+.intercept-raw, .decoder-input code { display: block; margin: 18px 0; padding: 18px; border-radius: 14px; background: rgba(0,0,0,.32); border: 1px solid color-mix(in srgb,var(--phase-color) 22%,rgba(255,255,255,.06)); color: #ecfbff; font-family: ui-monospace,SFMono-Regular,Consolas,monospace; line-height: 1.7; overflow-wrap: anywhere; }
+.intercept-options { display: grid; gap: 10px; align-content: center; padding: 20px; }
+.signal-bars { display: flex; align-items: center; gap: 4px; height: 74px; padding: 10px 0; }
+.signal-bars i { flex: 1; height: var(--h); min-height: 5px; max-width: 8px; border-radius: 999px; background: linear-gradient(180deg,var(--phase-color),color-mix(in srgb,var(--phase-color) 22%,transparent)); animation: signalPulse 1.5s ease-in-out infinite alternate; }
+.signal-bars i:nth-child(3n) { animation-delay: .18s; }
+.signal-bars.compact { height: 54px; }
+@keyframes signalPulse { to { transform: scaleY(.55); opacity: .55; } }
+.validate-row { gap: 8px; flex-wrap: wrap; }
+
+.support-shell { width: min(650px,calc(100vw - 24px)); }
+.support-character { display: flex; align-items: center; gap: 14px; margin: 10px 0 16px; }
+.support-avatar { width: 68px; height: 68px; display: grid; place-items: center; border-radius: 20px; background: radial-gradient(circle at 35% 30%,rgba(255,255,255,.18),color-mix(in srgb,var(--phase-color) 22%,#08101b)); border: 1px solid color-mix(in srgb,var(--phase-color) 42%,transparent); color: var(--phase-color); font-weight: 900; font-size: 1.15rem; }
+.support-character small { color: var(--phase-color); letter-spacing: .1em; font-weight: 900; }
+.support-character h2 { margin: 4px 0 0; }
+.support-message { font-size: .95rem; }
+.support-context { padding: 16px; border-radius: 14px; background: rgba(255,255,255,.035); border: 1px solid rgba(255,255,255,.07); margin-bottom: 16px; }
+.support-context strong { color: var(--phase-color); }
+.support-context p { margin: 8px 0; }
+.support-context small { color: var(--muted); }
+
+.profile-wide { grid-column: 1 / -1; }
+.badge-wall { display: grid; gap: 9px; }
+.badge-wall > span { margin-bottom: 2px; }
+.badge-wall article { display: grid; grid-template-columns: 42px 1fr; gap: 10px; align-items: center; padding: 9px; border-radius: 11px; background: rgba(255,255,255,.025); border: 1px solid rgba(255,255,255,.055); }
+.badge-wall article b { width: 38px; height: 38px; display: grid; place-items: center; border-radius: 50%; background: rgba(255,200,87,.1); color: #ffe19a; font-size: 1.1rem; }
+.badge-wall article strong, .badge-wall article small { display: block; }
+.badge-wall article small { color: var(--muted); margin-top: 3px; }
+
+.decoder-input span { color: var(--phase-color); font-size: .72rem; letter-spacing: .1em; font-weight: 900; }
+.toolkit-result { margin-top: 14px; padding: 14px; border-radius: 13px; background: rgba(86,255,176,.05); border: 1px solid rgba(86,255,176,.14); }
+.toolkit-result p { margin: 8px 0; }
+.toolkit-result small { color: var(--muted); }
+.analysis-spinner.small { width: 28px; height: 28px; margin: 0 0 10px; }
+.agency-sim { display: grid; gap: 14px; }
+.agency-grid { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 10px; }
+.agency-grid > div { display: flex; justify-content: space-between; gap: 10px; padding: 12px; border-radius: 12px; background: rgba(255,255,255,.025); border: 1px solid rgba(255,255,255,.06); }
+.agency-grid span { color: #d5e7f2; font-size: .75rem; }
+.agency-grid strong { color: var(--muted); font-size: .68rem; }
+
+body.system-disruption .mission-stage { animation: disruption .16s steps(2,end) 6; }
+body.exposure-event .mission-stage::after { content:"ROTA EXPOSTA"; position:absolute; inset:0; z-index:3; display:grid; place-items:center; background:rgba(255,30,72,.08); color:#ff9bad; font-size:clamp(1.4rem,5vw,3rem); letter-spacing:.18em; font-weight:900; pointer-events:none; }
+@keyframes disruption { 0%,100%{transform:translateX(0);filter:none} 35%{transform:translateX(-2px);filter:hue-rotate(25deg)} 70%{transform:translateX(2px);filter:hue-rotate(-25deg)} }
+.critical-flash .mission-stage { box-shadow: 0 0 0 1px rgba(255,77,112,.35), 0 0 70px rgba(255,77,112,.18); }
+
+@media (max-width: 720px) {
+  .version-tag { display: none; }
+  .module-chip { flex-basis: 86%; }
+  .intercept-layout { grid-template-columns: 1fr; }
+  .intercept-console { border-right: 0; border-bottom: 1px solid rgba(255,255,255,.06); }
+  .mission-actions { grid-template-columns: 1fr 1fr; }
+  .agency-grid { grid-template-columns: 1fr; }
+  .support-shell { padding: 20px 16px; }
+}
+
+
+/* V6.1 final visual QA fixes */
+.mission-card,
+.mission-card:disabled,
+.mission-card.locked { color: var(--text); }
+.map-node.other-module { opacity: .42 !important; filter: saturate(.45); animation: none; }
+.map-node.other-module::after { display: none; }
+.map-node.active-module { z-index: 2; }
+.map-node.active-module::after { display: block; }
+@media (max-width: 720px) {
+  .map-node.active-module::after { top: 21px; font-size: .54rem; }
+}
+
+
+/* Integração Lab Virtual DS — iframe interno e sessão isolada */
+body.labds-embedded {
+  min-height: 100dvh;
+  overscroll-behavior: contain;
+}
+body.labds-embedded .screen { min-height: 100dvh; }
+body.labds-embedded .topbar { top: max(6px, env(safe-area-inset-top)); }
+body.labds-embedded .boot-panel { margin-block: 12px; }
+body.labds-embedded .login-screen { background: transparent; }
+@media (max-width: 720px) {
+  body.labds-embedded .topbar { border-radius: 0 0 18px 18px; }
+  body.labds-embedded .hq-screen,
+  body.labds-embedded .mission-screen { padding-top: max(4px, env(safe-area-inset-top)); }
+}

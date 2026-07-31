@@ -1,0 +1,356 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+  <meta name="theme-color" content="#05070d" />
+  <meta name="description" content="Cyber Ops: mini missões narrativas de investigação e defesa cibernética." />
+  <link rel="manifest" href="manifest.webmanifest" />
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="assets/css/01-base.css" />
+  <link rel="stylesheet" href="assets/css/02-hq-mission.css" />
+  <link rel="stylesheet" href="assets/css/03-cinematic.css" />
+  <link rel="stylesheet" href="assets/css/04-toolkit.css" />
+  <link rel="stylesheet" href="assets/css/05-v6-modular.css" />
+  <title>Cyber Ops — Shadow Grid v6.1</title>
+</head>
+<body data-theme="recruta" data-integration="labds-ready">
+  <canvas id="ambientCanvas" aria-hidden="true"></canvas>
+  <div class="noise"></div>
+  <div class="scanline"></div>
+
+  <div id="app" class="app-shell">
+    <section id="bootScreen" class="screen boot-screen active" aria-labelledby="bootTitle">
+      <div class="boot-panel glass-panel">
+        <div class="agency-mark" aria-hidden="true">
+          <span class="agency-ring ring-a"></span>
+          <span class="agency-ring ring-b"></span>
+          <span class="agency-core">CO</span>
+        </div>
+        <p class="eyebrow">CENTRAL DE OPERAÇÕES DIGITAIS</p>
+        <h1 id="bootTitle">CYBER OPS // SHADOW GRID</h1>
+        <p class="boot-copy">Mini missões de inteligência, investigação cibernética e defesa de incidentes.</p>
+        <div id="bootLog" class="boot-log" role="status" aria-live="polite"></div>
+        <div class="progress-track"><span id="bootProgress"></span></div>
+        <button id="skipBootBtn" class="text-button" type="button">Pular inicialização</button>
+      </div>
+    </section>
+
+    <section id="loginScreen" class="screen login-screen" aria-labelledby="loginTitle">
+      <div class="login-layout">
+        <article class="brief-card glass-panel">
+          <span class="status-chip status-live">AMBIENTE SIMULADO E SEGURO</span>
+          <p class="eyebrow">ACESSO RESTRITO</p>
+          <h2 id="loginTitle">Credencial do agente</h2>
+          <p>Entre com seu nome e um codinome. O progresso fica salvo apenas neste dispositivo. O módulo foi pensado para mini missões rápidas, com narrativa, risco, cronômetro e investigação realista.</p>
+          <form id="agentForm" class="agent-form">
+            <label for="agentName">Nome do aluno</label>
+            <input id="agentName" name="agentName" maxlength="50" autocomplete="name" placeholder="Ex.: Gabriel Alves" required />
+            <label for="agentCode">Codinome</label>
+            <input id="agentCode" name="agentCode" maxlength="24" autocomplete="off" placeholder="Ex.: Eclipse 07" required />
+            <label for="agentClass">Turma</label>
+            <input id="agentClass" name="agentClass" maxlength="30" autocomplete="off" placeholder="Ex.: 2º DS" />
+            <button class="primary-button" type="submit"><span>Autenticar</span><span aria-hidden="true">→</span></button>
+          </form>
+        </article>
+
+        <aside class="radar-card glass-panel" aria-label="Painel de monitoramento">
+          <div class="radar"></div>
+          <div class="intel-wall">
+            <div class="intel-card mini-stat"><span>SETOR</span><strong>ATLÂNTICO SUL</strong></div>
+            <div class="intel-card mini-stat"><span>INCIDENTES</span><strong>06 ATIVOS</strong></div>
+            <div class="intel-card mini-stat"><span>STATUS</span><strong>VIGILÂNCIA</strong></div>
+          </div>
+          <div class="intel-stream" id="loginStream"></div>
+        </aside>
+      </div>
+    </section>
+
+    <section id="hqScreen" class="screen hq-screen" aria-labelledby="hqTitle">
+      <header class="topbar glass-panel">
+        <div>
+          <p class="eyebrow">SALA DE OPERAÇÕES</p>
+          <h2 id="hqTitle">Cyber Ops — Shadow Grid <span class="version-tag">v6.1 modular</span></h2>
+        </div>
+        <div class="topbar-actions">
+          <button id="honorsBtn" class="icon-button hidden" type="button" aria-label="Abrir mural de honras">🏅</button>
+          <button id="toolkitBtn" class="icon-button" type="button" aria-label="Abrir ferramentas táticas">◈</button>
+          <button id="profileBtn" class="icon-button" type="button" aria-label="Abrir perfil">AG</button>
+          <button id="tutorialBtn" class="icon-button" type="button" aria-label="Abrir tutorial">?</button>
+          <button id="settingsBtn" class="icon-button" type="button" aria-label="Abrir configurações">⚙</button>
+        </div>
+      </header>
+
+      <main class="hq-grid">
+        <section class="mission-map glass-panel" aria-label="Mapa tático">
+          <div class="map-header">
+            <div>
+              <span class="status-chip status-live">REDE OPERACIONAL</span>
+              <h3>Mapa tático global</h3>
+            </div>
+            <div class="threat-meter" id="hqThreatMeter">
+              <span>POSTURA DEFENSIVA</span>
+              <strong id="hqThreatLabel">EQUILIBRADA</strong>
+              <div><i id="hqThreatBar"></i></div>
+            </div>
+          </div>
+          <div id="worldMap" class="world-map">
+            <svg viewBox="0 0 1000 520" preserveAspectRatio="none">
+              <defs>
+                <linearGradient id="routeGrad" x1="0" x2="1">
+                  <stop offset="0" stop-color="#0ff2ff" stop-opacity=".05"></stop>
+                  <stop offset=".5" stop-color="#0ff2ff" stop-opacity=".6"></stop>
+                  <stop offset="1" stop-color="#0ff2ff" stop-opacity=".05"></stop>
+                </linearGradient>
+              </defs>
+              <path class="map-shape" d="M58 198L140 123l140 17 71-47 120 15 84 48 107-18 77 61 108 3 94 69-17 103-99 30-104-23-102 58-103-26-69-61-121 19-92-45-75-6-49-79z"></path>
+              <path class="map-route route-a" d="M126 276C226 204 350 160 480 230S720 258 872 162"></path>
+              <path class="map-route route-b" d="M188 376C314 272 428 392 594 302S742 132 878 204"></path>
+              <path class="map-route route-c" d="M110 216C232 270 365 215 477 173S672 116 848 281"></path>
+            </svg>
+            <div id="mapNodes" class="map-nodes"></div>
+            <div class="map-scan"></div>
+          </div>
+          <div class="map-footer">
+            <div><span>AGENTE</span><strong id="hqAgentCode">—</strong></div>
+            <div><span>MISSÕES CONCLUÍDAS</span><strong id="completedCount">0/0</strong></div>
+            <div><span>PONTUAÇÃO TOTAL</span><strong id="totalScore">0</strong></div>
+            <div><span>ÚLTIMO ALERTA</span><strong id="lastAlert">NENHUM</strong></div>
+          </div>
+        </section>
+
+        <aside class="mission-list-panel glass-panel">
+          <div class="panel-title-row">
+            <div>
+              <p class="eyebrow">ARQUIVOS CLASSIFICADOS</p>
+              <h3>Operações disponíveis</h3>
+            </div>
+            <select id="difficultySelect" aria-label="Selecionar dificuldade">
+              <option value="recruta">Recruta</option>
+              <option value="agente">Agente</option>
+              <option value="especialista">Especialista</option>
+            </select>
+          </div>
+          <div class="difficulty-brief" id="difficultyBrief"></div>
+          <div id="moduleNav" class="module-nav" aria-label="Módulos de missão"></div>
+          <div id="campaignBrief" class="campaign-brief"></div>
+          <div id="missionList" class="mission-list"></div>
+        </aside>
+      </main>
+    </section>
+
+    <section id="missionScreen" class="screen mission-screen" aria-labelledby="missionTitle">
+      <header class="mission-header glass-panel">
+        <button id="exitMissionBtn" class="icon-button" type="button" aria-label="Sair da missão">←</button>
+        <div class="mission-heading">
+          <p id="missionClassification" class="eyebrow">ARQUIVO CONFIDENCIAL</p>
+          <h2 id="missionTitle">Operação</h2>
+          <div class="dynamic-status"><span id="missionLocation">SECTOR 04</span><span id="missionCodename">OP-000</span></div>
+        </div>
+        <div class="mission-status-strip">
+          <span><small>FASE</small><strong id="stepCounter">1/4</strong></span>
+          <span><small>TEMPO</small><strong id="missionTimer">00:00</strong></span>
+          <span><small>AMEAÇA</small><strong id="threatValue">24%</strong></span>
+          <span><small>PREJUÍZO</small><strong id="lossValue">R$ 0</strong></span>
+          <span><small>PONTOS</small><strong id="missionScore">0</strong></span>
+        </div>
+      </header>
+
+      <main class="mission-layout">
+        <section class="mission-stage glass-panel">
+          <div id="missionBackdrop" class="mission-backdrop"></div>
+          <div class="overlay-banner hidden" id="eventBanner"></div>
+          <div id="missionContent" class="mission-content" aria-live="polite"></div>
+        </section>
+
+        <aside class="intel-sidebar glass-panel" id="intelSidebar">
+          <div class="sidebar-toggle-row">
+            <strong>PAINEL TÁTICO</strong>
+            <button id="sidebarToggle" class="text-button" type="button">Ocultar</button>
+          </div>
+          <div class="intel-tabs" role="tablist" aria-label="Painéis da missão">
+            <button class="intel-tab active" data-tab="objective" role="tab" aria-selected="true">Objetivo</button>
+            <button class="intel-tab" data-tab="evidence" role="tab" aria-selected="false">Evidências</button>
+            <button class="intel-tab" data-tab="comms" role="tab" aria-selected="false">Comms</button>
+          </div>
+          <div id="objectivePanel" class="intel-panel active" role="tabpanel"></div>
+          <div id="evidencePanel" class="intel-panel" role="tabpanel"></div>
+          <div id="commsPanel" class="intel-panel" role="tabpanel"></div>
+          <div class="mission-actions">
+            <button id="missionToolkitBtn" class="secondary-button" type="button">Ferramentas</button>
+            <button id="commanderBtn" class="secondary-button" type="button">Falar com a central</button>
+            <button id="intelSearchBtn" class="secondary-button" type="button">Pesquisa tática</button>
+            <button id="hintBtn" class="secondary-button" type="button">Solicitar pista</button>
+            <button id="continueBtn" class="primary-button hidden" type="button">Continuar →</button>
+          </div>
+        </aside>
+      </main>
+    </section>
+  </div>
+
+  <dialog id="briefingDialog" class="game-dialog">
+    <form method="dialog" class="dialog-shell glass-panel">
+      <button class="dialog-close icon-button" value="cancel" aria-label="Fechar">×</button>
+      <div class="classified-stamp">CONFIDENCIAL</div>
+      <p id="briefingAgency" class="eyebrow">CENTRAL DE INTELIGÊNCIA</p>
+      <h2 id="briefingTitle">Operação</h2>
+      <p id="briefingText"></p>
+      <div id="briefingMeta" class="briefing-meta"></div>
+      <div class="dialog-actions">
+        <button id="startMissionBtn" class="primary-button" type="button">Iniciar operação</button>
+      </div>
+    </form>
+  </dialog>
+
+  <dialog id="resultDialog" class="game-dialog result-dialog">
+    <div class="dialog-shell glass-panel">
+      <div id="resultSeal" class="result-seal">✓</div>
+      <p class="eyebrow" id="resultEyebrow">RELATÓRIO DA OPERAÇÃO</p>
+      <h2 id="resultTitle">Missão concluída</h2>
+      <p id="resultMessage"></p>
+      <div id="resultStats" class="result-stats"></div>
+      <div class="dialog-actions wrap-actions">
+        <button id="retryMissionBtn" class="secondary-button" type="button">Repetir missão</button>
+        <button id="exportReportBtn" class="secondary-button" type="button">Exportar evidência</button>
+        <button id="openClassroomBtn" class="secondary-button" type="button">Abrir Google Classroom</button>
+        <button id="returnHqBtn" class="primary-button" type="button">Voltar à central</button>
+      </div>
+    </div>
+  </dialog>
+
+  <dialog id="settingsDialog" class="game-dialog">
+    <form method="dialog" class="dialog-shell glass-panel">
+      <button class="dialog-close icon-button" value="cancel" aria-label="Fechar">×</button>
+      <p class="eyebrow">CONFIGURAÇÕES</p>
+      <h2>Ajustes do laboratório</h2>
+      <div class="settings-grid">
+        <label class="toggle-row"><span>Som</span><input id="soundToggle" type="checkbox" checked /></label>
+        <label class="toggle-row"><span>Reduzir animações</span><input id="motionToggle" type="checkbox" /></label>
+      </div>
+      <label class="field-row" for="classroomUrl">
+        <span>Link do Google Classroom</span>
+        <input id="classroomUrl" type="url" placeholder="https://classroom.google.com/" />
+      </label>
+      <div class="dialog-actions">
+        <button id="saveSettingsBtn" class="primary-button" type="button">Salvar configurações</button>
+      </div>
+    </form>
+  </dialog>
+
+  <dialog id="profileDialog" class="game-dialog profile-dialog">
+    <div class="dialog-shell glass-panel">
+      <button id="closeProfileBtn" class="dialog-close icon-button" type="button" aria-label="Fechar">×</button>
+      <p class="eyebrow">DOSSIÊ DO AGENTE</p>
+      <h2 id="profileCode">—</h2>
+      <div id="profileDetails" class="profile-details"></div>
+      <div class="dialog-actions wrap-actions">
+        <button id="exportAllBtn" class="secondary-button" type="button">Exportar histórico</button>
+        <button id="resetProgressBtn" class="danger-button" type="button">Redefinir progresso</button>
+      </div>
+    </div>
+  </dialog>
+
+
+  <dialog id="tutorialDialog" class="game-dialog tutorial-dialog">
+    <div class="dialog-shell glass-panel">
+      <button id="closeTutorialBtn" class="dialog-close icon-button" type="button" aria-label="Fechar tutorial">×</button>
+      <p class="eyebrow">TUTORIAL GUIADO</p>
+      <h2 id="tutorialTitle">Boas-vindas ao Shadow Grid</h2>
+      <p id="tutorialText">Aprenda o fluxo básico antes de iniciar as operações.</p>
+      <div id="tutorialVisual" class="tutorial-visual">
+        <div class="tutorial-pulse"></div>
+        <div class="tutorial-radar"></div>
+      </div>
+      <div id="tutorialSteps" class="tutorial-steps"></div>
+      <div class="dialog-actions wrap-actions">
+        <button id="tutorialPrevBtn" class="secondary-button" type="button">← Anterior</button>
+        <button id="tutorialNextBtn" class="primary-button" type="button">Próximo →</button>
+      </div>
+    </div>
+  </dialog>
+
+
+  <dialog id="cutsceneDialog" class="game-dialog cutscene-dialog">
+    <div class="cutscene-shell">
+      <div id="cutsceneBackdrop" class="cutscene-backdrop"></div>
+      <div class="cutscene-scan"></div>
+      <div class="cutscene-ui">
+        <div class="cutscene-topline">
+          <span id="cutsceneLabel">TRANSMISSÃO CRIPTOGRAFADA</span>
+          <button id="skipCutsceneBtn" class="text-button" type="button">Pular cena</button>
+        </div>
+        <div class="cutscene-character">
+          <div id="cutsceneAvatar" class="cutscene-avatar">CO</div>
+          <div>
+            <small id="cutsceneFaction">CYBER OPS</small>
+            <h2 id="cutsceneSpeaker">Comandante</h2>
+          </div>
+        </div>
+        <p id="cutsceneText" class="cutscene-text"></p>
+        <div id="cutsceneProgress" class="cutscene-progress"></div>
+        <div class="dialog-actions">
+          <button id="nextCutsceneBtn" class="primary-button" type="button">Continuar →</button>
+        </div>
+      </div>
+    </div>
+  </dialog>
+
+  <dialog id="honorsDialog" class="game-dialog honors-dialog">
+    <div class="dialog-shell glass-panel honors-shell">
+      <div class="honors-rays"></div>
+      <p class="eyebrow">CERIMÔNIA DE HONRA CYBER OPS</p>
+      <h2 id="honorsName">Agente</h2>
+      <p id="honorsSubtitle">Mural de emblemas e cargos conquistados.</p>
+      <div id="honorsAvatar" class="honors-avatar">AG</div>
+      <div id="honorsMedals" class="honors-medals"></div>
+      <div id="honorsTitles" class="honors-titles"></div>
+      <p id="honorsMessage" class="honors-message"></p>
+      <div class="dialog-actions wrap-actions">
+        <button id="exportHonorsBtn" class="secondary-button" type="button">Exportar certificado</button>
+        <button id="closeHonorsBtn" class="primary-button" type="button">Retornar à central</button>
+      </div>
+    </div>
+  </dialog>
+
+  <dialog id="toolkitDialog" class="game-dialog toolkit-dialog">
+    <div class="dialog-shell glass-panel toolkit-shell">
+      <button id="closeToolkitBtn" class="dialog-close icon-button" type="button" aria-label="Fechar ferramentas">×</button>
+      <p class="eyebrow">FERRAMENTAS TÁTICAS IMERSIVAS</p>
+      <h2 id="toolkitTitle">Cyber Deck de Operações</h2>
+      <p id="toolkitSubtitle">Simuladores visuais para análise de computadores, redes, acessos, credenciais e rastreamento.</p>
+      <div class="toolkit-topline">
+        <div id="toolkitSceneInfo" class="scene-badge">CENÁRIO: GLOBAL</div>
+        <div class="toolkit-loader"><i></i><i></i><i></i></div>
+      </div>
+      <div id="toolkitTabs" class="toolkit-tabs"></div>
+      <div id="toolkitContent" class="toolkit-content"></div>
+    </div>
+  </dialog>
+
+  <dialog id="supportDialog" class="game-dialog support-dialog">
+    <div class="dialog-shell glass-panel support-shell">
+      <button id="closeSupportBtn" class="dialog-close icon-button" type="button" aria-label="Fechar comunicação">×</button>
+      <p class="eyebrow">CANAL DE APOIO CRIPTOGRAFADO</p>
+      <div class="support-character">
+        <div id="supportAvatar" class="support-avatar">CO</div>
+        <div><small id="supportFaction">CYBER OPS</small><h2 id="supportName">Central de Operações</h2></div>
+      </div>
+      <p id="supportMessage" class="support-message"></p>
+      <div id="supportContext" class="support-context"></div>
+      <div class="dialog-actions wrap-actions">
+        <button id="requestAnalysisBtn" class="secondary-button" type="button">Pedir análise contextual</button>
+        <button id="closeSupportActionBtn" class="primary-button" type="button">Retornar à missão</button>
+      </div>
+    </div>
+  </dialog>
+
+  <div id="toastRegion" class="toast-region" aria-live="polite" aria-atomic="true"></div>
+
+    <script src="assets/js/01-data.js"></script>
+  <script src="assets/js/02-core.js"></script>
+  <script src="assets/js/03-mission-engine.js"></script>
+  <script src="assets/js/04-toolkit-export.js"></script>
+  <script src="assets/js/05-labds-bridge.js"></script>
+  <script src="assets/js/05-bootstrap.js"></script>
+</body>
+</html>

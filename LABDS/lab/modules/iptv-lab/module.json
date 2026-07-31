@@ -1,0 +1,13 @@
+{
+  "id": "iptv-lab",
+  "name": "Iptv",
+  "version": "3.8.0",
+  "weight": "medium",
+  "load": "on-demand",
+  "cache": "runtime",
+  "scripts": [
+    "modules/iptv-lab/index.js"
+  ],
+  "styles": [],
+  "bundles": []
+}
