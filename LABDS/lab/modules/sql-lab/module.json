@@ -1,0 +1,14 @@
+{
+  "id": "sql-lab",
+  "name": "Sql",
+  "version": "3.8.0",
+  "weight": "medium",
+  "load": "on-demand",
+  "cache": "runtime",
+  "scripts": [
+    "modules/sql-lab/index.js"
+  ],
+  "styles": [],
+  "bundles": [],
+  "timeoutMs": 60000
+}

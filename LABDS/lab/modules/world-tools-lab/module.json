@@ -1,0 +1,13 @@
+{
+  "id": "world-tools-lab",
+  "name": "World Tools",
+  "version": "3.8.0",
+  "weight": "heavy",
+  "load": "on-demand",
+  "cache": "runtime",
+  "scripts": [
+    "modules/world-tools-lab/index.js"
+  ],
+  "styles": [],
+  "bundles": []
+}

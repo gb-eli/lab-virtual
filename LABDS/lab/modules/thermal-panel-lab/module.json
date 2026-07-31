@@ -1,0 +1,13 @@
+{
+  "id": "thermal-panel-lab",
+  "name": "Thermal Panel",
+  "version": "3.8.0",
+  "weight": "heavy",
+  "load": "on-demand",
+  "cache": "runtime",
+  "scripts": [
+    "modules/thermal-panel-lab/index.js"
+  ],
+  "styles": [],
+  "bundles": []
+}
