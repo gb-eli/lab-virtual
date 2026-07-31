@@ -1,0 +1,13 @@
+{
+  "id": "fintech-lab",
+  "name": "Fintech",
+  "version": "3.8.0",
+  "weight": "medium",
+  "load": "on-demand",
+  "cache": "runtime",
+  "scripts": [
+    "modules/fintech-lab/index.js"
+  ],
+  "styles": [],
+  "bundles": []
+}

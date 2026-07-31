@@ -1,0 +1,13 @@
+{
+  "id": "device-lab",
+  "name": "Device",
+  "version": "3.8.0",
+  "weight": "medium",
+  "load": "on-demand",
+  "cache": "runtime",
+  "scripts": [
+    "modules/device-lab/index.js"
+  ],
+  "styles": [],
+  "bundles": []
+}

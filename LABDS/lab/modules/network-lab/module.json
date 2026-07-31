@@ -1,0 +1,15 @@
+{
+  "id": "network-lab",
+  "name": "Network",
+  "version": "3.8.0",
+  "weight": "medium",
+  "load": "on-demand",
+  "cache": "runtime",
+  "scripts": [
+    "modules/network-lab/index.js"
+  ],
+  "styles": [],
+  "bundles": [
+    "network"
+  ]
+}

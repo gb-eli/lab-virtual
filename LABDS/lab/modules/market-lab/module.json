@@ -1,0 +1,13 @@
+{
+  "id": "market-lab",
+  "name": "Market",
+  "version": "3.8.0",
+  "weight": "light",
+  "load": "on-demand",
+  "cache": "runtime",
+  "scripts": [
+    "modules/market-lab/index.js"
+  ],
+  "styles": [],
+  "bundles": []
+}

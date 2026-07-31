@@ -1,0 +1,13 @@
+{
+  "id": "display-media-lab",
+  "name": "Display Media",
+  "version": "3.8.0",
+  "weight": "heavy",
+  "load": "on-demand",
+  "cache": "runtime",
+  "scripts": [
+    "modules/display-media-lab/index.js"
+  ],
+  "styles": [],
+  "bundles": []
+}

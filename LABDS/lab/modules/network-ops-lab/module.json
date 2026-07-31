@@ -1,0 +1,13 @@
+{
+  "id": "network-ops-lab",
+  "name": "Network Ops",
+  "version": "3.8.0",
+  "weight": "medium",
+  "load": "on-demand",
+  "cache": "runtime",
+  "scripts": [
+    "modules/network-ops-lab/index.js"
+  ],
+  "styles": [],
+  "bundles": []
+}

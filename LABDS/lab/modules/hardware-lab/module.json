@@ -1,0 +1,13 @@
+{
+  "id": "hardware-lab",
+  "name": "Hardware",
+  "version": "3.8.0",
+  "weight": "medium",
+  "load": "on-demand",
+  "cache": "runtime",
+  "scripts": [
+    "modules/hardware-lab/index.js"
+  ],
+  "styles": [],
+  "bundles": []
+}

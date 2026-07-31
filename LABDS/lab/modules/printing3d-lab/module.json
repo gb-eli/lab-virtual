@@ -1,0 +1,13 @@
+{
+  "id": "printing3d-lab",
+  "name": "Printing3D",
+  "version": "3.8.0",
+  "weight": "medium",
+  "load": "on-demand",
+  "cache": "runtime",
+  "scripts": [
+    "modules/printing3d-lab/index.js"
+  ],
+  "styles": [],
+  "bundles": []
+}

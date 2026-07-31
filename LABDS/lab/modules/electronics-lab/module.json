@@ -1,0 +1,13 @@
+{
+  "id": "electronics-lab",
+  "name": "Electronics",
+  "version": "3.8.0",
+  "weight": "medium",
+  "load": "on-demand",
+  "cache": "runtime",
+  "scripts": [
+    "modules/electronics-lab/index.js"
+  ],
+  "styles": [],
+  "bundles": []
+}

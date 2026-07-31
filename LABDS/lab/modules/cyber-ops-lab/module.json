@@ -1,0 +1,15 @@
+{
+  "id": "cyber-ops-lab",
+  "name": "Cyber Ops — Shadow Grid",
+  "version": "6.1-integrated",
+  "weight": "heavy",
+  "load": "on-demand",
+  "cache": "runtime",
+  "scripts": [
+    "modules/cyber-ops-lab/index.js"
+  ],
+  "styles": [],
+  "bundles": [],
+  "timeoutMs": 60000,
+  "isolated": true
+}

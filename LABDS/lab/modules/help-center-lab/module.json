@@ -1,0 +1,13 @@
+{
+  "id": "help-center-lab",
+  "name": "Help Center",
+  "version": "3.8.0",
+  "weight": "light",
+  "load": "on-demand",
+  "cache": "runtime",
+  "scripts": [
+    "modules/help-center-lab/index.js"
+  ],
+  "styles": [],
+  "bundles": []
+}

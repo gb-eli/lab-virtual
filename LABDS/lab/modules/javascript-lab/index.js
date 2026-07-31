@@ -1,0 +1,34 @@
+'use strict';
+
+(function(){
+  window.LABDS_LABS=window.LABDS_LABS||{};
+  let root=null,ctx=null,state=null,worker=null,running=false,runStarted=0,runTimer=null,runToken=0;
+  const STORAGE_KEY='lab.javascript.state';
+  const defaults={schemaVersion:1,code:`const tecnologias = ["HTML", "CSS", "JavaScript"];
+
+for (const tecnologia of tecnologias) {
+  console.log("Praticando:", tecnologia);
+}
+
+const nome = prompt("Digite seu nome:");
+console.log("Olá, " + nome + "!");`,stdin:'Gabriel',logs:[]};
+  const $=selector=>root?.querySelector(selector);
+  function log(text,level='log'){state.logs.push({time:new Date().toLocaleTimeString('pt-BR'),text:String(text??'').slice(0,20000),level});state.logs=state.logs.slice(-300);renderConsole();}
+  function renderConsole(){const host=$('#jsConsole');if(!host)return;host.textContent='';if(!state.logs.length){const empty=document.createElement('div');empty.className='muted-copy';empty.textContent='Execute o código para ver a saída.';host.appendChild(empty);return;}state.logs.forEach(item=>{const row=document.createElement('div');row.className=`code-log ${item.level}`;const time=document.createElement('span');time.textContent=item.time;row.append(time,document.createTextNode(item.text));host.appendChild(row);});host.scrollTop=host.scrollHeight;}
+  function setRunning(value,label=value?'executando':'pronto',tone=value?'busy':'success'){running=value;$('#jsRun').disabled=value;$('#jsStop').disabled=!value;$('#jsStatus').textContent=label;$('#jsStatus').dataset.tone=tone;}
+  function cleanup(){clearTimeout(runTimer);runTimer=null;if(worker){worker.terminate();worker=null;}}
+  function run(){
+    if(running)return;state.code=$('#jsCode').value;state.stdin=$('#jsStdin').value;if(state.code.length>(window.LABDS.SECURITY_LIMITS?.codeBytes||200000)){ctx.toast('O código excede o limite de 200 KB.','warning');return;}if(state.stdin.length>20000){ctx.toast('A entrada padrão excede 20 KB.','warning');return;}
+    runStarted=performance.now();state.logs=[];renderConsole();runToken++;const token=runToken;worker=new Worker('js/workers/javascript-runner.js');setRunning(true);runTimer=setTimeout(()=>{if(running&&token===runToken){log(`Execução interrompida após ${(window.LABDS.SECURITY_LIMITS?.javascriptTimeoutMs||8000)/1000} segundos.`,'warning');stop('timeout');}},window.LABDS.SECURITY_LIMITS?.javascriptTimeoutMs||8000);
+    worker.onmessage=event=>{if(token!==runToken)return;const data=event.data||{},type=data.type,payload=data.payload||{};if(type==='console')log(payload.text,payload.level);else if(type==='error'){log(`${payload.name||'Error'}: ${payload.message}`,'error');if(payload.stack)log(payload.stack.split('\n').slice(0,6).join('\n'),'dim');}else if(type==='done'){cleanup();setRunning(false,payload.ok?'concluído':'concluído com erro',payload.ok?'success':'error');ctx.storage.set(STORAGE_KEY,state);const stdin=/senha|password/i.test(state.code)?'[entrada omitida por possível campo de senha]':state.stdin;ctx.logEvent({eventType:'code_execution',action:'Código JavaScript executado',input:state.code,output:state.logs.map(item=>item.text).join('\n'),status:payload.ok?'success':'error',context:{language:'JavaScript',file:'main.js',stdin,durationMs:Math.round(performance.now()-runStarted),isolated:'Web Worker',limits:payload.metrics||{}}});}};
+    worker.onerror=event=>{log(`Erro do Worker: ${event.message}`,'error');stop('worker-error');};worker.postMessage({type:'run',code:state.code,stdin:state.stdin.split(/\r?\n/)});
+  }
+  function stop(reason='user'){
+    const wasRunning=running;runToken++;cleanup();if(wasRunning){log(reason==='timeout'?'Worker encerrado pelo watchdog.':'Execução interrompida.','warning');ctx?.logEvent({eventType:'code_execution',action:'Execução JavaScript interrompida',input:state?.code||'',output:state?.logs?.map(item=>item.text).join('\n')||'',status:'interrupted',context:{language:'JavaScript',file:'main.js',reason,durationMs:Math.round(performance.now()-runStarted)}});}if(root)setRunning(false,'interrompido','warning');
+  }
+  async function mount(host,context){root=host;ctx=context;state={...defaults,...(await ctx.storage.get(STORAGE_KEY,defaults)),logs:[]};root.innerHTML='<div class="split-view code-lab"><section class="resizable-panel"><div class="panel-toolbar"><div class="tabs"><button class="tab-btn active" type="button">main.js</button></div><div class="button-row"><button id="jsRun" class="btn primary" type="button">Executar</button><button id="jsStop" class="btn secondary" type="button" disabled>Parar</button><button id="jsRestore" class="btn subtle" type="button">Restaurar exemplo</button></div></div><textarea id="jsCode" class="code-editor" spellcheck="false" aria-label="Código JavaScript"></textarea></section><section class="resizable-panel"><div class="panel-toolbar"><strong>Console isolado</strong><span id="jsStatus" data-tone="success">pronto</span></div><div class="stdin-box"><label>Entrada padrão — uma linha para cada <code>prompt()</code><textarea id="jsStdin" rows="4" aria-label="Entrada padrão JavaScript"></textarea></label></div><div class="state-card info"><p>Limites: 200 KB de código, 8 segundos, 350 mensagens e 200 KB de saída. Rede, novos Workers e importações externas são bloqueados.</p></div><div id="jsConsole" class="console-card code-console"></div></section></div>';$('#jsCode').value=state.code;$('#jsStdin').value=state.stdin;$('#jsRun').addEventListener('click',run);$('#jsStop').addEventListener('click',()=>stop('user'));$('#jsRestore').addEventListener('click',()=>{if(confirm('Restaurar o exemplo inicial?')){$('#jsCode').value=defaults.code;$('#jsStdin').value=defaults.stdin;}});$('#jsCode').addEventListener('keydown',event=>{if(event.key==='Tab'){event.preventDefault();event.target.setRangeText('  ',event.target.selectionStart,event.target.selectionEnd,'end');}if((event.ctrlKey||event.metaKey)&&event.key==='Enter'){event.preventDefault();run();}});renderConsole();}
+  function exportPayload(){const code=$('#jsCode')?.value||state.code;return{text:['AMBIENTE JAVASCRIPT',`Exportado em: ${new Date().toLocaleString('pt-BR')}`,'','===== CÓDIGO =====',code,'','===== CONSOLE =====',...state.logs.map(item=>`[${item.time}] ${item.text}`)].join('\n'),native:code,backup:{schemaVersion:1,code,stdin:$('#jsStdin')?.value||state.stdin},meta:[{label:'Execução',value:'Web Worker educacional'},{label:'Watchdog',value:'8 segundos'}]};}
+  function help(){return '<p>O JavaScript executa em Web Worker separado. Rede, importações externas, novos Workers e comunicação direta com a página são bloqueados. O isolamento reduz riscos, mas não substitui um sandbox de servidor para código hostil.</p>';}
+  async function unmount(){stop('unmount');if(ctx&&root){state.code=$('#jsCode').value;state.stdin=$('#jsStdin').value;await ctx.storage.set(STORAGE_KEY,state);}root=null;ctx=null;state=null;}
+  window.LABDS_LABS['javascript-lab']={mount,unmount,exportPayload,help};
+})();
