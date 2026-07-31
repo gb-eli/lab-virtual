@@ -1,0 +1,13 @@
+{
+  "id": "automation-lab",
+  "name": "Automation",
+  "version": "3.8.0",
+  "weight": "medium",
+  "load": "on-demand",
+  "cache": "runtime",
+  "scripts": [
+    "modules/automation-lab/index.js"
+  ],
+  "styles": [],
+  "bundles": []
+}

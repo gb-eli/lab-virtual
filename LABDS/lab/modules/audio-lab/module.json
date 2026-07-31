@@ -1,0 +1,13 @@
+{
+  "id": "audio-lab",
+  "name": "Audio",
+  "version": "3.8.0",
+  "weight": "medium",
+  "load": "on-demand",
+  "cache": "runtime",
+  "scripts": [
+    "modules/audio-lab/index.js"
+  ],
+  "styles": [],
+  "bundles": []
+}

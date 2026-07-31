@@ -1,0 +1,13 @@
+{
+  "id": "biomonitor-lab",
+  "name": "Biomonitor",
+  "version": "3.8.0",
+  "weight": "heavy",
+  "load": "on-demand",
+  "cache": "runtime",
+  "scripts": [
+    "modules/biomonitor-lab/index.js"
+  ],
+  "styles": [],
+  "bundles": []
+}

@@ -1,0 +1,343 @@
+{
+  "schema": "labds-module-index",
+  "version": "4.0.0",
+  "count": 42,
+  "modules": [
+    {
+      "id": "ai-lab",
+      "name": "Ai",
+      "version": "3.8.0",
+      "weight": "medium",
+      "load": "on-demand",
+      "cache": "runtime"
+    },
+    {
+      "id": "audio-lab",
+      "name": "Audio",
+      "version": "3.8.0",
+      "weight": "medium",
+      "load": "on-demand",
+      "cache": "runtime"
+    },
+    {
+      "id": "automation-lab",
+      "name": "Automation",
+      "version": "3.8.0",
+      "weight": "medium",
+      "load": "on-demand",
+      "cache": "runtime"
+    },
+    {
+      "id": "biomonitor-lab",
+      "name": "Biomonitor",
+      "version": "3.8.0",
+      "weight": "heavy",
+      "load": "on-demand",
+      "cache": "runtime"
+    },
+    {
+      "id": "blockchain-lab",
+      "name": "Blockchain",
+      "version": "3.8.0",
+      "weight": "medium",
+      "load": "on-demand",
+      "cache": "runtime"
+    },
+    {
+      "id": "blocks-lab",
+      "name": "Blocks",
+      "version": "3.8.0",
+      "weight": "light",
+      "load": "on-demand",
+      "cache": "runtime"
+    },
+    {
+      "id": "code-games-lab",
+      "name": "Code Games",
+      "version": "3.8.0",
+      "weight": "heavy",
+      "load": "on-demand",
+      "cache": "runtime"
+    },
+    {
+      "id": "communication-lab",
+      "name": "Communication",
+      "version": "3.8.0",
+      "weight": "medium",
+      "load": "on-demand",
+      "cache": "runtime"
+    },
+    {
+      "id": "cyber-ops-lab",
+      "name": "Cyber Ops — Shadow Grid",
+      "version": "6.1-integrated",
+      "weight": "heavy",
+      "load": "on-demand",
+      "cache": "runtime"
+    },
+    {
+      "id": "data-tools-lab",
+      "name": "Data Tools",
+      "version": "3.8.0",
+      "weight": "light",
+      "load": "on-demand",
+      "cache": "runtime"
+    },
+    {
+      "id": "device-lab",
+      "name": "Device",
+      "version": "3.8.0",
+      "weight": "medium",
+      "load": "on-demand",
+      "cache": "runtime"
+    },
+    {
+      "id": "display-media-lab",
+      "name": "Display Media",
+      "version": "3.8.0",
+      "weight": "heavy",
+      "load": "on-demand",
+      "cache": "runtime"
+    },
+    {
+      "id": "electronics-lab",
+      "name": "Electronics",
+      "version": "3.8.0",
+      "weight": "medium",
+      "load": "on-demand",
+      "cache": "runtime"
+    },
+    {
+      "id": "energy-lab",
+      "name": "Energy",
+      "version": "3.8.0",
+      "weight": "medium",
+      "load": "on-demand",
+      "cache": "runtime"
+    },
+    {
+      "id": "fintech-lab",
+      "name": "Fintech",
+      "version": "3.8.0",
+      "weight": "medium",
+      "load": "on-demand",
+      "cache": "runtime"
+    },
+    {
+      "id": "game-engine-lab",
+      "name": "Game Engine",
+      "version": "3.8.0",
+      "weight": "heavy",
+      "load": "on-demand",
+      "cache": "runtime"
+    },
+    {
+      "id": "git-lab",
+      "name": "Git",
+      "version": "3.8.0",
+      "weight": "light",
+      "load": "on-demand",
+      "cache": "runtime"
+    },
+    {
+      "id": "graphics-lab",
+      "name": "Graphics",
+      "version": "3.8.0",
+      "weight": "heavy",
+      "load": "on-demand",
+      "cache": "runtime"
+    },
+    {
+      "id": "hardware-lab",
+      "name": "Hardware",
+      "version": "3.8.0",
+      "weight": "medium",
+      "load": "on-demand",
+      "cache": "runtime"
+    },
+    {
+      "id": "help-center-lab",
+      "name": "Help Center",
+      "version": "3.8.0",
+      "weight": "light",
+      "load": "on-demand",
+      "cache": "runtime"
+    },
+    {
+      "id": "iptv-lab",
+      "name": "Iptv",
+      "version": "3.8.0",
+      "weight": "medium",
+      "load": "on-demand",
+      "cache": "runtime"
+    },
+    {
+      "id": "javascript-lab",
+      "name": "Javascript",
+      "version": "3.8.0",
+      "weight": "light",
+      "load": "on-demand",
+      "cache": "runtime"
+    },
+    {
+      "id": "market-lab",
+      "name": "Market",
+      "version": "3.8.0",
+      "weight": "light",
+      "load": "on-demand",
+      "cache": "runtime"
+    },
+    {
+      "id": "network-lab",
+      "name": "Network",
+      "version": "3.8.0",
+      "weight": "medium",
+      "load": "on-demand",
+      "cache": "runtime"
+    },
+    {
+      "id": "network-ops-lab",
+      "name": "Network Ops",
+      "version": "3.8.0",
+      "weight": "medium",
+      "load": "on-demand",
+      "cache": "runtime"
+    },
+    {
+      "id": "printing3d-lab",
+      "name": "Printing3D",
+      "version": "3.8.0",
+      "weight": "medium",
+      "load": "on-demand",
+      "cache": "runtime"
+    },
+    {
+      "id": "productivity-lab",
+      "name": "Productivity",
+      "version": "3.8.0",
+      "weight": "heavy",
+      "load": "on-demand",
+      "cache": "runtime"
+    },
+    {
+      "id": "python-lab",
+      "name": "Python",
+      "version": "3.8.0",
+      "weight": "medium",
+      "load": "on-demand",
+      "cache": "runtime"
+    },
+    {
+      "id": "school-randomizer-lab",
+      "name": "School Randomizer",
+      "version": "3.8.0",
+      "weight": "light",
+      "load": "on-demand",
+      "cache": "runtime"
+    },
+    {
+      "id": "security-lab",
+      "name": "Security",
+      "version": "3.8.0",
+      "weight": "medium",
+      "load": "on-demand",
+      "cache": "runtime"
+    },
+    {
+      "id": "solar-system-lab",
+      "name": "Solar System",
+      "version": "3.8.0",
+      "weight": "heavy",
+      "load": "on-demand",
+      "cache": "runtime"
+    },
+    {
+      "id": "sql-lab",
+      "name": "Sql",
+      "version": "3.8.0",
+      "weight": "medium",
+      "load": "on-demand",
+      "cache": "runtime"
+    },
+    {
+      "id": "sysadmin-lab",
+      "name": "Sysadmin",
+      "version": "3.8.0",
+      "weight": "medium",
+      "load": "on-demand",
+      "cache": "runtime"
+    },
+    {
+      "id": "teacher-lab",
+      "name": "Teacher",
+      "version": "3.8.0",
+      "weight": "light",
+      "load": "on-demand",
+      "cache": "runtime"
+    },
+    {
+      "id": "tech-explorer-lab",
+      "name": "Tech Explorer",
+      "version": "3.8.0",
+      "weight": "heavy",
+      "load": "on-demand",
+      "cache": "runtime"
+    },
+    {
+      "id": "thermal-panel-lab",
+      "name": "Thermal Panel",
+      "version": "3.8.0",
+      "weight": "heavy",
+      "load": "on-demand",
+      "cache": "runtime"
+    },
+    {
+      "id": "traffic-lab",
+      "name": "Traffic",
+      "version": "3.8.0",
+      "weight": "light",
+      "load": "on-demand",
+      "cache": "runtime"
+    },
+    {
+      "id": "tutorial-center-lab",
+      "name": "Tutorial Center",
+      "version": "3.8.0",
+      "weight": "medium",
+      "load": "on-demand",
+      "cache": "runtime"
+    },
+    {
+      "id": "vm-lab",
+      "name": "Vm",
+      "version": "3.8.0",
+      "weight": "heavy",
+      "load": "on-demand",
+      "cache": "runtime"
+    },
+    {
+      "id": "voxelcraft-lab",
+      "name": "Voxelcraft",
+      "version": "3.8.0",
+      "weight": "heavy",
+      "load": "on-demand",
+      "cache": "runtime"
+    },
+    {
+      "id": "web-lab",
+      "name": "Web",
+      "version": "3.8.0",
+      "weight": "medium",
+      "load": "on-demand",
+      "cache": "runtime"
+    },
+    {
+      "id": "world-tools-lab",
+      "name": "World Tools",
+      "version": "3.8.0",
+      "weight": "heavy",
+      "load": "on-demand",
+      "cache": "runtime"
+    }
+  ]
+}

@@ -1,0 +1,13 @@
+{
+  "id": "communication-lab",
+  "name": "Communication",
+  "version": "3.8.0",
+  "weight": "medium",
+  "load": "on-demand",
+  "cache": "runtime",
+  "scripts": [
+    "modules/communication-lab/index.js"
+  ],
+  "styles": [],
+  "bundles": []
+}
