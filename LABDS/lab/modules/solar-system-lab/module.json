@@ -1,0 +1,13 @@
+{
+  "id": "solar-system-lab",
+  "name": "Solar System",
+  "version": "3.8.0",
+  "weight": "heavy",
+  "load": "on-demand",
+  "cache": "runtime",
+  "scripts": [
+    "modules/solar-system-lab/index.js"
+  ],
+  "styles": [],
+  "bundles": []
+}

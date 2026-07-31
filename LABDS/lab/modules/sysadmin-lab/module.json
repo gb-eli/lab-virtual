@@ -1,0 +1,13 @@
+{
+  "id": "sysadmin-lab",
+  "name": "Sysadmin",
+  "version": "3.8.0",
+  "weight": "medium",
+  "load": "on-demand",
+  "cache": "runtime",
+  "scripts": [
+    "modules/sysadmin-lab/index.js"
+  ],
+  "styles": [],
+  "bundles": []
+}

@@ -1,0 +1,15 @@
+{
+  "id": "vm-lab",
+  "name": "Vm",
+  "version": "3.8.0",
+  "weight": "heavy",
+  "load": "on-demand",
+  "cache": "runtime",
+  "scripts": [
+    "modules/vm-lab/index.js"
+  ],
+  "styles": [
+    "modules/vm-lab/styles.css"
+  ],
+  "bundles": []
+}

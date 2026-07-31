@@ -1,0 +1,13 @@
+{
+  "id": "tutorial-center-lab",
+  "name": "Tutorial Center",
+  "version": "3.8.0",
+  "weight": "medium",
+  "load": "on-demand",
+  "cache": "runtime",
+  "scripts": [
+    "modules/tutorial-center-lab/index.js"
+  ],
+  "styles": [],
+  "bundles": []
+}

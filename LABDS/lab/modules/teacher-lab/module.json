@@ -1,0 +1,13 @@
+{
+  "id": "teacher-lab",
+  "name": "Teacher",
+  "version": "3.8.0",
+  "weight": "light",
+  "load": "on-demand",
+  "cache": "runtime",
+  "scripts": [
+    "modules/teacher-lab/index.js"
+  ],
+  "styles": [],
+  "bundles": []
+}

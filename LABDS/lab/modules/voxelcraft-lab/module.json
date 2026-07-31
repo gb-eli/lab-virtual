@@ -1,0 +1,13 @@
+{
+  "id": "voxelcraft-lab",
+  "name": "Voxelcraft",
+  "version": "3.8.0",
+  "weight": "heavy",
+  "load": "on-demand",
+  "cache": "runtime",
+  "scripts": [
+    "modules/voxelcraft-lab/index.js"
+  ],
+  "styles": [],
+  "bundles": []
+}
