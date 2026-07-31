@@ -1,0 +1,166 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,user-scalable=no">
+  <meta name="theme-color" content="#07131f">
+  <meta name="description" content="VoxelCraft DS 3D: mundo voxel educacional integrado ao Laboratório Virtual DS.">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; connect-src 'self'; style-src 'self'; img-src 'self' data: blob:; font-src 'self' data:; media-src 'none'; object-src 'none'; base-uri 'self'; form-action 'none'; frame-ancestors 'self';">
+  <title>VoxelCraft DS 3D</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<main id="app">
+  <section id="menu" class="screen active" aria-labelledby="gameTitle">
+    <div class="menu-topbar">
+      <span class="lab-badge">LAB VIRTUAL DS • JOGOS 3D</span>
+      <button id="returnLabBtn" class="ghost hidden" type="button">← Voltar ao laboratório</button>
+    </div>
+    <div class="menu-layout">
+      <div class="hero">
+        <span>MUNDO VOXEL EDUCACIONAL</span>
+        <h1 id="gameTitle">VoxelCraft DS 3D</h1>
+        <p>Explore um mundo procedural, colete recursos tecnológicos, construa blocos e observe como chunks, física, câmera e renderização trabalham juntos.</p>
+        <div class="feature-chips" aria-label="Recursos do jogo">
+          <span>WebGL 3D</span><span>Chunks</span><span>Modo aprendizagem</span><span>Touch + teclado</span>
+        </div>
+      </div>
+
+      <div class="menu-card" aria-label="Configurações do jogo">
+        <div class="action-grid">
+          <button id="playBtn" class="primary" type="button">Novo mundo</button>
+          <button id="continueBtn" type="button">Continuar</button>
+        </div>
+
+        <label>Modo de jogo
+          <select id="gameMode">
+            <option value="learning">Aprendizagem — missões e explicações</option>
+            <option value="free">Livre — exploração sem objetivo obrigatório</option>
+            <option value="challenge">Desafio — metas e XP ampliado</option>
+          </select>
+        </label>
+
+        <label>Qualidade gráfica
+          <select id="quality">
+            <option value="auto">Automático</option>
+            <option value="economy">Econômico — máximo desempenho</option>
+            <option value="low">Baixo — celular básico</option>
+            <option value="medium">Médio — Chromebook/tablet</option>
+            <option value="high">Alto — notebook/PC</option>
+            <option value="ultra">Ultra — PC potente</option>
+          </select>
+        </label>
+
+        <label>Campo de visão
+          <span class="range-line"><input id="fov" type="range" min="60" max="105" value="78"><output id="fovValue">78°</output></span>
+        </label>
+
+        <label>Sensibilidade
+          <span class="range-line"><input id="sensitivity" type="range" min="35" max="160" value="100"><output id="sensitivityValue">100%</output></span>
+        </label>
+
+        <label class="check"><input id="learning" type="checkbox" checked> Mostrar painel educativo durante o jogo</label>
+
+        <div id="saveSummary" class="save-summary" aria-live="polite">Nenhum mundo salvo neste dispositivo.</div>
+        <button id="clearSaveBtn" class="danger subtle" type="button">Apagar mundo salvo</button>
+
+        <div class="notice">
+          <strong>Desempenho por dispositivo</strong>
+          <p>No celular e tablet, a distância de visão e os efeitos são reduzidos automaticamente. O modo Ultra exige mais memória, GPU e processamento.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="gameScreen" class="screen" aria-label="Mundo VoxelCraft DS 3D">
+    <div id="game3d" aria-label="Cena tridimensional do jogo"></div>
+
+    <header id="hud">
+      <div class="vitals">
+        <div><span>Vida</span><i><b id="healthBar"></b></i></div>
+        <div><span>Fome</span><i><b id="hungerBar"></b></i></div>
+      </div>
+      <div class="hud-info">
+        <span id="modeLabel">APRENDIZAGEM</span>
+        <span id="qualityLabel">AUTO</span>
+        <span id="fps">0 FPS</span>
+        <span id="chunkCount">0 chunks</span>
+        <span id="triangleCount">0 tri</span>
+        <span id="xpLabel">0 XP</span>
+        <button id="menuBtn" type="button" aria-label="Abrir menu">☰</button>
+      </div>
+    </header>
+
+    <aside id="learningPanel">
+      <button class="icon-close" data-close="learningPanel" type="button" aria-label="Fechar explicação">×</button>
+      <strong id="missionTitle">Missão inicial</strong>
+      <p id="lesson">O mundo é carregado em partes chamadas chunks para evitar que o mapa inteiro ocupe a memória.</p>
+      <div class="mission-progress"><i><b id="missionBar"></b></i><span id="missionText">0%</span></div>
+      <code id="codeExplain">streamChunksByDistance();</code>
+    </aside>
+
+    <div id="crosshair" aria-hidden="true">+</div>
+    <div id="prompt" aria-live="polite"></div>
+    <div id="hotbar" aria-label="Barra rápida de itens"></div>
+
+    <section id="helpModal" class="modal" aria-modal="true" role="dialog" aria-labelledby="helpTitle">
+      <div class="modal-card">
+        <button class="icon-close" data-close="helpModal" type="button" aria-label="Fechar instruções">×</button>
+        <h2 id="helpTitle">Como jogar</h2>
+        <p><b>Computador:</b> WASD ou setas, mouse para olhar, Espaço para pular, Shift para correr, C para agachar, clique esquerdo para quebrar e clique direito para construir.</p>
+        <p><b>Celular:</b> joystick esquerdo para mover, joystick direito para olhar e botões para pular, quebrar, construir e consumir.</p>
+        <p><b>Aprendizagem:</b> as missões relacionam coleta, construção, chunks, inventário, eventos e renderização com conceitos de Desenvolvimento de Sistemas.</p>
+        <button id="startBtn" class="primary" type="button">Começar</button>
+      </div>
+    </section>
+
+    <section id="pauseModal" class="modal hidden" aria-modal="true" role="dialog" aria-labelledby="pauseTitle">
+      <div class="modal-card compact">
+        <button class="icon-close" data-close="pauseModal" type="button" aria-label="Fechar menu">×</button>
+        <h2 id="pauseTitle">Menu</h2>
+        <button id="resumeBtn" class="primary" type="button">Continuar</button>
+        <button id="saveBtn" type="button">Salvar mundo</button>
+        <button id="cameraBtn" type="button">Trocar câmera</button>
+        <button id="inventoryBtn" type="button">Inventário</button>
+        <button id="fullscreenBtn" type="button">Tela cheia</button>
+        <button id="exitBtn" type="button">Voltar ao menu do jogo</button>
+      </div>
+    </section>
+
+    <section id="inventoryModal" class="modal hidden" aria-modal="true" role="dialog" aria-labelledby="inventoryTitle">
+      <div class="modal-card">
+        <button class="icon-close" data-close="inventoryModal" type="button" aria-label="Fechar inventário">×</button>
+        <h2 id="inventoryTitle">Inventário</h2>
+        <div id="inventoryGrid"></div>
+      </div>
+    </section>
+
+    <section id="loadingModal" class="modal hidden" aria-live="assertive">
+      <div class="loading-card"><span class="loader"></span><strong id="loadingTitle">Preparando o mundo...</strong><small id="loadingText">Carregando renderizador 3D e criando os primeiros chunks.</small></div>
+    </section>
+
+    <section id="errorModal" class="modal hidden" aria-modal="true" role="alertdialog" aria-labelledby="errorTitle">
+      <div class="modal-card compact">
+        <h2 id="errorTitle">Não foi possível iniciar o jogo</h2>
+        <p id="errorText"></p>
+        <button id="retryBtn" class="primary" type="button">Tentar novamente</button>
+        <button id="errorBackBtn" type="button">Voltar ao menu</button>
+      </div>
+    </section>
+
+    <section id="mobileControls" aria-label="Controles móveis">
+      <div class="joystick" id="moveJoystick" aria-label="Mover"><div class="stick"></div></div>
+      <div class="joystick look" id="lookJoystick" aria-label="Olhar"><div class="stick"></div></div>
+      <div class="mobile-buttons">
+        <button data-action="jump" type="button">Pular</button>
+        <button data-action="primary" type="button">Quebrar</button>
+        <button data-action="secondary" type="button">Construir</button>
+        <button data-action="consume" type="button">Consumir</button>
+        <button data-action="crouch" type="button">Agachar</button>
+      </div>
+    </section>
+  </section>
+</main>
+<script type="module" src="js/app.js"></script>
+</body>
+</html>

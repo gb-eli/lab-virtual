@@ -1,0 +1,14 @@
+{
+  "name": "VoxelCraft DS 3D",
+  "version": 10,
+  "lab_virtual_ds_version": "4.0.0-pages",
+  "frontend_only": true,
+  "github_pages_ready": true,
+  "renderer": "Three.js/WebGL",
+  "three_version": "0.180.0-local",
+  "offline_renderer": true,
+  "profiles": ["auto", "low", "medium", "high", "ultra"],
+  "modes": ["learning", "free", "challenge"],
+  "mobile_profile": "automatically_limited",
+  "storage_schema": 9
+}
