@@ -1,7 +1,7 @@
 {
   "schema": "labds-module-index",
   "version": "4.0.0",
-  "count": 42,
+  "count": 41,
   "modules": [
     {
       "id": "ai-lab",
@@ -54,7 +54,7 @@
     {
       "id": "code-games-lab",
       "name": "Code Games",
-      "version": "3.8.0",
+      "version": "4.1.0",
       "weight": "heavy",
       "load": "on-demand",
       "cache": "runtime"
@@ -264,14 +264,6 @@
       "name": "Sysadmin",
       "version": "3.8.0",
       "weight": "medium",
-      "load": "on-demand",
-      "cache": "runtime"
-    },
-    {
-      "id": "teacher-lab",
-      "name": "Teacher",
-      "version": "3.8.0",
-      "weight": "light",
       "load": "on-demand",
       "cache": "runtime"
     },
