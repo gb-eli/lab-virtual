@@ -1,7 +1,7 @@
 {
   "id": "teacher-lab",
   "name": "Teacher",
-  "version": "4.1.0-removed",
+  "version": "4.2.0-disabled",
   "weight": "light",
   "load": "on-demand",
   "cache": "runtime",
