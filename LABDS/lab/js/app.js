@@ -68,18 +68,23 @@
   function authorizationOptionsForTool(tool){
     if(!window.LABDS.EduAuth)return null;
     const params=new URLSearchParams(location.search),session=window.LABDS.Session.get()||{};
-    if(tool.id==='teacher-mode')return{actionId:'teacher-mode-access',resourceId:'teacher-mode',resourceLabel:'Modo Professor',classId:session.studentClass,subjectId:'desenvolvimento-de-sistemas',lessonId:'atividade-atual',activityId:'modo-professor'};
     const actionId=params.get('eduauthAction');
     if(actionId&&params.get('tool')===tool.id&&window.LABDS.EduAuth.actions[actionId])return{actionId,resourceId:params.get('activity')||tool.id,resourceLabel:tool.name,classId:params.get('classId')||session.studentClass,subjectId:params.get('subjectId')||'desenvolvimento-de-sistemas',lessonId:params.get('lessonId')||'atividade-atual',activityId:params.get('activityId')||'atividade-principal'};
     return null;
   }
 
   async function openTool(id){
+    if(isRemovedToolId(id)){
+      window.LABDS.Storage?.smallRemove?.('lastTool');
+      const url=new URL(location.href);url.searchParams.delete('tool');history.replaceState(null,'',url);
+      toast('Este módulo foi removido da versão pública e não pode ser aberto.','warning',5200);
+      return;
+    }
     const tool=window.LABDS.TOOLS.find(item=>item.id===id);if(!tool)return toast('Ferramenta não encontrada.','error');clearTimeout(state.showcaseTimer);
     if(!window.LABDS.Session.get()){requestIdentification(id);return;}
     const snapshot=window.LABDS.Core?.getSnapshot?.();
     if((tool.experiences||[]).includes('game')&&snapshot?.settings?.studyGateGames){if((snapshot.wallet?.arcadeMinutes||0)<=0){toast('O modo estudo protegido está ativo. Adquira minutos Arcade na Loja Tech.','warning',5600);await ensureBundle('shell');window.LABDS.V3Shell?.openPanel?.('store');scheduleShowcase();return;}clearInterval(state.arcadeTimer);state.arcadeTimer=setInterval(()=>{if(!window.LABDS.Core?.consumeArcadeMinute?.(`Jogo: ${tool.name}`)){clearInterval(state.arcadeTimer);state.arcadeTimer=0;toast('Os minutos Arcade terminaram. O jogo foi pausado e você voltou às ferramentas.','warning',6000);goHome(true);}},60000);}
-    const authParams=new URLSearchParams(location.search),needsEduAuth=tool.id==='teacher-mode'||tool.module==='vm-lab'||(authParams.get('eduauthAction')&&authParams.get('tool')===tool.id);
+    const authParams=new URLSearchParams(location.search),needsEduAuth=tool.module==='vm-lab'||(authParams.get('eduauthAction')&&authParams.get('tool')===tool.id);
     if(needsEduAuth)await ensureBundle('eduauth');
     const authorization=authorizationOptionsForTool(tool);
     if(authorization&&!(await window.LABDS.EduAuth.authorize(authorization))){toast('A ferramenta não foi aberta porque a autorização não foi concluída.','warning',4800);scheduleShowcase();return;}
@@ -191,6 +196,6 @@
   document.addEventListener('labds:moduleloadstart',event=>{const loading=$('#labLoading');if(!loading)return;const manifest=event.detail?.manifest||{};loading.querySelector('strong').textContent=`Preparando ${event.detail?.tool?.shortName||event.detail?.tool?.name||'laboratório'}...`;loading.querySelector('small').textContent=manifest.weight==='heavy'?'Módulo avançado: os arquivos maiores serão carregados somente agora.':'Carregamento modular sob demanda.';});
   document.addEventListener('labds:moduleloadend',event=>{const loading=$('#labLoading');if(loading)loading.querySelector('small').textContent=`Módulo pronto em ${event.detail?.durationMs||0} ms.`;});
 
-  async function init(){await cleanupRemovedFeatures();await window.LABDS.Core?.init?.();window.LABDS.Accessibility?.init?.();if(!window.LABDS.Accessibility)setTheme(window.LABDS.Storage.smallGet('theme',matchMedia('(prefers-color-scheme: light)').matches?'light':'dark'));populateStudentClasses();renderHome();bind();await window.LABDS.Session.init();if(window.LABDS.Session.hasRestorable())$('#restoreSessionDialog').showModal();const last=window.LABDS.Storage.smallGet('lastTool');if(last&&window.LABDS.TOOLS.some(tool=>tool.id===last)){$('#resumeToolBtn').classList.remove('hidden');$('#resumeToolBtn').textContent=`Retomar ${window.LABDS.TOOLS.find(t=>t.id===last).shortName}`;}const rawRequested=new URLSearchParams(location.search).get('tool'),requested=resolveRequestedTool(rawRequested);if(rawRequested&&requested!==rawRequested){const url=new URL(location.href);url.searchParams.set('tool',requested);history.replaceState(null,'',url);toast('O recurso antigo foi removido. A Central de Ajuda foi aberta como alternativa leve.','info',5200);}if(requested&&window.LABDS.TOOLS.some(tool=>tool.id===requested)&&!window.LABDS.Session.hasRestorable())setTimeout(()=>openTool(requested),100);if('serviceWorker'in navigator&&location.protocol.startsWith('http'))registerServiceWorker();}
+  async function init(){await cleanupRemovedFeatures();await window.LABDS.Core?.init?.();window.LABDS.Accessibility?.init?.();if(!window.LABDS.Accessibility)setTheme(window.LABDS.Storage.smallGet('theme',matchMedia('(prefers-color-scheme: light)').matches?'light':'dark'));populateStudentClasses();renderHome();bind();await window.LABDS.Session.init();if(window.LABDS.Session.hasRestorable())$('#restoreSessionDialog').showModal();const resume=$('#resumeToolBtn'),last=window.LABDS.Storage.smallGet('lastTool'),lastTool=window.LABDS.TOOLS.find(tool=>tool.id===last);if(lastTool&&!isRemovedToolId(last)){resume?.classList.remove('hidden');if(resume)resume.textContent=`Retomar ${lastTool.shortName}`;}else{window.LABDS.Storage.smallRemove('lastTool');resume?.classList.add('hidden');}const rawRequested=new URLSearchParams(location.search).get('tool'),requested=resolveRequestedTool(rawRequested);if(rawRequested&&isRemovedToolId(rawRequested)){const url=new URL(location.href);url.searchParams.delete('tool');history.replaceState(null,'',url);toast('O módulo solicitado foi removido e está indisponível.','warning',5200);}else if(rawRequested&&requested!==rawRequested){const url=new URL(location.href);url.searchParams.set('tool',requested);history.replaceState(null,'',url);toast('O recurso antigo foi removido. A Central de Ajuda foi aberta como alternativa leve.','info',5200);}if(requested&&!isRemovedToolId(rawRequested)&&window.LABDS.TOOLS.some(tool=>tool.id===requested)&&!window.LABDS.Session.hasRestorable())setTimeout(()=>openTool(requested),100);if('serviceWorker'in navigator&&location.protocol.startsWith('http'))registerServiceWorker();}
   window.LABDS.App={init,openTool,goHome,toast,showCatalog,getState:()=>state,openHistory,openFinish,cleanupRemovedFeatures,resolveRequestedTool,isRemovedToolId};if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init,{once:true});else init();
 })();
