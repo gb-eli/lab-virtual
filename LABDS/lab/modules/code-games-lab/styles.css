@@ -1,0 +1,11 @@
+.trio-stage{display:grid;place-items:center;align-content:center;gap:18px;min-height:420px;padding:22px;text-align:center}
+.trio-reels{display:grid;grid-template-columns:repeat(3,minmax(76px,112px));gap:10px}
+.trio-reel{display:grid;place-items:center;aspect-ratio:1;border:2px solid rgba(255,206,98,.45);border-radius:18px;background:linear-gradient(#f8fbff,#dfeef5);color:#081520;font:900 clamp(.9rem,2vw,1.1rem) ui-monospace,monospace;box-shadow:inset 0 0 25px rgba(12,55,75,.16)}
+.trend-controls{display:flex;justify-content:center;gap:12px;flex-wrap:wrap}.trend-controls button{min-width:130px}
+.snake-mode{position:absolute;z-index:3;top:10px;right:10px;display:flex;gap:6px;padding:5px;border:1px solid rgba(120,225,255,.22);border-radius:12px;background:rgba(3,12,22,.84);backdrop-filter:blur(8px)}
+.snake-mode button{min-height:36px;padding:6px 10px;border:1px solid transparent;border-radius:8px;background:transparent;color:#c7eafa;font-weight:800}.snake-mode button.active{background:linear-gradient(135deg,#5fe3ff,#55e6b2);color:#03151b}
+.memory-card{position:relative;display:grid;place-items:center;padding:7px;color:#e8f8ff!important;transform:none!important;overflow:hidden}
+.memory-card.open,.memory-card.done{transform:none!important;background:linear-gradient(145deg,#e8f8ff,#bcefff)!important}.memory-card.done{box-shadow:0 0 0 2px #55e6b2,0 0 22px rgba(85,230,178,.3)}
+.memory-back{font:900 1.7rem ui-monospace,monospace;color:#7de8ff}.memory-face{display:grid;place-items:center;gap:3px;width:100%;height:100%;color:#061421}.memory-face svg{width:min(68px,82%);height:auto;display:block}.memory-face small{max-width:100%;font-size:.64rem;line-height:1.05;text-align:center;color:#061421;overflow:hidden;text-overflow:ellipsis}
+@media(max-width:760px){.snake-mode{top:6px;right:6px}.snake-mode button{font-size:.76rem}.trio-stage{min-height:360px;padding:14px}.trio-reels{grid-template-columns:repeat(3,minmax(66px,86px))}.memory-face small{font-size:.55rem}}
+@media(prefers-reduced-motion:reduce){.memory-card,.snake-mode button{transition:none!important}}
