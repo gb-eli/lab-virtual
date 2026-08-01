@@ -54,7 +54,7 @@
     {
       "id": "code-games-lab",
       "name": "Code Games",
-      "version": "4.1.0",
+      "version": "4.2.0",
       "weight": "heavy",
       "load": "on-demand",
       "cache": "runtime"
