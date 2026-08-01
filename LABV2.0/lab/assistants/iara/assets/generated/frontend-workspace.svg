@@ -1,7 +1,0 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="768" viewBox="0 0 1280 768">
-<defs><linearGradient id="g6" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#111827"/><stop offset="1" stop-color="#312e81"/></linearGradient>
-<radialGradient id="r6"><stop stop-color="#67e8f9" stop-opacity=".8"/><stop offset="1" stop-color="#7c3aed" stop-opacity="0"/></radialGradient></defs>
-<rect width="1280" height="768" fill="url(#g6)"/><circle cx="418" cy="406" r="240" fill="url(#r6)"/>
-<g fill="none" stroke="#a5f3fc" stroke-width="4" opacity=".7"><path d="M120 600 Q420 180 680 480 T1160 210"/><circle cx="640" cy="380" r="120"/><rect x="500" y="270" width="280" height="220" rx="32"/></g>
-<text x="80" y="650" fill="white" font-family="Arial, sans-serif" font-size="52" font-weight="700">Estação de desenvolvimento front-end</text>
-<text x="84" y="704" fill="#c4b5fd" font-family="Arial, sans-serif" font-size="26">IARA DS • geração visual simulada</text></svg>
