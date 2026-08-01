@@ -15,11 +15,11 @@ const context={window:{LABDS:{}},navigator:{},console,Date,URL,URLSearchParams,s
 vm.runInNewContext(read(path.join(lab,'js/config.js')),context,{filename:'config.js'});
 const {VERSION,TOOLS}=context.window.LABDS;
 assert(VERSION==='4.0.0-pages',`Versão inesperada: ${VERSION}`);
-assert(Array.isArray(TOOLS)&&TOOLS.length===51,`Catálogo deveria ter 51 ferramentas; encontrado ${TOOLS?.length}`);
+assert(Array.isArray(TOOLS)&&TOOLS.length===50,`Catálogo deveria ter 50 ferramentas públicas; encontrado ${TOOLS?.length}`);
 const ids=TOOLS.map(tool=>tool.id);assert(new Set(ids).size===ids.length,'Há IDs duplicados no catálogo.');
 const modules=[...new Set(TOOLS.filter(tool=>tool.module).map(tool=>tool.module))];
 const knownBundles=new Set(['network','terminal','export','eduauth','learning','shell','effects']);
-assert(modules.length===42,`Esperados 42 módulos; encontrados ${modules.length}`);
+assert(modules.length===41,`Esperados 41 módulos públicos; encontrados ${modules.length}`);
 for(const moduleName of modules){
   const folder=path.join(lab,'modules',moduleName),manifestFile=path.join(folder,'module.json');
   assert(fs.existsSync(folder),`Pasta ausente: modules/${moduleName}`);
@@ -40,6 +40,13 @@ assert(moduleIndex.version==='4.0.0',`Versão inesperada no índice de módulos:
 assert(moduleIndex.count===modules.length,`Índice declara ${moduleIndex.count} módulos, mas o catálogo usa ${modules.length}.`);
 assert(new Set(moduleIndex.modules.map(item=>item.id)).size===moduleIndex.modules.length,'Há IDs duplicados no índice de módulos.');
 for(const moduleName of modules)assert(moduleIndex.modules.some(item=>item.id===moduleName),`Módulo ausente no MODULE_INDEX: ${moduleName}`);
+const arcadeManifest=JSON.parse(read(path.join(lab,'modules/code-games-lab/module.json')));
+assert(arcadeManifest.version==='4.3.0',`Versão inesperada do Arcade: ${arcadeManifest.version}`);
+assert(moduleIndex.modules.find(item=>item.id==='code-games-lab')?.version==='4.3.0','MODULE_INDEX não referencia o Arcade V4.3.0.');
+const arcadeTool=TOOLS.find(tool=>tool.id==='code-games');
+assert(arcadeTool?.description?.startsWith('Oito experiências'),'Catálogo não anuncia as oito experiências do Arcade.');
+const arcadeSource=read(path.join(lab,'modules/code-games-lab/index.js'));
+for(const gameId of ['snake','hangman','trio','trend','pac','memory','platform','drone'])assert(new RegExp(`\\n    ${gameId}:\\{name:`).test(arcadeSource),`Experiência ausente no Arcade: ${gameId}`);
 
 for(const file of walk(lab).filter(file=>file.endsWith('.js'))){
   const source=read(file),relative=path.relative(root,file);
@@ -96,6 +103,7 @@ assert(fs.existsSync(path.join(lab,'vendor/three/three.core.min.js')),'Núcleo l
 assert(voxelGame.includes("../../../vendor/three/three.module.min.js"),'VoxelCraft não aponta para o renderizador Three.js local.');
 assert(!/https:\/\/cdn\.jsdelivr\.net\/npm\/three/.test(voxelGame),'VoxelCraft ainda depende da CDN do Three.js.');
 const sw=read(path.join(lab,'service-worker.js'));
+assert(sw.includes("labds-v4.3.0-arcade-drone-final"),'Service Worker não está no cache final do Arcade V4.3.0.');
 const coreBlock=sw.match(/CORE_FILES=\[(.*?)\];/s)?.[1]||'';
 const coreRefs=[...coreBlock.matchAll(/['"](\.\/?[^'"]+)['"]/g)].map(match=>match[1]);
 for(const raw of coreRefs){const clean=raw==='./'?'index.html':raw.replace(/^\.\//,'');assert(fs.existsSync(path.join(lab,clean)),`Arquivo do núcleo ausente no Service Worker: ${raw}`);}
