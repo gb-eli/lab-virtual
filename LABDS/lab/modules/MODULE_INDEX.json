@@ -53,8 +53,8 @@
     },
     {
       "id": "code-games-lab",
-      "name": "Code Games",
-      "version": "4.3.0",
+      "name": "Simuladores Interativos DS",
+      "version": "4.13.0",
       "weight": "heavy",
       "load": "on-demand",
       "cache": "runtime"
