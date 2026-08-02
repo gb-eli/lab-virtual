@@ -45,7 +45,7 @@ html.arcade-immersive-open,body.arcade-immersive-open{overflow:hidden!important;
 .arcade-stick-slot[data-stick-slot="move"]{grid-area:move}.arcade-stick-slot[data-stick-slot="camera"]{grid-area:camera}.arcade-action-cluster{grid-area:actions}
 .arcade-stick-slot{display:grid;justify-items:center;align-content:end;gap:5px;min-width:0;touch-action:none}
 .arcade-stick-label{color:#c9f5ff;font-size:.7rem;font-weight:850;letter-spacing:.03em;text-align:center;text-transform:uppercase;text-shadow:0 2px 8px #020812}
-.arcade-stick{position:relative;display:grid;place-items:center;width:clamp(104px,25vw,132px);height:clamp(104px,25vw,132px);border:1px solid rgba(135,233,255,.35);border-radius:50%;background:radial-gradient(circle,rgba(103,226,255,.14) 0 22%,rgba(4,22,37,.82) 23% 66%,rgba(35,113,142,.28) 67% 100%);box-shadow:inset 0 0 22px rgba(94,222,255,.11),0 9px 24px rgba(0,0,0,.28);touch-action:none}
+.arcade-stick{position:relative;display:grid;place-items:center;width:clamp(84px,calc(25vw * var(--arcade-control-scale,1)),172px);height:clamp(84px,calc(25vw * var(--arcade-control-scale,1)),172px);border:1px solid rgba(135,233,255,.35);border-radius:50%;background:radial-gradient(circle,rgba(103,226,255,.14) 0 22%,rgba(4,22,37,.82) 23% 66%,rgba(35,113,142,.28) 67% 100%);box-shadow:inset 0 0 22px rgba(94,222,255,.11),0 9px 24px rgba(0,0,0,.28);touch-action:none}
 .arcade-stick::before,.arcade-stick::after{content:"";position:absolute;background:rgba(139,232,255,.14);pointer-events:none}.arcade-stick::before{width:1px;height:72%;left:50%;top:14%}.arcade-stick::after{width:72%;height:1px;left:14%;top:50%}
 .arcade-stick-ring{position:relative;display:grid;place-items:center;width:100%;height:100%;border-radius:50%;pointer-events:none}.arcade-stick-thumb{width:42%;height:42%;border:2px solid rgba(210,250,255,.65);border-radius:50%;background:linear-gradient(145deg,rgba(105,232,255,.94),rgba(57,154,209,.86));box-shadow:0 7px 18px rgba(0,0,0,.38),inset 0 2px 7px rgba(255,255,255,.4);transform:translate3d(0,0,0);transition:transform 90ms ease-out;will-change:transform}.arcade-stick.is-active .arcade-stick-thumb{transition:none;box-shadow:0 0 0 5px rgba(100,227,255,.12),0 8px 20px rgba(0,0,0,.4)}
 .arcade-action-cluster{position:relative;display:flex;align-items:flex-end;justify-content:center;align-content:flex-end;flex-wrap:wrap;gap:6px;min-width:0;padding-bottom:2px;touch-action:none}.arcade-action-cluster>button,.arcade-control-settings>summary{min-height:44px;padding:7px 10px;border:1px solid rgba(139,233,255,.32);border-radius:12px;background:rgba(5,25,42,.88);color:#e5fbff;font-weight:850;box-shadow:0 6px 18px rgba(0,0,0,.2);touch-action:none}.arcade-action-cluster>button{flex:1 1 72px;max-width:112px}.arcade-action-cluster>button:active{transform:translateY(1px);background:rgba(32,103,133,.9)}
@@ -57,11 +57,11 @@ html.arcade-immersive-open,body.arcade-immersive-open{overflow:hidden!important;
 .arcade-playfield.is-immersive .arcade-joystick-layout,.arcade-playfield:fullscreen .arcade-joystick-layout,.arcade-playfield:-webkit-full-screen .arcade-joystick-layout{display:flex!important;align-items:flex-end;justify-content:space-between;max-width:none;min-height:0;margin:0;pointer-events:none}
 .arcade-playfield.is-immersive .arcade-joystick-layout[data-control-layout="move-right"] [data-stick-slot="move"],.arcade-playfield:fullscreen .arcade-joystick-layout[data-control-layout="move-right"] [data-stick-slot="move"],.arcade-playfield:-webkit-full-screen .arcade-joystick-layout[data-control-layout="move-right"] [data-stick-slot="move"]{order:3}.arcade-playfield.is-immersive .arcade-joystick-layout[data-control-layout="move-right"] [data-stick-slot="camera"],.arcade-playfield:fullscreen .arcade-joystick-layout[data-control-layout="move-right"] [data-stick-slot="camera"],.arcade-playfield:-webkit-full-screen .arcade-joystick-layout[data-control-layout="move-right"] [data-stick-slot="camera"]{order:1}
 .arcade-playfield.is-immersive .arcade-stick-slot,.arcade-playfield.is-immersive .arcade-action-cluster,.arcade-playfield:fullscreen .arcade-stick-slot,.arcade-playfield:fullscreen .arcade-action-cluster,.arcade-playfield:-webkit-full-screen .arcade-stick-slot,.arcade-playfield:-webkit-full-screen .arcade-action-cluster{pointer-events:auto}
-.arcade-playfield.is-immersive .arcade-stick,.arcade-playfield:fullscreen .arcade-stick,.arcade-playfield:-webkit-full-screen .arcade-stick{width:clamp(104px,20vmin,138px);height:clamp(104px,20vmin,138px);background:radial-gradient(circle,rgba(103,226,255,.12) 0 22%,rgba(4,22,37,.58) 23% 66%,rgba(35,113,142,.22) 67% 100%);backdrop-filter:blur(5px)}
-.arcade-playfield.is-immersive .arcade-action-cluster,.arcade-playfield:fullscreen .arcade-action-cluster,.arcade-playfield:-webkit-full-screen .arcade-action-cluster{position:absolute;right:calc(clamp(104px,20vmin,138px) + 12px);bottom:0;display:grid;grid-template-columns:repeat(2,minmax(58px,82px));max-width:172px}.arcade-playfield.is-immersive .arcade-joystick-layout[data-control-layout="move-right"] .arcade-action-cluster,.arcade-playfield:fullscreen .arcade-joystick-layout[data-control-layout="move-right"] .arcade-action-cluster,.arcade-playfield:-webkit-full-screen .arcade-joystick-layout[data-control-layout="move-right"] .arcade-action-cluster{right:auto;left:calc(clamp(104px,20vmin,138px) + 12px)}
+.arcade-playfield.is-immersive .arcade-stick,.arcade-playfield:fullscreen .arcade-stick,.arcade-playfield:-webkit-full-screen .arcade-stick{width:clamp(88px,calc(20vmin * var(--arcade-control-scale,1)),172px);height:clamp(88px,calc(20vmin * var(--arcade-control-scale,1)),172px);background:radial-gradient(circle,rgba(103,226,255,.12) 0 22%,rgba(4,22,37,.58) 23% 66%,rgba(35,113,142,.22) 67% 100%);backdrop-filter:blur(5px)}
+.arcade-playfield.is-immersive .arcade-action-cluster,.arcade-playfield:fullscreen .arcade-action-cluster,.arcade-playfield:-webkit-full-screen .arcade-action-cluster{position:absolute;right:calc(clamp(88px,calc(20vmin * var(--arcade-control-scale,1)),172px) + 12px);bottom:0;display:grid;grid-template-columns:repeat(2,minmax(58px,82px));max-width:172px}.arcade-playfield.is-immersive .arcade-joystick-layout[data-control-layout="move-right"] .arcade-action-cluster,.arcade-playfield:fullscreen .arcade-joystick-layout[data-control-layout="move-right"] .arcade-action-cluster,.arcade-playfield:-webkit-full-screen .arcade-joystick-layout[data-control-layout="move-right"] .arcade-action-cluster{right:auto;left:calc(clamp(88px,calc(20vmin * var(--arcade-control-scale,1)),172px) + 12px)}
 .arcade-playfield.is-immersive .arcade-joystick-layout.is-single .arcade-action-cluster,.arcade-playfield:fullscreen .arcade-joystick-layout.is-single .arcade-action-cluster,.arcade-playfield:-webkit-full-screen .arcade-joystick-layout.is-single .arcade-action-cluster{right:0;left:auto}.arcade-playfield.is-immersive .arcade-joystick-layout.is-single[data-control-layout="move-right"] .arcade-action-cluster,.arcade-playfield:fullscreen .arcade-joystick-layout.is-single[data-control-layout="move-right"] .arcade-action-cluster,.arcade-playfield:-webkit-full-screen .arcade-joystick-layout.is-single[data-control-layout="move-right"] .arcade-action-cluster{right:auto;left:0}
 .arcade-playfield.is-immersive .arcade-control-settings,.arcade-playfield:fullscreen .arcade-control-settings,.arcade-playfield:-webkit-full-screen .arcade-control-settings{grid-column:1/-1}.arcade-playfield.is-immersive .arcade-control-settings>div,.arcade-playfield:fullscreen .arcade-control-settings>div,.arcade-playfield:-webkit-full-screen .arcade-control-settings>div{right:0}.arcade-playfield.is-immersive .arcade-joystick-layout[data-control-layout="move-right"] .arcade-control-settings>div,.arcade-playfield:fullscreen .arcade-joystick-layout[data-control-layout="move-right"] .arcade-control-settings>div,.arcade-playfield:-webkit-full-screen .arcade-joystick-layout[data-control-layout="move-right"] .arcade-control-settings>div{right:auto;left:0}
-@media(max-width:700px) and (orientation:portrait){.arcade-playfield.is-immersive .arcade-action-cluster,.arcade-playfield:fullscreen .arcade-action-cluster,.arcade-playfield:-webkit-full-screen .arcade-action-cluster{grid-template-columns:minmax(56px,76px);right:calc(clamp(96px,26vw,120px) + 7px);max-width:80px}.arcade-playfield.is-immersive .arcade-joystick-layout[data-control-layout="move-right"] .arcade-action-cluster,.arcade-playfield:fullscreen .arcade-joystick-layout[data-control-layout="move-right"] .arcade-action-cluster,.arcade-playfield:-webkit-full-screen .arcade-joystick-layout[data-control-layout="move-right"] .arcade-action-cluster{right:auto;left:calc(clamp(96px,26vw,120px) + 7px)}.arcade-playfield.is-immersive .arcade-stick,.arcade-playfield:fullscreen .arcade-stick,.arcade-playfield:-webkit-full-screen .arcade-stick{width:clamp(96px,26vw,120px);height:clamp(96px,26vw,120px)}.arcade-playfield.is-immersive .arcade-stick-label,.arcade-playfield:fullscreen .arcade-stick-label,.arcade-playfield:-webkit-full-screen .arcade-stick-label{font-size:.6rem}}
+@media(max-width:700px) and (orientation:portrait){.arcade-playfield.is-immersive .arcade-action-cluster,.arcade-playfield:fullscreen .arcade-action-cluster,.arcade-playfield:-webkit-full-screen .arcade-action-cluster{grid-template-columns:minmax(56px,76px);right:calc(clamp(84px,calc(26vw * var(--arcade-control-scale,1)),146px) + 7px);max-width:80px}.arcade-playfield.is-immersive .arcade-joystick-layout[data-control-layout="move-right"] .arcade-action-cluster,.arcade-playfield:fullscreen .arcade-joystick-layout[data-control-layout="move-right"] .arcade-action-cluster,.arcade-playfield:-webkit-full-screen .arcade-joystick-layout[data-control-layout="move-right"] .arcade-action-cluster{right:auto;left:calc(clamp(84px,calc(26vw * var(--arcade-control-scale,1)),146px) + 7px)}.arcade-playfield.is-immersive .arcade-stick,.arcade-playfield:fullscreen .arcade-stick,.arcade-playfield:-webkit-full-screen .arcade-stick{width:clamp(84px,calc(26vw * var(--arcade-control-scale,1)),146px);height:clamp(84px,calc(26vw * var(--arcade-control-scale,1)),146px)}.arcade-playfield.is-immersive .arcade-stick-label,.arcade-playfield:fullscreen .arcade-stick-label,.arcade-playfield:-webkit-full-screen .arcade-stick-label{font-size:.6rem}}
 @media(prefers-reduced-motion:reduce){.arcade-stick-thumb,.arcade-playfield.has-dual-stick-controls>.camera-controls{transition:none}}
 
 /* Fase 3 — leitura móvel, câmera do Snake e renderização 3D adaptativa. */
@@ -223,3 +223,352 @@ html.arcade-immersive-open,body.arcade-immersive-open{overflow:hidden!important;
 .arcade-playfield.is-immersive[data-arcade-game="drone"]>.arcade-overlay,.arcade-playfield:fullscreen[data-arcade-game="drone"]>.arcade-overlay,.arcade-playfield:-webkit-full-screen[data-arcade-game="drone"]>.arcade-overlay{max-width:min(72vw,760px)}
 @media(max-height:520px) and (orientation:landscape){.arcade-playfield.is-immersive[data-arcade-game="drone"]>.arcade-overlay #arcadeHud,.arcade-playfield:fullscreen[data-arcade-game="drone"]>.arcade-overlay #arcadeHud,.arcade-playfield:-webkit-full-screen[data-arcade-game="drone"]>.arcade-overlay #arcadeHud{display:none}.drone-stats{display:flex;width:auto;max-width:70vw}.drone-stats span:last-child{display:none}}
 @media(prefers-reduced-motion:reduce){.arcade-playfield[data-drone-quality]>canvas{filter:none}.arcade-playfield[data-arcade-game="drone"]>canvas{cursor:default}}
+
+/* V4.3.1 — navegação permanente, entrada móvel protegida e controles sem sobreposição. */
+.arcade-system-dock{position:absolute;z-index:42;top:var(--arcade-safe-top);right:var(--arcade-safe-right);display:none;align-items:center;gap:5px;padding:5px;border:1px solid rgba(137,232,255,.3);border-radius:14px;background:rgba(2,13,24,.86);box-shadow:0 10px 28px rgba(0,0,0,.34);backdrop-filter:blur(10px)}
+.arcade-system-dock button{display:grid;grid-template-columns:auto auto;place-items:center;gap:5px;min-width:48px;min-height:44px;padding:6px 8px;border:1px solid transparent;border-radius:10px;background:transparent;color:#e6fbff;font-size:.72rem;font-weight:850;line-height:1;cursor:pointer;touch-action:manipulation}
+.arcade-system-dock button:hover,.arcade-system-dock button:focus-visible{border-color:rgba(126,231,255,.42);background:rgba(68,194,230,.16)}
+.arcade-system-dock button:disabled{opacity:.44;cursor:not-allowed}.arcade-system-dock button span{font-size:1rem}.arcade-system-dock button b{font:inherit}
+.arcade-menu button>span:last-child{min-width:0}.arcade-menu button strong,.arcade-menu button small{display:block}.arcade-menu button small{margin-top:3px;line-height:1.28}
+.arcade-playfield.is-immersive>.arcade-system-dock,.arcade-playfield:fullscreen>.arcade-system-dock,.arcade-playfield:-webkit-full-screen>.arcade-system-dock{display:flex;position:fixed}
+.arcade-playfield.is-library-open>.arcade-system-dock{opacity:0;pointer-events:none}
+
+.arcade-library-drawer{position:absolute;z-index:46;inset:0;box-sizing:border-box;display:grid;grid-template-rows:auto minmax(0,1fr) auto auto;gap:12px;width:100%;height:100%;padding:calc(var(--arcade-safe-top) + 12px) calc(var(--arcade-safe-right) + 12px) calc(var(--arcade-safe-bottom) + 12px) calc(var(--arcade-safe-left) + 12px);overflow:auto;color:#e8faff;background:radial-gradient(circle at 80% 0,rgba(65,215,255,.15),transparent 34%),rgba(2,10,20,.97);overscroll-behavior:contain}
+.arcade-library-drawer[hidden]{display:none!important}.arcade-library-drawer>header{display:flex;align-items:flex-start;justify-content:space-between;gap:12px}.arcade-library-drawer h3,.arcade-library-drawer p{margin:3px 0}.arcade-library-drawer p{color:#b9dfe8}
+.arcade-drawer-close{display:grid;place-items:center;flex:0 0 auto;width:46px;height:46px;min-height:46px;padding:0;border:1px solid rgba(143,235,255,.36);border-radius:50%;background:rgba(7,28,44,.9);color:#fff;font:800 1.6rem/1 system-ui;cursor:pointer}
+.arcade-library-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));align-content:start;gap:8px;min-height:0;overflow:auto;padding:2px;overscroll-behavior:contain}
+.arcade-library-game{display:grid;grid-template-columns:auto minmax(0,1fr);align-items:center;gap:10px;min-width:0;min-height:72px;padding:10px;border:1px solid rgba(117,222,247,.18);border-radius:13px;background:rgba(7,28,46,.8);color:#e9fbff;text-align:left;cursor:pointer;touch-action:manipulation}
+.arcade-library-game:hover,.arcade-library-game:focus-visible,.arcade-library-game.active{border-color:rgba(101,232,255,.58);background:linear-gradient(135deg,rgba(71,207,241,.2),rgba(116,92,220,.17));box-shadow:inset 3px 0 #63e7ff}.arcade-library-game .game-emoji{font-size:1.5rem}.arcade-library-game span:last-child{min-width:0}.arcade-library-game strong,.arcade-library-game small{display:block}.arcade-library-game small{margin-top:3px;color:#afd5df;font-size:.69rem;line-height:1.25}
+.arcade-drawer-settings{border:1px solid rgba(119,223,249,.22);border-radius:12px;background:rgba(5,24,40,.82)}.arcade-drawer-settings>summary{min-height:44px;padding:12px;color:#dffaff;font-weight:850;cursor:pointer;touch-action:manipulation}.arcade-drawer-settings>div{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px;padding:0 12px 12px}.arcade-drawer-settings label{display:grid;grid-template-columns:1fr auto;align-items:center;gap:5px 10px;min-width:0;color:#c9edf5;font-size:.74rem;font-weight:800}.arcade-drawer-settings select,.arcade-drawer-settings input{grid-column:1/-1;width:100%;min-width:0}.arcade-drawer-settings output{color:#71eaff;font-variant-numeric:tabular-nums}.arcade-library-drawer>footer{display:flex;justify-content:flex-end}.arcade-library-drawer>footer .btn{min-height:44px}
+
+.arcade-mobile-gate{position:absolute;z-index:40;inset:0;display:grid;place-content:center;justify-items:center;gap:13px;padding:24px;color:#eaffff;text-align:center;background:radial-gradient(circle at 50% 24%,rgba(62,217,255,.2),transparent 38%),linear-gradient(150deg,#020a15,#071a2d);overflow:auto;overscroll-behavior:contain}
+.arcade-mobile-gate>div{max-width:560px}.arcade-mobile-gate h3{margin:5px 0;font-size:clamp(1.35rem,6vw,2rem)}.arcade-mobile-gate p{margin:0;color:#c4e8ef;line-height:1.45}.arcade-mobile-gate .btn{width:min(320px,100%);min-height:48px}.arcade-mobile-gate small{max-width:520px;color:#94c5d0;line-height:1.35}.arcade-mobile-gate-icon{display:grid;place-items:center;width:76px;height:76px;border:1px solid rgba(121,231,255,.38);border-radius:22px;background:rgba(33,133,168,.15);font-size:2.4rem;box-shadow:0 14px 38px rgba(0,0,0,.3)}
+.arcade-playfield.requires-immersive{min-height:440px}.arcade-playfield.requires-immersive>.arcade-system-dock{display:none!important}
+
+.arcade-playfield.is-immersive,.arcade-playfield:fullscreen,.arcade-playfield:-webkit-full-screen{width:var(--arcade-vw,100vw)!important;height:var(--arcade-vh,100dvh)!important;min-width:var(--arcade-vw,100vw)!important;min-height:var(--arcade-vh,100dvh)!important}
+.arcade-playfield.is-immersive>.arcade-overlay,.arcade-playfield:fullscreen>.arcade-overlay,.arcade-playfield:-webkit-full-screen>.arcade-overlay{right:calc(var(--arcade-safe-right) + min(318px,48vw) + 10px)}
+.arcade-playfield.is-immersive .mobile-game-controls [data-action="action"],.arcade-playfield:fullscreen .mobile-game-controls [data-action="action"],.arcade-playfield:-webkit-full-screen .mobile-game-controls [data-action="action"]{grid-column:5;grid-row:1}
+.arcade-playfield.is-immersive .mobile-game-controls [data-action="jump"],.arcade-playfield.is-immersive .mobile-game-controls [data-action="turbo"],.arcade-playfield.is-immersive .mobile-game-controls [data-action="bomb"],.arcade-playfield:fullscreen .mobile-game-controls [data-action="jump"],.arcade-playfield:fullscreen .mobile-game-controls [data-action="turbo"],.arcade-playfield:fullscreen .mobile-game-controls [data-action="bomb"],.arcade-playfield:-webkit-full-screen .mobile-game-controls [data-action="jump"],.arcade-playfield:-webkit-full-screen .mobile-game-controls [data-action="turbo"],.arcade-playfield:-webkit-full-screen .mobile-game-controls [data-action="bomb"]{grid-column:5;grid-row:2}
+.arcade-playfield.is-immersive>.arcade-pause-curtain,.arcade-playfield:fullscreen>.arcade-pause-curtain,.arcade-playfield:-webkit-full-screen>.arcade-pause-curtain{z-index:44;padding-top:calc(var(--arcade-safe-top) + 58px)}
+.arcade-playfield.is-immersive.has-dual-stick-controls>.camera-controls,.arcade-playfield:fullscreen.has-dual-stick-controls>.camera-controls,.arcade-playfield:-webkit-full-screen.has-dual-stick-controls>.camera-controls{display:none!important}
+
+@media(max-width:760px),(max-height:520px) and (pointer:coarse){
+  .arcade-shell>.arcade-hero,.arcade-shell>.arcade-grid>.arcade-menu,.arcade-stage>.arcade-stage-head,.arcade-stage>.arcade-info,.arcade-stage>#arcadeStatus{display:none}
+  .arcade-shell>.arcade-grid,.arcade-shell .arcade-stage{display:block}.arcade-shell .arcade-playfield.requires-immersive{border-radius:18px}
+}
+
+@media(max-width:760px),(pointer:coarse){
+  .arcade-system-dock{display:flex}.arcade-stage-actions{grid-template-columns:repeat(4,minmax(0,1fr))}.arcade-stage-actions .btn{font-size:.72rem}
+  .arcade-library-drawer{position:fixed}.arcade-library-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .arcade-menu button{min-height:64px}.arcade-playfield.requires-immersive{min-height:clamp(420px,112vw,540px)}
+}
+
+@media(max-width:430px){
+  .arcade-system-dock{gap:3px;padding:4px}.arcade-system-dock button{grid-template-columns:1fr;gap:2px;min-width:44px;min-height:44px;padding:4px 6px}.arcade-system-dock button b{font-size:.58rem}.arcade-system-dock button span{font-size:.9rem}
+  .arcade-playfield.is-immersive>.arcade-overlay,.arcade-playfield:fullscreen>.arcade-overlay,.arcade-playfield:-webkit-full-screen>.arcade-overlay{right:calc(var(--arcade-safe-right) + 202px);max-width:none}
+  .arcade-library-drawer{gap:9px;padding-top:calc(var(--arcade-safe-top) + 8px)}.arcade-library-drawer h3{font-size:1.15rem}.arcade-library-drawer p{font-size:.74rem}.arcade-library-game{min-height:66px;padding:8px}.arcade-library-game small{display:none}.arcade-drawer-settings>div{grid-template-columns:1fr}.arcade-mobile-gate{padding:18px}.arcade-mobile-gate-icon{width:64px;height:64px;font-size:2rem}
+}
+
+@media(max-height:520px) and (orientation:landscape){
+  .arcade-system-dock{top:max(4px,env(safe-area-inset-top));right:max(4px,env(safe-area-inset-right));padding:3px}.arcade-system-dock button{min-height:38px;padding:3px 6px}.arcade-system-dock button b{font-size:.58rem}
+  .arcade-library-drawer{grid-template-columns:minmax(190px,.58fr) minmax(360px,1.42fr);grid-template-rows:auto 1fr auto;grid-template-areas:"head games" "settings games" "footer games";gap:8px;padding-top:calc(var(--arcade-safe-top) + 6px)}.arcade-library-drawer>header{grid-area:head}.arcade-library-grid{grid-area:games}.arcade-drawer-settings{grid-area:settings;align-self:start}.arcade-drawer-settings>div{grid-template-columns:1fr}.arcade-library-drawer>footer{grid-area:footer;justify-content:stretch}.arcade-library-drawer>footer .btn{width:100%}.arcade-library-game{min-height:58px}.arcade-library-game small{display:none}
+  .arcade-mobile-gate{grid-template-columns:auto minmax(250px,560px);grid-template-areas:"icon copy" "primary primary" "secondary note";align-content:center;gap:8px 14px;padding:12px 18px}.arcade-mobile-gate-icon{grid-area:icon;width:60px;height:60px;font-size:1.9rem}.arcade-mobile-gate>div{grid-area:copy;text-align:left}.arcade-mobile-gate h3{font-size:1.25rem}.arcade-mobile-gate p{font-size:.76rem}.arcade-mobile-gate [data-start-mobile-game]{grid-area:primary}.arcade-mobile-gate [data-mobile-library]{grid-area:secondary}.arcade-mobile-gate small{grid-area:note;font-size:.65rem;text-align:left}
+  .arcade-playfield.is-immersive>.hangman-stage,.arcade-playfield:fullscreen>.hangman-stage,.arcade-playfield:-webkit-full-screen>.hangman-stage{align-content:start;gap:7px;min-height:100%;max-height:none;padding-top:calc(var(--arcade-safe-top) + 50px);padding-bottom:calc(var(--arcade-safe-bottom) + 6px)}.arcade-playfield.is-immersive .hangman-drawing,.arcade-playfield:fullscreen .hangman-drawing,.arcade-playfield:-webkit-full-screen .hangman-drawing{display:none}.arcade-playfield.is-immersive .hangman-stage p,.arcade-playfield:fullscreen .hangman-stage p,.arcade-playfield:-webkit-full-screen .hangman-stage p{margin:1px 0;font-size:.76rem}.arcade-playfield.is-immersive .hangman-word,.arcade-playfield:fullscreen .hangman-word,.arcade-playfield:-webkit-full-screen .hangman-word{gap:5px}.arcade-playfield.is-immersive .hangman-letter,.arcade-playfield:fullscreen .hangman-letter,.arcade-playfield:-webkit-full-screen .hangman-letter{width:30px;height:32px;font-size:1rem}.arcade-playfield.is-immersive .hangman-input-label,.arcade-playfield:fullscreen .hangman-input-label,.arcade-playfield:-webkit-full-screen .hangman-input-label{gap:3px}.arcade-playfield.is-immersive .hangman-input-label input,.arcade-playfield:fullscreen .hangman-input-label input,.arcade-playfield:-webkit-full-screen .hangman-input-label input{height:42px}.arcade-playfield.is-immersive #hangmanFocus,.arcade-playfield:fullscreen #hangmanFocus,.arcade-playfield:-webkit-full-screen #hangmanFocus{min-height:38px;padding-block:5px}
+  .arcade-playfield.is-immersive .arcade-stick,.arcade-playfield:fullscreen .arcade-stick,.arcade-playfield:-webkit-full-screen .arcade-stick{width:clamp(84px,19vmin,104px);height:clamp(84px,19vmin,104px)}.arcade-playfield.is-immersive .arcade-action-cluster,.arcade-playfield:fullscreen .arcade-action-cluster,.arcade-playfield:-webkit-full-screen .arcade-action-cluster{right:calc(clamp(84px,19vmin,104px) + 8px);grid-template-columns:repeat(2,minmax(52px,72px));max-width:150px}.arcade-playfield.is-immersive .arcade-joystick-layout[data-control-layout="move-right"] .arcade-action-cluster,.arcade-playfield:fullscreen .arcade-joystick-layout[data-control-layout="move-right"] .arcade-action-cluster,.arcade-playfield:-webkit-full-screen .arcade-joystick-layout[data-control-layout="move-right"] .arcade-action-cluster{right:auto;left:calc(clamp(84px,19vmin,104px) + 8px)}.arcade-playfield.is-immersive .arcade-action-cluster>button,.arcade-playfield.is-immersive .arcade-control-settings>summary,.arcade-playfield:fullscreen .arcade-action-cluster>button,.arcade-playfield:fullscreen .arcade-control-settings>summary,.arcade-playfield:-webkit-full-screen .arcade-action-cluster>button,.arcade-playfield:-webkit-full-screen .arcade-control-settings>summary{min-height:36px;padding:4px 6px;font-size:.62rem}
+}
+
+@media(prefers-reduced-motion:reduce){.arcade-system-dock,.arcade-library-drawer,.arcade-mobile-gate{backdrop-filter:none}}
+
+/* V4.4.0 — Drone Core 360: física assistida, arena ampliada, câmeras e gamepad. */
+.arcade-playfield[data-arcade-game="drone"]{position:relative;background:#020711}
+.arcade-playfield[data-arcade-game="drone"]>canvas{background:radial-gradient(circle at 50% 20%,#0a2440,#020711 72%)}
+.drone-flight-toolbar{position:absolute;z-index:19;top:9px;left:9px;display:flex;align-items:center;gap:5px;max-width:calc(100% - 18px);padding:5px;border:1px solid rgba(117,226,255,.3);border-radius:13px;background:rgba(2,14,25,.76);box-shadow:0 10px 26px rgba(0,0,0,.28);backdrop-filter:blur(9px)}
+.drone-flight-toolbar button{min-height:34px;padding:6px 9px;border:1px solid transparent;border-radius:9px;background:rgba(28,75,96,.42);color:#dffaff;font-size:.7rem;font-weight:850;cursor:pointer;touch-action:manipulation}
+.drone-flight-toolbar button:hover,.drone-flight-toolbar button:focus-visible{border-color:rgba(110,232,255,.55);background:rgba(45,132,163,.45)}
+.drone-flight-toolbar button[aria-pressed="true"]{border-color:#69e9ff;background:linear-gradient(135deg,rgba(45,193,224,.4),rgba(83,91,207,.35));box-shadow:inset 0 0 0 1px rgba(219,253,255,.16)}
+.drone-flight-toolbar span{overflow:hidden;max-width:160px;padding:0 6px;color:#aee4ee;font-size:.65rem;font-weight:750;text-overflow:ellipsis;white-space:nowrap}
+.drone-crosshair{position:absolute;z-index:11;top:min(43%,260px);left:50%;display:none;place-items:center;width:34px;height:34px;transform:translate(-50%,-50%);border:1px solid rgba(116,238,255,.52);border-radius:50%;box-shadow:0 0 18px rgba(66,224,255,.28);pointer-events:none}
+.drone-crosshair::before,.drone-crosshair::after{content:"";position:absolute;background:rgba(149,245,255,.78)}
+.drone-crosshair::before{width:46px;height:1px}.drone-crosshair::after{width:1px;height:46px}
+.drone-crosshair i{width:5px;height:5px;border-radius:50%;background:#d9fbff;box-shadow:0 0 9px #68eaff}
+.arcade-playfield[data-drone-camera="cockpit"] .drone-crosshair{display:grid}
+.arcade-playfield[data-drone-camera="cockpit"]>canvas{cursor:crosshair}
+.drone-stats{grid-template-columns:repeat(6,minmax(max-content,auto));max-width:min(100%,900px);gap:5px}
+.drone-stats span{font-variant-numeric:tabular-nums}
+.drone-stats span:last-child{grid-column:1/-1;justify-content:flex-start;min-width:0}
+.arcade-playfield[data-drone-quality="high"]>canvas,.arcade-playfield[data-drone-quality="ultra"]>canvas{filter:saturate(1.04) contrast(1.015)}
+
+.arcade-playfield.is-immersive[data-arcade-game="drone"]>.drone-flight-toolbar,.arcade-playfield:fullscreen[data-arcade-game="drone"]>.drone-flight-toolbar,.arcade-playfield:-webkit-full-screen[data-arcade-game="drone"]>.drone-flight-toolbar{position:fixed;top:calc(var(--arcade-safe-top) + 56px);left:calc(var(--arcade-safe-left) + 6px)}
+.arcade-playfield.is-immersive[data-arcade-game="drone"]>.drone-crosshair,.arcade-playfield:fullscreen[data-arcade-game="drone"]>.drone-crosshair,.arcade-playfield:-webkit-full-screen[data-arcade-game="drone"]>.drone-crosshair{position:fixed;top:50%}
+
+@media(max-width:760px){
+  .drone-flight-toolbar{top:6px;left:6px;max-width:calc(100% - 12px);padding:4px}
+  .drone-flight-toolbar button{min-height:32px;padding:5px 7px;font-size:.64rem}
+  .drone-flight-toolbar span{max-width:105px;font-size:.59rem}
+  .drone-stats{grid-template-columns:repeat(3,minmax(0,1fr));width:100%;gap:4px}
+  .drone-stats span{min-width:0}
+  .drone-stats span:last-child{grid-column:1/-1;justify-content:center}
+}
+
+@media(max-width:430px){
+  .drone-flight-toolbar span{display:none}
+  .drone-flight-toolbar button{padding-inline:6px}
+  .drone-crosshair{width:28px;height:28px}
+  .drone-crosshair::before{width:38px}.drone-crosshair::after{height:38px}
+}
+
+@media(max-height:520px) and (orientation:landscape){
+  .arcade-playfield.is-immersive[data-arcade-game="drone"]>.drone-flight-toolbar,.arcade-playfield:fullscreen[data-arcade-game="drone"]>.drone-flight-toolbar,.arcade-playfield:-webkit-full-screen[data-arcade-game="drone"]>.drone-flight-toolbar{top:calc(var(--arcade-safe-top) + 44px)}
+  .drone-flight-toolbar button{min-height:29px;padding:3px 6px;font-size:.59rem}
+  .drone-flight-toolbar span{display:none}
+  .drone-stats{display:grid;grid-template-columns:repeat(6,minmax(0,auto));max-width:72vw}
+  .drone-stats span:last-child{display:none}
+}
+
+@media(prefers-reduced-motion:reduce){.drone-flight-toolbar{backdrop-filter:none}.drone-crosshair{box-shadow:none}}
+.arcade-playfield.has-drone-fallback>.drone-flight-toolbar,.arcade-playfield.has-drone-fallback>.drone-crosshair{display:none!important}
+
+@media(max-width:430px) and (orientation:portrait){
+  .arcade-playfield.is-immersive[data-arcade-game="drone"]>.arcade-overlay,.arcade-playfield:fullscreen[data-arcade-game="drone"]>.arcade-overlay,.arcade-playfield:-webkit-full-screen[data-arcade-game="drone"]>.arcade-overlay{top:calc(var(--arcade-safe-top) + 108px);right:calc(var(--arcade-safe-right) + 6px);left:calc(var(--arcade-safe-left) + 6px);max-width:none;padding:5px 7px}
+  .arcade-playfield.is-immersive[data-arcade-game="drone"]>.arcade-overlay #arcadeHud,.arcade-playfield:fullscreen[data-arcade-game="drone"]>.arcade-overlay #arcadeHud,.arcade-playfield:-webkit-full-screen[data-arcade-game="drone"]>.arcade-overlay #arcadeHud{display:none}
+  .arcade-playfield.is-immersive[data-arcade-game="drone"] .drone-stats,.arcade-playfield:fullscreen[data-arcade-game="drone"] .drone-stats,.arcade-playfield:-webkit-full-screen[data-arcade-game="drone"] .drone-stats{grid-template-columns:repeat(3,minmax(0,1fr));width:100%}
+  .arcade-playfield.is-immersive[data-arcade-game="drone"] .drone-stats span:nth-child(n+4),.arcade-playfield:fullscreen[data-arcade-game="drone"] .drone-stats span:nth-child(n+4),.arcade-playfield:-webkit-full-screen[data-arcade-game="drone"] .drone-stats span:nth-child(n+4){display:none}
+}
+
+/* V4.5.0 — Drone Missions 360: rotas, checkpoints, obstáculos móveis, pousos avaliados e medalhas. */
+.drone-mission-panel{position:absolute;z-index:18;top:54px;left:9px;width:min(350px,calc(100% - 18px));padding:10px;border:1px solid rgba(115,229,255,.32);border-radius:14px;background:linear-gradient(145deg,rgba(2,17,30,.9),rgba(7,31,48,.78));box-shadow:0 14px 34px rgba(0,0,0,.34);color:#e8fbff;backdrop-filter:blur(10px);pointer-events:none}
+.drone-mission-panel header{display:grid;grid-template-columns:auto minmax(0,1fr) auto;align-items:center;gap:7px}
+.drone-mission-panel header span,.drone-mission-panel time{padding:3px 6px;border:1px solid rgba(118,230,255,.22);border-radius:7px;background:rgba(56,157,190,.14);color:#aeeaf5;font-size:.61rem;font-weight:900;font-variant-numeric:tabular-nums;white-space:nowrap}
+.drone-mission-panel header strong{overflow:hidden;color:#f2fdff;font-size:.76rem;text-overflow:ellipsis;white-space:nowrap}
+.drone-mission-panel p{margin:7px 0 8px;color:#bde7ef;font-size:.67rem;font-weight:720;line-height:1.3}
+.drone-route{display:flex;gap:5px;overflow:hidden}
+.drone-route span{display:flex;align-items:center;min-width:28px;max-width:34px;height:28px;padding:3px;border:1px solid rgba(123,221,242,.2);border-radius:8px;background:rgba(18,64,82,.45);transition:max-width .2s ease,background .2s ease,border-color .2s ease}
+.drone-route span i{display:grid;place-items:center;flex:0 0 20px;width:20px;height:20px;border-radius:6px;background:rgba(125,222,243,.12);color:#aeeaf5;font-size:.58rem;font-style:normal;font-weight:950}
+.drone-route span b{overflow:hidden;margin-left:5px;color:#ddf8fc;font-size:.59rem;text-overflow:ellipsis;white-space:nowrap}
+.drone-route span.is-active{max-width:145px;border-color:#6ceaff;background:linear-gradient(135deg,rgba(38,185,217,.3),rgba(72,91,196,.28));box-shadow:0 0 16px rgba(72,224,255,.18)}
+.drone-route span.is-done{border-color:rgba(98,255,159,.48);background:rgba(30,129,75,.26)}
+.drone-route span.is-done i{background:rgba(74,224,126,.2);color:#91ffc1}
+.drone-route span.is-pending{opacity:.62}
+.drone-mission-panel footer{display:flex;justify-content:space-between;gap:8px;margin-top:8px;padding-top:7px;border-top:1px solid rgba(126,227,246,.14);color:#9ed7e1;font-size:.59rem;font-weight:800}
+.drone-mission-panel footer span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.arcade-playfield[data-drone-mission-state="transition"] .drone-mission-panel{border-color:rgba(255,216,91,.62);box-shadow:0 0 28px rgba(255,198,58,.16)}
+.drone-flight-toolbar [data-drone-checkpoint-reset]{border-color:rgba(99,255,158,.24);color:#caffdc}
+.drone-flight-toolbar [data-drone-checkpoint-reset]:hover,.drone-flight-toolbar [data-drone-checkpoint-reset]:focus-visible{border-color:rgba(99,255,158,.58);background:rgba(40,139,79,.32)}
+.drone-stats{grid-template-columns:repeat(7,minmax(max-content,auto));max-width:min(100%,1040px)}
+.drone-stats span:last-child{grid-column:1/-1}
+
+.arcade-playfield.is-immersive[data-arcade-game="drone"]>.drone-mission-panel,.arcade-playfield:fullscreen[data-arcade-game="drone"]>.drone-mission-panel,.arcade-playfield:-webkit-full-screen[data-arcade-game="drone"]>.drone-mission-panel{position:fixed;top:calc(var(--arcade-safe-top) + 101px);left:calc(var(--arcade-safe-left) + 6px)}
+
+@media(max-width:760px){
+  .drone-mission-panel{top:48px;left:6px;width:min(330px,calc(100% - 12px));padding:8px}
+  .drone-mission-panel p{margin:5px 0 6px;font-size:.63rem}
+  .drone-route{gap:4px}.drone-route span{height:25px;min-width:25px;max-width:29px}.drone-route span i{width:18px;height:18px;flex-basis:18px}.drone-route span.is-active{max-width:124px}
+  .drone-mission-panel footer{margin-top:6px;padding-top:5px}
+  .drone-stats{grid-template-columns:repeat(4,minmax(0,1fr));width:100%}
+  .drone-stats span:last-child{grid-column:1/-1}
+}
+
+@media(max-width:430px){
+  .drone-flight-toolbar [data-drone-checkpoint-reset]{font-size:0;width:34px}
+  .drone-flight-toolbar [data-drone-checkpoint-reset]::before{content:"↺";font-size:.9rem}
+  .drone-mission-panel{width:calc(100% - 12px)}
+  .drone-mission-panel header{grid-template-columns:auto minmax(0,1fr) auto;gap:5px}
+  .drone-mission-panel header strong{font-size:.68rem}
+  .drone-route span.is-active{max-width:112px}
+}
+
+@media(max-height:520px) and (orientation:landscape){
+  .arcade-playfield.is-immersive[data-arcade-game="drone"]>.drone-mission-panel,.arcade-playfield:fullscreen[data-arcade-game="drone"]>.drone-mission-panel,.arcade-playfield:-webkit-full-screen[data-arcade-game="drone"]>.drone-mission-panel{top:calc(var(--arcade-safe-top) + 78px);width:min(290px,38vw);padding:6px 7px}
+  .drone-mission-panel p{display:none}.drone-mission-panel footer{margin-top:5px;padding-top:4px}.drone-mission-panel footer span:first-child{display:none}
+  .drone-route span{height:23px;min-width:23px;max-width:26px}.drone-route span i{width:16px;height:16px;flex-basis:16px}.drone-route span.is-active{max-width:102px}
+  .drone-stats{grid-template-columns:repeat(7,minmax(0,auto));max-width:78vw}
+}
+
+@media(max-width:430px) and (orientation:portrait){
+  .arcade-playfield.is-immersive[data-arcade-game="drone"]>.drone-mission-panel,.arcade-playfield:fullscreen[data-arcade-game="drone"]>.drone-mission-panel,.arcade-playfield:-webkit-full-screen[data-arcade-game="drone"]>.drone-mission-panel{top:calc(var(--arcade-safe-top) + 148px);right:calc(var(--arcade-safe-right) + 6px);left:calc(var(--arcade-safe-left) + 6px);width:auto}
+  .arcade-playfield.is-immersive[data-arcade-game="drone"] .drone-mission-panel footer,.arcade-playfield:fullscreen[data-arcade-game="drone"] .drone-mission-panel footer,.arcade-playfield:-webkit-full-screen[data-arcade-game="drone"] .drone-mission-panel footer{display:none}
+  .arcade-playfield.is-immersive[data-arcade-game="drone"] .drone-stats,.arcade-playfield:fullscreen[data-arcade-game="drone"] .drone-stats,.arcade-playfield:-webkit-full-screen[data-arcade-game="drone"] .drone-stats{grid-template-columns:repeat(4,minmax(0,1fr))}
+}
+
+@media(prefers-reduced-motion:reduce){.drone-mission-panel{backdrop-filter:none}.drone-route span{transition:none}}
+.arcade-playfield.has-drone-fallback>.drone-mission-panel{display:none!important}
+@media(max-width:430px) and (orientation:portrait){
+  .arcade-playfield.is-immersive[data-arcade-game="drone"] .drone-stats span:nth-child(4),.arcade-playfield:fullscreen[data-arcade-game="drone"] .drone-stats span:nth-child(4),.arcade-playfield:-webkit-full-screen[data-arcade-game="drone"] .drone-stats span:nth-child(4){display:inline-flex}
+  .arcade-playfield.is-immersive[data-arcade-game="drone"] .drone-stats span:nth-child(n+5),.arcade-playfield:fullscreen[data-arcade-game="drone"] .drone-stats span:nth-child(n+5),.arcade-playfield:-webkit-full-screen[data-arcade-game="drone"] .drone-stats span:nth-child(n+5){display:none}
+}
+
+/* V4.6.0 — Drone Atmosphere 360: vento físico, chuva, poeira, nuvens, rotor wash e tempestade elétrica. */
+.drone-weather-flash{position:absolute;z-index:12;inset:0;background:radial-gradient(circle at 58% 15%,rgba(225,249,255,.95),rgba(119,192,255,.42) 24%,transparent 68%);opacity:0;mix-blend-mode:screen;pointer-events:none;transition:opacity 70ms linear}
+.drone-weather-badge{display:inline-flex;align-items:center;max-width:190px!important;padding:5px 8px!important;border:1px solid rgba(142,235,255,.2);border-radius:8px;background:rgba(18,71,91,.3);color:#d7f8ff!important;letter-spacing:.01em}
+.arcade-playfield[data-drone-weather="crosswind"] .drone-weather-badge{border-color:rgba(96,224,255,.48);background:rgba(21,112,139,.32)}
+.arcade-playfield[data-drone-weather="dust"] .drone-weather-badge{border-color:rgba(236,183,111,.52);background:rgba(116,73,31,.38);color:#ffe0b1!important}
+.arcade-playfield[data-drone-weather="rain"] .drone-weather-badge{border-color:rgba(119,178,255,.52);background:rgba(40,71,128,.4);color:#d8e8ff!important}
+.arcade-playfield[data-drone-weather="storm"] .drone-weather-badge{border-color:rgba(179,145,255,.64);background:linear-gradient(135deg,rgba(62,40,122,.52),rgba(22,66,116,.5));color:#f0e8ff!important;box-shadow:0 0 16px rgba(126,102,255,.2)}
+.arcade-playfield[data-drone-weather="dust"]>canvas{filter:saturate(.82) sepia(.08) contrast(1.035)}
+.arcade-playfield[data-drone-weather="rain"]>canvas{filter:saturate(.88) contrast(1.05) brightness(.92)}
+.arcade-playfield[data-drone-weather="storm"]>canvas{filter:saturate(.8) contrast(1.1) brightness(.84)}
+.arcade-playfield[data-drone-weather="storm"] .drone-mission-panel{border-color:rgba(164,137,255,.46);background:linear-gradient(145deg,rgba(8,11,31,.93),rgba(17,37,64,.84))}
+.arcade-playfield[data-drone-weather="dust"] .drone-mission-panel{border-color:rgba(220,164,96,.42);background:linear-gradient(145deg,rgba(31,22,15,.92),rgba(55,39,25,.8))}
+.drone-mission-panel footer{align-items:center}
+.drone-mission-panel footer #droneWindLabel{flex:1;text-align:center;color:#c4edf4;font-variant-numeric:tabular-nums}
+.drone-stats{grid-template-columns:repeat(9,minmax(max-content,auto));max-width:min(100%,1260px)}
+.arcade-playfield.is-immersive[data-arcade-game="drone"]>.drone-weather-flash,.arcade-playfield:fullscreen[data-arcade-game="drone"]>.drone-weather-flash,.arcade-playfield:-webkit-full-screen[data-arcade-game="drone"]>.drone-weather-flash{position:fixed}
+.arcade-playfield.has-drone-fallback>.drone-weather-flash{display:none!important}
+
+@media(max-width:900px){
+  .drone-weather-badge{max-width:128px!important}
+  .drone-stats{grid-template-columns:repeat(5,minmax(0,1fr));width:100%}
+  .drone-stats span:nth-child(10){grid-column:1/-1}
+}
+
+@media(max-width:760px){
+  .drone-weather-badge{max-width:105px!important;padding-inline:6px!important}
+  .drone-stats{grid-template-columns:repeat(4,minmax(0,1fr))}
+  .drone-stats span:nth-child(5),.drone-stats span:nth-child(6){grid-column:span 2}
+  .drone-stats span:nth-child(10){grid-column:1/-1}
+  .drone-mission-panel footer #droneWindLabel{max-width:120px}
+}
+
+@media(max-width:520px){
+  .drone-weather-badge{display:none!important}
+  .drone-mission-panel footer{gap:5px}
+  .drone-mission-panel footer #droneWindLabel{max-width:104px;font-size:.56rem}
+}
+
+@media(max-height:520px) and (orientation:landscape){
+  .drone-stats{grid-template-columns:repeat(8,minmax(0,auto));max-width:88vw}
+  .drone-stats span:nth-child(9),.drone-stats span:nth-child(10){display:none}
+  .drone-mission-panel footer #droneWindLabel{display:inline;max-width:110px}
+}
+
+@media(max-width:430px) and (orientation:portrait){
+  .arcade-playfield.is-immersive[data-arcade-game="drone"] .drone-stats,.arcade-playfield:fullscreen[data-arcade-game="drone"] .drone-stats,.arcade-playfield:-webkit-full-screen[data-arcade-game="drone"] .drone-stats{grid-template-columns:repeat(4,minmax(0,1fr))}
+  .arcade-playfield.is-immersive[data-arcade-game="drone"] .drone-stats span:nth-child(n+5),.arcade-playfield:fullscreen[data-arcade-game="drone"] .drone-stats span:nth-child(n+5),.arcade-playfield:-webkit-full-screen[data-arcade-game="drone"] .drone-stats span:nth-child(n+5){display:none}
+}
+
+@media(prefers-reduced-motion:reduce){
+  .drone-weather-flash{display:none}
+  .arcade-playfield[data-drone-weather]>canvas{filter:none}
+}
+
+
+/* V4.7.0 — Drone Performance 360: benchmark, telemetria e qualidade adaptativa. */
+.drone-performance-panel{position:relative}
+.drone-performance-panel>summary{display:flex;align-items:center;min-height:34px;padding:6px 9px;border:1px solid rgba(119,229,255,.22);border-radius:9px;background:rgba(28,75,96,.42);color:#dffaff;font-size:.7rem;font-weight:850;cursor:pointer;list-style:none;white-space:nowrap}
+.drone-performance-panel>summary::-webkit-details-marker{display:none}
+.drone-performance-panel[open]>summary{border-color:#6ceaff;background:rgba(42,143,172,.48)}
+.drone-performance-card{position:absolute;z-index:40;top:calc(100% + 8px);left:0;width:min(360px,calc(100vw - 28px));padding:11px;border:1px solid rgba(111,232,255,.42);border-radius:14px;background:linear-gradient(145deg,rgba(2,14,26,.97),rgba(7,34,51,.96));box-shadow:0 18px 48px rgba(0,0,0,.5);color:#eaffff}
+.drone-performance-card header{display:flex;justify-content:space-between;gap:10px;align-items:center;margin-bottom:9px}
+.drone-performance-card header strong{font-size:.78rem}.drone-performance-card header span{max-width:190px;padding:3px 6px;border-radius:7px;background:rgba(67,183,214,.15);color:#aeeaf5;font-size:.61rem;text-align:right}
+.drone-quality-options{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:5px;margin-bottom:9px}
+.drone-quality-options button{min-height:31px!important;padding:4px 6px!important;border-color:rgba(116,224,246,.18)!important;font-size:.62rem!important}
+.drone-quality-options button[aria-pressed="true"]{border-color:#68eaff!important;background:linear-gradient(135deg,rgba(36,188,219,.42),rgba(85,89,202,.38))!important;color:#fff}
+.drone-performance-card dl{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:5px;margin:0 0 9px}
+.drone-performance-card dl div{min-width:0;padding:6px;border:1px solid rgba(112,218,239,.14);border-radius:8px;background:rgba(12,51,68,.42)}
+.drone-performance-card dt{color:#84cbd8;font-size:.54rem;font-weight:850;text-transform:uppercase}.drone-performance-card dd{overflow:hidden;margin:2px 0 0;color:#effdff;font-size:.68rem;font-weight:900;font-variant-numeric:tabular-nums;text-overflow:ellipsis;white-space:nowrap}
+.drone-benchmark-button{width:100%;border-color:rgba(103,255,164,.34)!important;background:rgba(33,125,73,.3)!important;color:#d5ffe3!important}
+.drone-performance-card small{display:block;margin-top:7px;color:#8fc8d2;font-size:.56rem;line-height:1.35}
+.arcade-playfield[data-drone-adaptive="fps-low"]>canvas{filter:saturate(.94) contrast(1.02)}
+.arcade-playfield.has-drone-fallback>.drone-performance-panel{display:none!important}
+@media(max-width:760px){.drone-performance-panel>summary{min-height:32px;padding:5px 7px;font-size:.64rem}.drone-performance-card{position:fixed;top:calc(var(--arcade-safe-top) + 98px);left:calc(var(--arcade-safe-left) + 6px);width:min(340px,calc(100vw - var(--arcade-safe-left) - var(--arcade-safe-right) - 12px));max-height:calc(100dvh - 116px);overflow:auto}.drone-performance-card dl{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media(max-width:430px){.drone-performance-panel>summary{width:34px;font-size:0}.drone-performance-panel>summary::before{content:"⚙";font-size:.88rem}.drone-performance-card{top:calc(var(--arcade-safe-top) + 91px)}.drone-quality-options{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-height:520px) and (orientation:landscape){.drone-performance-card{top:calc(var(--arcade-safe-top) + 72px);width:min(430px,58vw);max-height:calc(100dvh - 80px)}.drone-performance-card dl{grid-template-columns:repeat(6,minmax(0,1fr))}.drone-performance-card small{display:none}}
+@media(prefers-reduced-motion:reduce){.drone-performance-card{backdrop-filter:none}.drone-quality-options button{transition:none}}
+.drone-quality-options [data-drone-quality-mode]{touch-action:manipulation}
+.drone-performance-card{box-sizing:border-box}
+@media(max-width:430px){.drone-performance-card{left:0;width:min(340px,calc(100vw - 14px))}}
+
+
+/* V4.8.0 — Drone Mobile Access 360: controles calibráveis, acessibilidade, haptics e modo precisão. */
+.arcade-sr-only{position:absolute!important;width:1px!important;height:1px!important;padding:0!important;margin:-1px!important;overflow:hidden!important;clip:rect(0,0,0,0)!important;white-space:nowrap!important;border:0!important}
+.arcade-stick-slot,.arcade-action-cluster{opacity:var(--arcade-control-opacity,.86);transition:opacity .16s ease}.arcade-stick-slot:focus-within,.arcade-stick-slot:active,.arcade-action-cluster:focus-within,.arcade-action-cluster:active{opacity:1}.arcade-control-settings>div{max-height:min(62dvh,520px);overflow:auto;overscroll-behavior:contain;opacity:1}
+.arcade-toggle-setting{grid-template-columns:minmax(0,1fr) auto!important}.arcade-toggle-setting span{min-width:0}.arcade-toggle-setting input[type="checkbox"]{grid-column:2!important;width:22px!important;height:22px!important;margin:0;accent-color:#63e7ff}
+.arcade-orientation-hint{display:block;margin-top:8px;color:#7fe9ff;font-size:.72rem;font-weight:850}
+.arcade-action-cluster>[data-action="precision"],[data-drone-precision]{border-color:rgba(107,255,181,.35)!important;background:linear-gradient(145deg,rgba(20,91,70,.88),rgba(31,136,118,.78))!important;color:#d9ffef!important}
+.arcade-action-cluster>[data-action="precision"][aria-pressed="true"],[data-drone-precision][aria-pressed="true"]{border-color:#72ffc0!important;background:linear-gradient(145deg,rgba(33,183,121,.72),rgba(40,117,194,.72))!important;box-shadow:0 0 0 2px rgba(96,255,185,.14),0 0 20px rgba(64,255,183,.16)!important}
+.arcade-playfield[data-drone-precision="on"] .drone-crosshair{border-color:rgba(111,255,190,.82);box-shadow:0 0 18px rgba(78,255,177,.24)}
+.arcade-playfield[data-drone-precision="on"] .drone-crosshair::before,.arcade-playfield[data-drone-precision="on"] .drone-crosshair::after{background:#8dffcc}
+.arcade-playfield[data-arcade-contrast="high"]>.arcade-overlay,.arcade-playfield[data-arcade-contrast="high"] .arcade-system-dock,.arcade-playfield[data-arcade-contrast="high"] .arcade-control-settings>div,.arcade-playfield[data-arcade-contrast="high"] .arcade-library-drawer,.arcade-playfield[data-arcade-contrast="high"] .drone-flight-toolbar,.arcade-playfield[data-arcade-contrast="high"] .drone-mission-panel,.arcade-playfield[data-arcade-contrast="high"] .drone-performance-card{background:#000!important;border-color:#fff!important;color:#fff!important;box-shadow:0 0 0 2px #000,0 0 0 4px #fff!important;backdrop-filter:none!important}
+.arcade-playfield[data-arcade-contrast="high"] button,.arcade-playfield[data-arcade-contrast="high"] summary,.arcade-playfield[data-arcade-contrast="high"] .arcade-game-stats span{border-color:#fff!important;color:#fff!important;text-shadow:none!important}
+.arcade-playfield[data-arcade-contrast="high"]>canvas{filter:contrast(1.18) saturate(1.05)!important}
+.arcade-playfield[data-arcade-motion="reduced"] .arcade-stick-thumb,.arcade-playfield[data-arcade-motion="reduced"] .arcade-stick-slot,.arcade-playfield[data-arcade-motion="reduced"] .arcade-action-cluster,.arcade-playfield[data-arcade-motion="reduced"] .drone-route span,.arcade-playfield[data-arcade-motion="reduced"] .drone-weather-flash{transition:none!important;animation:none!important}.arcade-playfield[data-arcade-motion="reduced"] .drone-weather-flash{display:none!important}.arcade-playfield[data-arcade-motion="reduced"][data-drone-weather]>canvas{filter:none}
+.arcade-playfield.is-immersive .arcade-control-settings>div,.arcade-playfield:fullscreen .arcade-control-settings>div,.arcade-playfield:-webkit-full-screen .arcade-control-settings>div{width:min(330px,calc(100vw - var(--arcade-safe-left) - var(--arcade-safe-right) - 14px));max-height:min(68dvh,520px)}
+.arcade-drawer-settings>div{max-height:min(52dvh,520px);overflow:auto;overscroll-behavior:contain}.arcade-drawer-settings .arcade-toggle-setting input{grid-column:2!important}
+@media(max-width:430px){.arcade-control-settings>div{width:min(300px,calc(100vw - 14px));padding:9px}.arcade-control-settings label{font-size:.7rem}.arcade-orientation-hint{font-size:.66rem}.arcade-action-cluster>[data-action="precision"]{font-size:.64rem}}
+@media(max-height:520px) and (orientation:landscape){.arcade-control-settings>div{width:min(430px,52vw);max-height:calc(100dvh - var(--arcade-safe-top) - var(--arcade-safe-bottom) - 18px);grid-template-columns:repeat(2,minmax(0,1fr))}.arcade-control-settings .arcade-toggle-setting{align-self:end}.arcade-orientation-hint{margin-top:3px;font-size:.62rem}}
+@media(prefers-reduced-motion:reduce){.arcade-stick-slot,.arcade-action-cluster{transition:none}}
+@media(max-width:700px) and (orientation:portrait){
+  .arcade-playfield.is-immersive .arcade-control-settings>div,.arcade-playfield:fullscreen .arcade-control-settings>div,.arcade-playfield:-webkit-full-screen .arcade-control-settings>div{position:fixed;top:calc(var(--arcade-safe-top) + 66px);right:calc(var(--arcade-safe-right) + 4px)!important;bottom:auto;left:calc(var(--arcade-safe-left) + 4px)!important;width:auto;max-height:calc(100dvh - var(--arcade-safe-top) - var(--arcade-safe-bottom) - 82px)}
+}
+.arcade-playfield.is-control-settings-open::after{content:"";position:fixed;z-index:47;inset:0;background:rgba(0,5,12,.78);backdrop-filter:blur(5px)}
+.arcade-playfield.is-control-settings-open>.arcade-control-dock{z-index:48!important}
+.arcade-playfield.is-control-settings-open .arcade-stick-slot,.arcade-playfield.is-control-settings-open .arcade-action-cluster{opacity:1}
+.arcade-playfield.is-immersive .arcade-action-cluster>[data-action="pause"],.arcade-playfield:fullscreen .arcade-action-cluster>[data-action="pause"],.arcade-playfield:-webkit-full-screen .arcade-action-cluster>[data-action="pause"]{display:none}
+@media(max-width:700px) and (orientation:portrait){.arcade-playfield.is-immersive .arcade-action-cluster>[data-action="camera-center"],.arcade-playfield:fullscreen .arcade-action-cluster>[data-action="camera-center"],.arcade-playfield:-webkit-full-screen .arcade-action-cluster>[data-action="camera-center"]{display:none}}
+@media(prefers-reduced-motion:reduce){.arcade-playfield.is-control-settings-open::after{backdrop-filter:none}}
+
+
+/* V4.9.0 — integração das oito experiências, progresso universal e biblioteca evolutiva. */
+.arcade-shell{--arcade-game-accent:#65e8ff}.arcade-currency{flex-wrap:wrap}.arcade-currency span:last-child{border-color:color-mix(in srgb,var(--arcade-game-accent,#65e8ff) 46%,transparent)}
+.arcade-game-copy{display:block;min-width:0}.arcade-game-badges{display:flex!important;flex-wrap:wrap;gap:4px;margin-top:6px}.arcade-game-badges i{display:inline-flex;padding:3px 6px;border:1px solid rgba(126,225,246,.18);border-radius:999px;background:rgba(17,57,73,.56);color:#bfeaf3;font:800 .58rem/1.1 system-ui;font-style:normal;white-space:nowrap}.arcade-menu [data-game-state="complete"] .arcade-game-badges i:first-child,.arcade-library-game[data-game-state="complete"] .arcade-game-badges i:first-child{border-color:rgba(94,255,171,.42);background:rgba(30,128,81,.34);color:#caffdf}.arcade-menu [data-game-state="started"] .arcade-game-badges i:first-child,.arcade-library-game[data-game-state="started"] .arcade-game-badges i:first-child{border-color:rgba(255,207,91,.36);background:rgba(130,92,24,.3);color:#ffe8a1}.arcade-menu [data-game-state="new"] .arcade-game-badges i:first-child,.arcade-library-game[data-game-state="new"] .arcade-game-badges i:first-child{color:#9bdff0}
+.arcade-session-hud{--arcade-session-accent:var(--arcade-game-accent,#65e8ff);position:absolute;z-index:20;top:10px;left:10px;display:grid;grid-template-columns:minmax(0,1fr) minmax(90px,180px) auto;align-items:center;gap:9px;width:min(720px,calc(100% - 20px));min-height:54px;padding:7px 9px;border:1px solid color-mix(in srgb,var(--arcade-session-accent) 38%,transparent);border-radius:14px;background:linear-gradient(135deg,rgba(2,14,25,.9),rgba(8,31,45,.82));box-shadow:0 12px 34px rgba(0,0,0,.3);color:#eaffff;backdrop-filter:blur(10px);pointer-events:none}.arcade-session-hud>*{min-width:0}.arcade-session-identity{display:grid;grid-template-columns:auto minmax(0,1fr);align-items:center;gap:8px}.arcade-session-identity>span:first-child{display:grid;place-items:center;width:34px;height:34px;border:1px solid color-mix(in srgb,var(--arcade-session-accent) 52%,transparent);border-radius:10px;background:color-mix(in srgb,var(--arcade-session-accent) 12%,rgba(3,16,27,.8));font-size:1.05rem}.arcade-session-identity>span:last-child{display:grid;gap:2px}.arcade-session-identity small{overflow:hidden;color:var(--arcade-session-accent);font-size:.61rem;font-weight:900;letter-spacing:.045em;text-overflow:ellipsis;text-transform:uppercase;white-space:nowrap}.arcade-session-identity strong{overflow:hidden;color:#effdff;font-size:.72rem;line-height:1.2;text-overflow:ellipsis;white-space:nowrap}.arcade-session-progress{height:7px;overflow:hidden;border:1px solid rgba(145,228,245,.18);border-radius:999px;background:rgba(0,5,12,.66)}.arcade-session-progress i{display:block;width:0;height:100%;border-radius:inherit;background:linear-gradient(90deg,var(--arcade-session-accent),#f5ffff);box-shadow:0 0 12px color-mix(in srgb,var(--arcade-session-accent) 50%,transparent);transition:width .28s ease}.arcade-session-metrics{display:flex;align-items:center;justify-content:flex-end;gap:5px;pointer-events:auto}.arcade-session-metrics>span,.arcade-session-help>summary{display:inline-flex;align-items:center;justify-content:center;min-height:30px;padding:5px 7px;border:1px solid rgba(129,224,244,.2);border-radius:9px;background:rgba(17,61,79,.54);color:#dffaff;font-size:.63rem;font-weight:850;white-space:nowrap}.arcade-session-help{position:relative}.arcade-session-help>summary{cursor:pointer;list-style:none}.arcade-session-help>summary::-webkit-details-marker{display:none}.arcade-session-help[open]>summary{border-color:var(--arcade-session-accent);color:#fff}.arcade-session-help>div{position:absolute;z-index:51;top:calc(100% + 8px);right:0;width:min(340px,calc(100vw - 28px));padding:11px;border:1px solid color-mix(in srgb,var(--arcade-session-accent) 42%,transparent);border-radius:12px;background:rgba(2,14,25,.98);box-shadow:0 18px 46px rgba(0,0,0,.5);color:#eaffff}.arcade-session-help strong{display:block;color:var(--arcade-session-accent);font-size:.72rem}.arcade-session-help p{margin:6px 0 0;color:#b9e1e9;font-size:.68rem;line-height:1.4}.arcade-session-hud[data-session-status="complete"]{border-color:rgba(99,255,174,.55)}.arcade-session-hud[data-session-status="warning"]{border-color:rgba(255,111,130,.58)}.arcade-session-hud[data-session-status="paused"]{opacity:.72}
+.arcade-playfield.has-arcade-canvas>.arcade-session-hud~canvas{padding-top:68px;box-sizing:border-box}.arcade-playfield:not(.has-arcade-canvas)>.arcade-session-hud+*:not(.arcade-system-dock){padding-top:74px}.arcade-playfield>.snake-mode,.arcade-playfield>.platform-modes{top:72px}.arcade-playfield>.camera-controls{top:122px}
+.arcade-playfield.is-immersive>.arcade-session-hud,.arcade-playfield:fullscreen>.arcade-session-hud,.arcade-playfield:-webkit-full-screen>.arcade-session-hud{position:fixed;top:var(--arcade-safe-top);left:var(--arcade-safe-left);width:min(720px,calc(100vw - var(--arcade-safe-left) - var(--arcade-safe-right) - 330px));min-height:48px;padding:6px 8px}.arcade-playfield.is-immersive>.arcade-overlay,.arcade-playfield:fullscreen>.arcade-overlay,.arcade-playfield:-webkit-full-screen>.arcade-overlay{top:calc(var(--arcade-safe-top) + 60px)}.arcade-playfield.is-immersive>.snake-mode,.arcade-playfield.is-immersive>.platform-modes,.arcade-playfield:fullscreen>.snake-mode,.arcade-playfield:fullscreen>.platform-modes,.arcade-playfield:-webkit-full-screen>.snake-mode,.arcade-playfield:-webkit-full-screen>.platform-modes{top:calc(var(--arcade-safe-top) + 112px)}.arcade-playfield.is-immersive>.camera-controls,.arcade-playfield:fullscreen>.camera-controls,.arcade-playfield:-webkit-full-screen>.camera-controls{top:calc(var(--arcade-safe-top) + 164px)}
+.arcade-playfield[data-arcade-contrast="high"] .arcade-session-hud,.arcade-playfield[data-arcade-contrast="high"] .arcade-session-help>div{background:#000!important;border-color:#fff!important;color:#fff!important;box-shadow:0 0 0 2px #000,0 0 0 4px #fff!important;backdrop-filter:none!important}.arcade-playfield[data-arcade-motion="reduced"] .arcade-session-progress i{transition:none!important}
+@media(max-width:900px){.arcade-session-hud{grid-template-columns:minmax(0,1fr) 100px auto}.arcade-session-metrics>span:nth-child(2){display:none}}
+@media(max-width:760px){.arcade-game-badges i:last-child{display:none}.arcade-session-hud{top:6px;left:6px;grid-template-columns:minmax(0,1fr) auto;width:calc(100% - 12px);min-height:48px}.arcade-session-progress{grid-column:1/-1;height:5px}.arcade-session-identity>span:first-child{width:30px;height:30px}.arcade-session-identity strong{font-size:.65rem}.arcade-session-metrics>span{font-size:.58rem}.arcade-playfield.has-arcade-canvas>.arcade-session-hud~canvas{padding-top:66px}.arcade-playfield>.snake-mode,.arcade-playfield>.platform-modes{top:68px}.arcade-playfield>.camera-controls{top:154px}}
+@media(max-width:430px){.arcade-session-hud{right:calc(var(--arcade-safe-right) + 192px);width:auto;grid-template-columns:minmax(0,1fr);pointer-events:none}.arcade-session-progress,.arcade-session-metrics>span,.arcade-session-help{display:none}.arcade-session-identity>span:first-child{display:none}.arcade-session-identity strong{font-size:.59rem}.arcade-session-identity small{font-size:.53rem}.arcade-playfield:not(.is-immersive):not(:fullscreen):not(:-webkit-full-screen)>.arcade-session-hud{right:6px}.arcade-playfield:not(.is-immersive):not(:fullscreen):not(:-webkit-full-screen)>.arcade-session-hud .arcade-session-progress{display:block}.arcade-library-game .arcade-game-badges{display:flex!important}}
+@media(max-height:520px) and (orientation:landscape){.arcade-session-hud{grid-template-columns:minmax(0,1fr) 90px auto;min-height:42px}.arcade-session-identity>span:first-child{width:28px;height:28px}.arcade-session-help>div{width:min(360px,55vw)}.arcade-playfield.is-immersive>.arcade-overlay,.arcade-playfield:fullscreen>.arcade-overlay,.arcade-playfield:-webkit-full-screen>.arcade-overlay{top:calc(var(--arcade-safe-top) + 50px)}.arcade-playfield.is-immersive[data-arcade-game="drone"]>.drone-flight-toolbar,.arcade-playfield:fullscreen[data-arcade-game="drone"]>.drone-flight-toolbar,.arcade-playfield:-webkit-full-screen[data-arcade-game="drone"]>.drone-flight-toolbar{top:calc(var(--arcade-safe-top) + 50px)}.arcade-playfield.is-immersive[data-arcade-game="drone"]>.drone-mission-panel,.arcade-playfield:fullscreen[data-arcade-game="drone"]>.drone-mission-panel,.arcade-playfield:-webkit-full-screen[data-arcade-game="drone"]>.drone-mission-panel{top:calc(var(--arcade-safe-top) + 92px)}}
+@media(prefers-reduced-motion:reduce){.arcade-session-progress i{transition:none}}
+/* Ajustes de composição da faixa universal com jogos DOM e painéis do Drone. */
+.arcade-playfield:not(.has-arcade-canvas)>.arcade-session-hud~:not(.arcade-system-dock):not(.arcade-library-drawer):not(.arcade-pause-curtain):not(.arcade-mobile-gate){padding-top:78px}
+.arcade-playfield[data-arcade-game="drone"]>.drone-flight-toolbar{top:72px}.arcade-playfield[data-arcade-game="drone"]>.drone-mission-panel{top:116px}
+@media(max-width:760px){.arcade-playfield[data-arcade-game="drone"]>.drone-flight-toolbar{top:68px}.arcade-playfield[data-arcade-game="drone"]>.drone-mission-panel{top:108px}}
+.arcade-playfield.is-immersive[data-arcade-game="drone"]>.drone-flight-toolbar,.arcade-playfield:fullscreen[data-arcade-game="drone"]>.drone-flight-toolbar,.arcade-playfield:-webkit-full-screen[data-arcade-game="drone"]>.drone-flight-toolbar{top:calc(var(--arcade-safe-top) + 58px)}
+.arcade-playfield.is-immersive[data-arcade-game="drone"]>.drone-mission-panel,.arcade-playfield:fullscreen[data-arcade-game="drone"]>.drone-mission-panel,.arcade-playfield:-webkit-full-screen[data-arcade-game="drone"]>.drone-mission-panel{top:calc(var(--arcade-safe-top) + 103px)}
+@media(max-height:520px) and (orientation:landscape){.arcade-playfield.is-immersive[data-arcade-game="drone"]>.drone-flight-toolbar,.arcade-playfield:fullscreen[data-arcade-game="drone"]>.drone-flight-toolbar,.arcade-playfield:-webkit-full-screen[data-arcade-game="drone"]>.drone-flight-toolbar{top:calc(var(--arcade-safe-top) + 48px)}.arcade-playfield.is-immersive[data-arcade-game="drone"]>.drone-mission-panel,.arcade-playfield:fullscreen[data-arcade-game="drone"]>.drone-mission-panel,.arcade-playfield:-webkit-full-screen[data-arcade-game="drone"]>.drone-mission-panel{top:calc(var(--arcade-safe-top) + 87px)}}
+/* Ajuste final de empilhamento dos HUDs integrados. */
+.arcade-playfield[data-arcade-game="drone"]>.drone-mission-panel{top:134px}
+@media(max-width:760px){.arcade-playfield[data-arcade-game="drone"]>.drone-mission-panel{top:128px}}
+.arcade-playfield.is-immersive[data-arcade-game="drone"]>.drone-flight-toolbar,.arcade-playfield:fullscreen[data-arcade-game="drone"]>.drone-flight-toolbar,.arcade-playfield:-webkit-full-screen[data-arcade-game="drone"]>.drone-flight-toolbar{top:calc(var(--arcade-safe-top) + 70px)}
+.arcade-playfield.is-immersive[data-arcade-game="drone"]>.drone-mission-panel,.arcade-playfield:fullscreen[data-arcade-game="drone"]>.drone-mission-panel,.arcade-playfield:-webkit-full-screen[data-arcade-game="drone"]>.drone-mission-panel{top:calc(var(--arcade-safe-top) + 136px)}
+@media(max-width:430px){.arcade-playfield.is-immersive>.arcade-session-hud,.arcade-playfield:fullscreen>.arcade-session-hud,.arcade-playfield:-webkit-full-screen>.arcade-session-hud{right:calc(var(--arcade-safe-right) + 215px);width:auto;min-width:0}.arcade-playfield.is-immersive>.arcade-session-hud .arcade-session-identity strong,.arcade-playfield:fullscreen>.arcade-session-hud .arcade-session-identity strong,.arcade-playfield:-webkit-full-screen>.arcade-session-hud .arcade-session-identity strong{display:none}}
+@media(max-height:520px) and (orientation:landscape){.arcade-playfield.is-immersive[data-arcade-game="drone"]>.drone-flight-toolbar,.arcade-playfield:fullscreen[data-arcade-game="drone"]>.drone-flight-toolbar,.arcade-playfield:-webkit-full-screen[data-arcade-game="drone"]>.drone-flight-toolbar{top:calc(var(--arcade-safe-top) + 64px)}.arcade-playfield.is-immersive[data-arcade-game="drone"]>.drone-mission-panel,.arcade-playfield:fullscreen[data-arcade-game="drone"]>.drone-mission-panel,.arcade-playfield:-webkit-full-screen[data-arcade-game="drone"]>.drone-mission-panel{top:calc(var(--arcade-safe-top) + 128px)}}
+/* V4.9.0 — compactação final da Forca em celular horizontal. */
+@media(max-height:520px) and (orientation:landscape){
+  .arcade-playfield.is-immersive[data-arcade-game="hangman"]>.hangman-stage,
+  .arcade-playfield:fullscreen[data-arcade-game="hangman"]>.hangman-stage,
+  .arcade-playfield:-webkit-full-screen[data-arcade-game="hangman"]>.hangman-stage{
+    box-sizing:border-box;height:100dvh;min-height:100dvh;max-height:100dvh;overflow:auto;
+    align-content:start;gap:5px;padding-top:calc(var(--arcade-safe-top) + 54px);padding-right:calc(var(--arcade-safe-right) + 54px);padding-bottom:calc(var(--arcade-safe-bottom) + 4px)
+  }
+  .arcade-playfield[data-arcade-game="hangman"] .phase-chip{padding:4px 8px;font-size:.72rem}
+  .arcade-playfield[data-arcade-game="hangman"] .hangman-word{gap:4px;margin-block:0}
+  .arcade-playfield[data-arcade-game="hangman"] .hangman-letter{width:27px;height:29px;font-size:.9rem}
+  .arcade-playfield[data-arcade-game="hangman"] .hangman-input-label{font-size:.76rem}
+  .arcade-playfield[data-arcade-game="hangman"] .hangman-input-label input{height:38px}
+  .arcade-playfield[data-arcade-game="hangman"] .used-letters{min-height:28px;gap:4px}
+  .arcade-playfield[data-arcade-game="hangman"] .used-letters span{width:27px;height:27px;font-size:.72rem}
+}
+
+
+/* V4.10.0 — validação final: recuperação segura, foco restaurado e navegação modal por teclado. */
+.arcade-playfield :focus-visible,.arcade-shell :focus-visible{outline:3px solid var(--arcade-game-accent,#72ffc0);outline-offset:3px;box-shadow:0 0 0 2px rgba(2,12,22,.92),0 0 18px color-mix(in srgb,var(--arcade-game-accent,#72ffc0) 55%,transparent)}
+.arcade-recovery-panel{display:grid;place-content:center;justify-items:center;gap:12px;min-height:clamp(360px,62vh,620px);padding:clamp(24px,6vw,64px);text-align:center;background:radial-gradient(circle at 50% 35%,color-mix(in srgb,var(--arcade-game-accent,#72ffc0) 18%,transparent),transparent 42%),linear-gradient(155deg,#061421,#020711 70%);color:#ecfcff}
+.arcade-recovery-panel .eyebrow{color:var(--arcade-game-accent,#72ffc0)}.arcade-recovery-panel h3{margin:0;font-size:clamp(1.4rem,4vw,2.4rem)}.arcade-recovery-panel p{max-width:620px;margin:0;color:#b9dfe8;line-height:1.55}.arcade-recovery-panel>div{display:flex;flex-wrap:wrap;justify-content:center;gap:10px}.arcade-recovery-panel details{width:min(620px,100%);padding:10px 12px;border:1px solid rgba(130,224,244,.22);border-radius:12px;background:rgba(4,18,29,.78);text-align:left}.arcade-recovery-panel summary{cursor:pointer;color:#dffbff;font-weight:800}.arcade-recovery-panel code{display:block;overflow-wrap:anywhere;margin-top:8px;color:#ffb8c2;font-size:.72rem;line-height:1.45}
+.arcade-playfield[data-arcade-contrast="high"] .arcade-recovery-panel{background:#000!important;color:#fff!important}.arcade-playfield[data-arcade-contrast="high"] .arcade-recovery-panel details{border-color:#fff!important;background:#000!important}
+@media(max-width:760px){.arcade-recovery-panel{min-height:100%;padding:90px 18px 180px}.arcade-recovery-panel>div{display:grid;width:min(320px,100%)}.arcade-recovery-panel .btn{width:100%}}
+@media(max-height:520px) and (orientation:landscape){.arcade-recovery-panel{align-content:start;min-height:100%;padding:78px 210px 110px 110px}.arcade-recovery-panel p{font-size:.78rem}.arcade-recovery-panel details{max-height:82px;overflow:auto}}
+
+
+/* Fase 1.1 — separação entre simuladores e Fliperama DS */
+.simulators-shell .arcade-hero{margin-bottom:14px}
+.simulators-bridge{display:flex;align-items:center;justify-content:space-between;gap:18px;margin:0 0 18px;padding:18px 20px;border:1px solid color-mix(in srgb,var(--accent,#65e8ff) 42%,transparent);border-radius:18px;background:linear-gradient(135deg,rgba(24,48,76,.92),rgba(12,22,38,.96));box-shadow:0 18px 44px rgba(0,0,0,.18)}
+.simulators-bridge h3{margin:4px 0 6px;font-size:clamp(1.08rem,2vw,1.42rem)}
+.simulators-bridge p{margin:0;max-width:760px;color:var(--muted,#b8c8dc);line-height:1.55}
+.simulators-bridge-actions{display:flex;align-items:center;gap:10px;flex:0 0 auto}
+.simulators-bridge-status{display:inline-flex;align-items:center;min-height:34px;padding:6px 11px;border-radius:999px;font-size:.82rem;font-weight:800;letter-spacing:.04em;text-transform:uppercase}
+.simulators-bridge-status.is-pending{background:rgba(255,193,92,.14);color:#ffd58d;border:1px solid rgba(255,193,92,.34)}
+.simulators-bridge-status.is-ready{background:rgba(77,232,166,.14);color:#8fffc9;border:1px solid rgba(77,232,166,.34)}
+.simulators-bridge .btn:disabled{cursor:not-allowed;opacity:.58;filter:saturate(.55)}
+@media (max-width:760px){.simulators-bridge{align-items:flex-start;flex-direction:column;padding:15px}.simulators-bridge-actions{width:100%;justify-content:space-between}.simulators-bridge .btn{min-height:44px}}
