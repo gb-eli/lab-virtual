@@ -572,3 +572,27 @@ html.arcade-immersive-open,body.arcade-immersive-open{overflow:hidden!important;
 .simulators-bridge-status.is-ready{background:rgba(77,232,166,.14);color:#8fffc9;border:1px solid rgba(77,232,166,.34)}
 .simulators-bridge .btn:disabled{cursor:not-allowed;opacity:.58;filter:saturate(.55)}
 @media (max-width:760px){.simulators-bridge{align-items:flex-start;flex-direction:column;padding:15px}.simulators-bridge-actions{width:100%;justify-content:space-between}.simulators-bridge .btn{min-height:44px}}
+
+
+/* V4.14.0 — correção do fechamento e evolução do Simulador de Drone e Voo 360. */
+.arcade-control-settings>div{max-height:min(72vh,560px);overflow:auto;overscroll-behavior:contain}
+.arcade-control-settings-head{position:sticky;z-index:2;top:-12px;display:flex;align-items:center;justify-content:space-between;gap:12px;margin:-12px -12px 4px;padding:12px;background:rgba(2,14,25,.98);border-bottom:1px solid rgba(130,232,255,.22)}
+.arcade-control-settings-head strong{font-size:.82rem;color:#effdff}.arcade-control-settings-head button,.drone-customization-card header button,.drone-performance-card header button{display:inline-grid;place-items:center;width:36px;height:36px;padding:0;border:1px solid rgba(130,232,255,.35);border-radius:10px;background:rgba(22,65,86,.78);color:#fff;font-size:1.25rem;font-weight:900;cursor:pointer}
+.arcade-control-settings-head button:hover,.arcade-control-settings-head button:focus-visible,.drone-customization-card header button:hover,.drone-customization-card header button:focus-visible,.drone-performance-card header button:hover,.drone-performance-card header button:focus-visible{background:rgba(52,139,169,.72);border-color:#82edff}
+.arcade-playfield.is-control-settings-open::after{content:"";position:absolute;z-index:26;inset:0;background:rgba(0,7,14,.28);pointer-events:none}
+.arcade-playfield.is-control-settings-open .arcade-control-settings{z-index:31}
+
+.drone-customization-panel,.drone-performance-panel{position:relative}
+.drone-customization-panel>summary,.drone-performance-panel>summary{display:inline-flex;align-items:center;min-height:34px;padding:6px 9px;border:1px solid transparent;border-radius:9px;background:rgba(28,75,96,.42);color:#dffaff;font-size:.7rem;font-weight:850;cursor:pointer;list-style:none}
+.drone-customization-panel>summary::-webkit-details-marker,.drone-performance-panel>summary::-webkit-details-marker{display:none}
+.drone-customization-card,.drone-performance-card{position:absolute;z-index:34;top:calc(100% + 8px);left:0;width:min(370px,calc(100vw - 24px));max-height:min(76vh,640px);overflow:auto;overscroll-behavior:contain;padding:13px;border:1px solid rgba(111,232,255,.38);border-radius:16px;background:rgba(2,15,26,.98);box-shadow:0 20px 56px rgba(0,0,0,.58);color:#e9fbff}
+.drone-performance-panel .drone-performance-card{left:auto;right:0;width:min(360px,calc(100vw - 24px))}
+.drone-customization-card header,.drone-performance-card header{position:sticky;z-index:2;top:-13px;display:flex;align-items:center;justify-content:space-between;gap:12px;margin:-13px -13px 12px;padding:13px;background:rgba(2,15,26,.99);border-bottom:1px solid rgba(111,232,255,.2)}
+.drone-customization-card header>div,.drone-performance-card header>div{display:grid;gap:2px}.drone-customization-card header small{color:#a9d7e1;font-size:.64rem}
+.drone-customization-card label{display:grid;gap:6px;margin:0 0 12px;color:#dff8ff;font-size:.76rem;font-weight:850}.drone-customization-card select{min-height:40px;width:100%;border:1px solid rgba(118,230,255,.28);border-radius:10px;background:#071b2a;color:#eefcff;padding:7px 9px}.drone-customization-card label>small{color:#9bcbd6;font-size:.66rem;font-weight:650;line-height:1.4}
+.drone-customization-card fieldset{margin:0 0 12px;padding:10px;border:1px solid rgba(118,230,255,.2);border-radius:12px}.drone-customization-card legend{padding:0 5px;color:#dff8ff;font-size:.72rem;font-weight:850}
+.drone-color-options{display:flex;flex-wrap:wrap;gap:8px}.drone-color-options button{display:grid;place-items:center;width:40px;height:40px;padding:0;border:2px solid transparent;border-radius:12px;background:rgba(255,255,255,.06);cursor:pointer}.drone-color-options button[aria-pressed="true"]{border-color:#fff;box-shadow:0 0 0 2px #51dfff}.drone-color-options i{display:block;width:25px;height:25px;border-radius:50%;background:var(--drone-swatch);box-shadow:inset 0 0 8px rgba(255,255,255,.38),0 3px 10px rgba(0,0,0,.35)}
+.drone-flight-toolbar{flex-wrap:wrap}.drone-flight-toolbar details[open]>summary{border-color:#69e9ff;background:rgba(45,132,163,.48)}
+.arcade-playfield[data-drone-weather="snow"] .drone-weather-badge{color:#e9faff}.arcade-playfield[data-drone-weather="night"] .drone-weather-badge{color:#c7c4ff}
+@media(max-width:760px){.drone-customization-card,.drone-performance-panel .drone-performance-card{position:fixed;z-index:80;inset:calc(var(--arcade-safe-top) + 8px) calc(var(--arcade-safe-right) + 8px) calc(var(--arcade-safe-bottom) + 8px) calc(var(--arcade-safe-left) + 8px);width:auto;max-height:none}.drone-flight-toolbar{right:6px}.drone-customization-panel>summary,.drone-performance-panel>summary{min-height:32px;padding:5px 7px;font-size:.64rem}}
+@media(max-height:520px) and (orientation:landscape){.drone-customization-card,.drone-performance-panel .drone-performance-card{inset:calc(var(--arcade-safe-top) + 4px) calc(var(--arcade-safe-right) + 80px) calc(var(--arcade-safe-bottom) + 4px) calc(var(--arcade-safe-left) + 80px)}}
