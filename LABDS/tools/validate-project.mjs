@@ -12,7 +12,8 @@ const read=file=>fs.readFileSync(file,'utf8');
 const walk=dir=>fs.readdirSync(dir,{withFileTypes:true}).flatMap(entry=>entry.isDirectory()?walk(path.join(dir,entry.name)):[path.join(dir,entry.name)]);
 
 const context={window:{LABDS:{}},navigator:{},console,Date,URL,URLSearchParams,setTimeout,clearTimeout};
-vm.runInNewContext(read(path.join(lab,'js/config.js')),context,{filename:'config.js'});
+const configSource=read(path.join(lab,'js/config.js'));
+vm.runInNewContext(configSource,context,{filename:'config.js'});
 const {VERSION,TOOLS}=context.window.LABDS;
 assert(VERSION==='4.0.0-pages',`Versão inesperada: ${VERSION}`);
 assert(Array.isArray(TOOLS)&&TOOLS.length===50,`Catálogo deveria ter 50 ferramentas públicas; encontrado ${TOOLS?.length}`);
@@ -41,12 +42,21 @@ assert(moduleIndex.count===modules.length,`Índice declara ${moduleIndex.count} 
 assert(new Set(moduleIndex.modules.map(item=>item.id)).size===moduleIndex.modules.length,'Há IDs duplicados no índice de módulos.');
 for(const moduleName of modules)assert(moduleIndex.modules.some(item=>item.id===moduleName),`Módulo ausente no MODULE_INDEX: ${moduleName}`);
 const arcadeManifest=JSON.parse(read(path.join(lab,'modules/code-games-lab/module.json')));
-assert(arcadeManifest.version==='4.3.0',`Versão inesperada do Arcade: ${arcadeManifest.version}`);
-assert(moduleIndex.modules.find(item=>item.id==='code-games-lab')?.version==='4.3.0','MODULE_INDEX não referencia o Arcade V4.3.0.');
+assert(arcadeManifest.version==='4.13.0',`Versão inesperada dos Simuladores Interativos DS: ${arcadeManifest.version}`);
+assert(moduleIndex.modules.find(item=>item.id==='code-games-lab')?.version==='4.13.0','MODULE_INDEX não referencia Simuladores Interativos DS V4.13.0.');
 const arcadeTool=TOOLS.find(tool=>tool.id==='code-games');
-assert(arcadeTool?.description?.startsWith('Oito experiências'),'Catálogo não anuncia as oito experiências do Arcade.');
+assert(arcadeTool?.name==='Simuladores Interativos DS','Catálogo não apresenta a nova identidade dos simuladores.');
+assert(arcadeTool?.description?.startsWith('Três simuladores'),'Catálogo não anuncia os três simuladores preservados.');
+assert(arcadeTool?.experiences?.includes('simulator')&&!arcadeTool?.experiences?.includes('game'),'Simuladores Interativos DS ainda está classificado como jogo.');
 const arcadeSource=read(path.join(lab,'modules/code-games-lab/index.js'));
-for(const gameId of ['snake','hangman','trio','trend','pac','memory','platform','drone'])assert(new RegExp(`\\n    ${gameId}:\\{name:`).test(arcadeSource),`Experiência ausente no Arcade: ${gameId}`);
+for(const simulatorId of ['trio','trend','drone'])assert(new RegExp(`\n    ${simulatorId}:\{name:`).test(arcadeSource),`Simulador ausente: ${simulatorId}`);
+const activeCatalog=arcadeSource.match(/const GAMES=\{([\s\S]*?)\n  \};/)?.[1]||'';
+for(const removedId of ['snake','hangman','pac','memory','platform'])assert(!new RegExp(`\n    ${removedId}:\{name:`).test(activeCatalog),`Jogo ainda ativo no catálogo interno: ${removedId}`);
+for(const marker of ['Simuladores Interativos DS','Fliperama DS — A Evolução dos Jogos','openFliperamaDs','FLIPERAMA_DS_URL','Em breve'])assert(arcadeSource.includes(marker)||configSource.includes(marker),`Ponte para o Fliperama incompleta: ${marker}`);
+for(const marker of ['arcade-system-dock','arcade-library-drawer','arcade-mobile-gate','startOrResumeMobileGame','renderMobileEntry','visualViewport','resolveDroneQuality','stepDroneFlight','sampleDroneGamepad','data-drone-camera','ACESFilmicToneMapping','droneMissionMedal','droneLandingGrade','updateDroneHazard','data-drone-checkpoint-reset','droneMissionPanel','droneWeatherForPhase','sampleDroneWeather','applyDroneWeather','droneWeatherFlash','dataset.droneWeather','normalizeDroneQualityMode','estimateDroneHardwareProfile','droneFrameMetrics','recommendDroneQuality','evaluateDroneAdaptiveTier','data-drone-quality-mode','data-drone-benchmark','dronePerfFps','normalizeControlScale','normalizeControlOpacity','arcadeReducedMotion','arcadeHapticPattern','data-control-scale','data-control-opacity','data-control-haptics','data-control-invert-y','data-drone-precision','requestArcadeWakeLock','arcadeGameProgress','arcadeSessionDefaults','normalizeArcadeSession','arcadeSessionHudMarkup','arcade-session-hud','arcadeSessionProgress','arcadeCompletion','activeArcadeDialog','handleArcadeDialogKey','renderGameRecovery','data-retry-game','schemaVersion:11'])assert(arcadeSource.includes(marker),`Navegação móvel do Arcade incompleta: ${marker}`);
+assert(!arcadeSource.includes('V4.9.0'),'O código do Arcade ainda contém identificação visual da V4.9.0.');
+const arcadeStyles=read(path.join(lab,'modules/code-games-lab/styles.css'));
+for(const selector of ['.arcade-system-dock','.arcade-library-drawer','.arcade-mobile-gate','[data-action="action"]','.drone-flight-toolbar','.drone-crosshair','[data-drone-camera="cockpit"]','.drone-mission-panel','.drone-route','[data-drone-checkpoint-reset]','.drone-weather-flash','.drone-weather-badge','[data-drone-weather]','.drone-performance-panel','.drone-quality-options','[data-drone-quality-mode]','.drone-benchmark-button','.arcade-sr-only','[data-arcade-contrast="high"]','[data-arcade-motion="reduced"]','[data-action="precision"]','[data-drone-precision]','.arcade-session-hud','.arcade-session-progress','.arcade-game-badges','[data-game-state="','.arcade-recovery-panel',':focus-visible'])assert(arcadeStyles.includes(selector),`CSS móvel do Arcade incompleto: ${selector}`);
 
 for(const file of walk(lab).filter(file=>file.endsWith('.js'))){
   const source=read(file),relative=path.relative(root,file);
@@ -103,7 +113,7 @@ assert(fs.existsSync(path.join(lab,'vendor/three/three.core.min.js')),'Núcleo l
 assert(voxelGame.includes("../../../vendor/three/three.module.min.js"),'VoxelCraft não aponta para o renderizador Three.js local.');
 assert(!/https:\/\/cdn\.jsdelivr\.net\/npm\/three/.test(voxelGame),'VoxelCraft ainda depende da CDN do Three.js.');
 const sw=read(path.join(lab,'service-worker.js'));
-assert(sw.includes("labds-v4.3.0-arcade-drone-final"),'Service Worker não está no cache final do Arcade V4.3.0.');
+assert(sw.includes("labds-v4.13.0-simuladores-fliperama-bridge"),'Service Worker não está no cache da Fase 1.1 V4.13.0.');
 const coreBlock=sw.match(/CORE_FILES=\[(.*?)\];/s)?.[1]||'';
 const coreRefs=[...coreBlock.matchAll(/['"](\.\/?[^'"]+)['"]/g)].map(match=>match[1]);
 for(const raw of coreRefs){const clean=raw==='./'?'index.html':raw.replace(/^\.\//,'');assert(fs.existsSync(path.join(lab,clean)),`Arquivo do núcleo ausente no Service Worker: ${raw}`);}
