@@ -15,7 +15,7 @@ const context={window:{LABDS:{}},navigator:{},console,Date,URL,URLSearchParams,s
 const configSource=read(path.join(lab,'js/config.js'));
 vm.runInNewContext(configSource,context,{filename:'config.js'});
 const {VERSION,TOOLS}=context.window.LABDS;
-assert(VERSION==='4.16.0',`Versão inesperada: ${VERSION}`);
+assert(VERSION==='4.19.0',`Versão inesperada: ${VERSION}`);
 const release=context.window.LABDS.RELEASE;
 assert(release?.version===VERSION,'Metadados de versão não correspondem à versão instalada.');
 assert(Number.isFinite(new Date(release?.updatedAt).getTime()),'Data e hora da atualização são inválidas.');
@@ -47,6 +47,36 @@ assert(moduleIndex.version==='4.0.0',`Versão inesperada no índice de módulos:
 assert(moduleIndex.count===modules.length,`Índice declara ${moduleIndex.count} módulos, mas o catálogo usa ${modules.length}.`);
 assert(new Set(moduleIndex.modules.map(item=>item.id)).size===moduleIndex.modules.length,'Há IDs duplicados no índice de módulos.');
 for(const moduleName of modules)assert(moduleIndex.modules.some(item=>item.id===moduleName),`Módulo ausente no MODULE_INDEX: ${moduleName}`);
+
+const printingManifest=JSON.parse(read(path.join(lab,'modules/printing3d-lab/module.json')));
+assert(printingManifest.version==='4.17.0','Manifesto da Impressão 3D não está na V4.17.0.');
+assert(printingManifest.weight==='heavy','Impressão 3D WebGL deve ser carregada como módulo pesado sob demanda.');
+assert(moduleIndex.modules.find(item=>item.id==='printing3d-lab')?.version==='4.17.0','MODULE_INDEX não referencia Impressão 3D V4.17.0.');
+const printingSource=read(path.join(lab,'modules/printing3d-lab/index.js'));
+for(const marker of ['THREE_URL','WebGLRenderer','createModelAsset','buildMachine','bindOrbit','printing-preflight-layout','data-print-view','data-scene-toggle','preflightReady',"status===\'heating\'","status===\'homing\'","status===\'cooling\'",'telemetryNozzle','printCanvas3d'])assert(printingSource.includes(marker),`Impressão 3D incompleta: ${marker}`);
+const blocksManifest=JSON.parse(read(path.join(lab,'modules/blocks-lab/module.json')));
+assert(blocksManifest.version==='4.17.0','Manifesto de Blocos não está na V4.17.0.');
+assert(blocksManifest.weight==='medium','Programação em Blocos visual deve usar peso médio.');
+assert(moduleIndex.modules.find(item=>item.id==='blocks-lab')?.version==='4.17.0','MODULE_INDEX não referencia Blocos V4.17.0.');
+const blocksSource=read(path.join(lab,'modules/blocks-lab/index.js'));
+for(const marker of ['blocksVisualCanvas','previewRoute','parseProgram','Executar visualmente','Mover 1 casa','Girar 90° à direita','blocks-variable-grid','drawScene','runToken'])assert(blocksSource.includes(marker),`Programação em Blocos visual incompleta: ${marker}`);
+const fabricationStyles=read(path.join(lab,'css/v32.css'));
+for(const marker of ['.printing-layout-v40','.printing-stage canvas','.printing-telemetry','.printing-preflight-layout','.blocks-workspace-v2','.blocks-visual-panel canvas','.logic-block.is-running'])assert(fabricationStyles.includes(marker),`CSS da Fase 1.5 incompleto: ${marker}`);
+
+
+const hardwareManifest=JSON.parse(read(path.join(lab,'modules/hardware-lab/module.json')));
+assert(hardwareManifest.version==='4.19.0','Manifesto da Bancada Técnica de Hardware não está na V4.19.0.');
+assert(moduleIndex.modules.find(item=>item.id==='hardware-lab')?.version==='4.19.0','MODULE_INDEX não referencia Hardware V4.19.0.');
+const hardwareSource=read(path.join(lab,'modules/hardware-lab/index.js'));
+for(const marker of ['hardwareCanvas','boxFaces','drawHardware','drawAirflow','drawCable','data-hw-view-toggle','exploded','autorotate','temperatureC'])assert(hardwareSource.includes(marker),`Bancada visual de Hardware incompleta: ${marker}`);
+const engineManifest=JSON.parse(read(path.join(lab,'modules/game-engine-lab/module.json')));
+assert(engineManifest.version==='4.19.0','Manifesto do Laboratório de Engine não está na V4.19.0.');
+assert(moduleIndex.modules.find(item=>item.id==='game-engine-lab')?.version==='4.19.0','MODULE_INDEX não referencia Engine V4.19.0.');
+const engineSource=read(path.join(lab,'modules/game-engine-lab/index.js'));
+for(const marker of ['voxelWorld','setBlockTarget','editVoxelAt','sumBlocks','drawProfilerScene','performance.now','Profiler real','Editor de mundo 2.5D','undoVoxel','redoVoxel','profilerAdvice','platformPaused','MODULE_UPDATED_AT'])assert(engineSource.includes(marker),`Laboratório de Engine V4.19.0 incompleto: ${marker}`);
+const visualUpgradeStyles=read(path.join(lab,'css/v32.css'));
+for(const marker of ['.hardware-canvas-wrap canvas','.hardware-part-strip','.hardware-diagnostics-grid','.engine-v419 .engine-stage canvas'])assert(visualUpgradeStyles.includes(marker),`CSS da Fase 1.7 incompleto: ${marker}`);
+
 const arcadeManifest=JSON.parse(read(path.join(lab,'modules/code-games-lab/module.json')));
 assert(arcadeManifest.version==='4.15.0',`Versão inesperada dos Simuladores Interativos DS: ${arcadeManifest.version}`);
 assert(moduleIndex.modules.find(item=>item.id==='code-games-lab')?.version==='4.15.0','MODULE_INDEX não referencia Simuladores Interativos DS V4.15.0.');
@@ -117,14 +147,14 @@ const directScripts=[...index.matchAll(/<script[^>]+src=["']([^"']+)/g)].map(mat
 assert(directScripts.length===1&&directScripts[0]==='js/core/bootstrap.js','O HTML inicial deve chamar somente o bootstrap.');
 const pwaManifest=JSON.parse(read(path.join(lab,'manifest.webmanifest')));
 assert(pwaManifest.start_url.includes(VERSION),`Manifesto PWA não referencia a versão ${VERSION}.`);
-assert(index.includes('content="4.16.0"'), 'Meta de versão do HTML não está em 4.16.0.');
+assert(index.includes('content="4.19.0"'), 'Meta de versão do HTML não está em 4.19.0.');
 const voxelGame=read(path.join(lab,'games/voxelcraft/js/game.js'));
 assert(fs.existsSync(path.join(lab,'vendor/three/three.module.min.js')),'Three.js local do VoxelCraft está ausente.');
 assert(fs.existsSync(path.join(lab,'vendor/three/three.core.min.js')),'Núcleo local do Three.js está ausente.');
 assert(voxelGame.includes("../../../vendor/three/three.module.min.js"),'VoxelCraft não aponta para o renderizador Three.js local.');
 assert(!/https:\/\/cdn\.jsdelivr\.net\/npm\/three/.test(voxelGame),'VoxelCraft ainda depende da CDN do Three.js.');
 const sw=read(path.join(lab,'service-worker.js'));
-assert(sw.includes("labds-v4.16.0-version-control"),'Service Worker não está no cache da Fase 1.4 V4.16.0.');
+assert(sw.includes("labds-v4.19.0-hardware-engine-polish"),'Service Worker não está no cache da Fase 1.7 V4.19.0.');
 const coreBlock=sw.match(/CORE_FILES=\[(.*?)\];/s)?.[1]||'';
 const coreRefs=[...coreBlock.matchAll(/['"](\.\/?[^'"]+)['"]/g)].map(match=>match[1]);
 for(const raw of coreRefs){const clean=raw==='./'?'index.html':raw.replace(/^\.\//,'');assert(fs.existsSync(path.join(lab,clean)),`Arquivo do núcleo ausente no Service Worker: ${raw}`);}
