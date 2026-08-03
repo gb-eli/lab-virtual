@@ -2,8 +2,19 @@
 
 window.LABDS = window.LABDS || {};
 
-window.LABDS.VERSION = '4.0.0-pages';
-window.LABDS.RELEASE_DATE = '2026-07-31';
+window.LABDS.VERSION = '4.16.0';
+window.LABDS.RELEASE_DATE = '2026-08-02';
+window.LABDS.RELEASE = Object.freeze({
+  version:'4.16.0',
+  updatedAt:'2026-08-02T21:38:00-03:00',
+  channel:'stable',
+  title:'Controle de versão e última atualização',
+  notes:Object.freeze([
+    'Versão e data da publicação visíveis na tela inicial.',
+    'Contador automático informa há quanto tempo ocorreu a atualização.',
+    'Verificação online identifica quando uma aba ainda usa uma versão anterior em cache.'
+  ])
+});
 window.LABDS.REMOVED_TOOL_IDS = Object.freeze([
   'iara','iara-ds','iara_ds','iara-assistant','assistant-ds',
   'teacher-mode','teacher-lab','modo-professor','modo-professor-atividades','professor'
