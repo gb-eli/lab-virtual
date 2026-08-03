@@ -1,13 +1,13 @@
 {
   "schemaVersion": 1,
   "application": "Laboratório Virtual DS",
-  "version": "4.20.0",
-  "updatedAt": "2026-08-03T00:17:00-03:00",
+  "version": "4.21.0",
+  "updatedAt": "2026-08-03T01:05:00-03:00",
   "channel": "stable",
-  "title": "Hardware Studio 3D com catálogo, periféricos e benchmarks",
+  "title": "Hardware Studio Premium 3D com realismo ampliado",
   "notes": [
-    "Montagem de Computador evoluiu para Hardware Studio 3D com mais peças, marcas, gerações, gabinetes, cores e configurações.",
-    "Foram adicionados dispositivos de entrada e saída, monitores, periféricos, diagnósticos e benchmarks didáticos para jogos, vídeo, trabalho e estudos.",
-    "Gráficos Baixo, Médio, Alto e Ultra controlam visualização 360°, materiais PBR, vidro, sombras, RGB, shader e partículas."
+    "Hardware Studio 3D evoluiu para Hardware Studio Premium 3D com cenário, bancada, iluminação ambiente, ferramentas e destaque RGB configuráveis.",
+    "A bancada ganhou mais realismo visual com detalhes de gabinete, GPU, water cooler, suporte estrutural, props e acessórios de montagem.",
+    "Foi adicionada uma animação guiada de montagem, mantendo os modos gráficos Baixo, Médio, Alto e Ultra."
   ]
 }
