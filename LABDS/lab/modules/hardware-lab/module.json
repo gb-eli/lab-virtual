@@ -1,7 +1,7 @@
 {
   "id": "hardware-lab",
-  "name": "Hardware",
-  "version": "3.8.0",
+  "name": "Bancada Técnica de Hardware",
+  "version": "4.19.0",
   "weight": "medium",
   "load": "on-demand",
   "cache": "runtime",
@@ -9,5 +9,7 @@
     "modules/hardware-lab/index.js"
   ],
   "styles": [],
-  "bundles": []
+  "bundles": [],
+  "description": "Bancada pseudo-3D com perfis rápidos, inspeção de peças, prontidão, correção assistida, compatibilidade, energia, refrigeração, cabos e POST.",
+  "updatedAt": "2026-08-02T23:33:00-03:00"
 }
