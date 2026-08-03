@@ -1,8 +1,8 @@
 {
-  "name": "Lab Virtual DS V4.0 Consolidado",
-  "short_name": "Lab DS V4.0",
-  "description": "Plataforma educacional modular com simuladores, Cyber Ops, tutoriais, organização escolar, ciências, áudio, jogos, produtividade e progressão local. Módulos pesados são carregados sob demanda.",
-  "start_url": "./index.html?v=4.0.0-pages",
+  "name": "Lab Virtual DS",
+  "short_name": "Lab DS",
+  "description": "Plataforma educacional modular com simuladores, emuladores, laboratórios, acessibilidade e controle público de versão.",
+  "start_url": "./index.html?v=4.16.0",
   "display": "standalone",
   "background_color": "#07101c",
   "theme_color": "#07111f",
