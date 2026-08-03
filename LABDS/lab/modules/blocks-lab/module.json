@@ -1,8 +1,8 @@
 {
   "id": "blocks-lab",
   "name": "Blocks",
-  "version": "3.8.0",
-  "weight": "light",
+  "version": "4.17.0",
+  "weight": "medium",
   "load": "on-demand",
   "cache": "runtime",
   "scripts": [
