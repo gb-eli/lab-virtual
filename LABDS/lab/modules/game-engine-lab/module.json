@@ -1,7 +1,7 @@
 {
   "id": "game-engine-lab",
-  "name": "Game Engine",
-  "version": "3.8.0",
+  "name": "Laboratório de Engine e Renderização",
+  "version": "4.19.0",
   "weight": "heavy",
   "load": "on-demand",
   "cache": "runtime",
@@ -9,5 +9,7 @@
     "modules/game-engine-lab/index.js"
   ],
   "styles": [],
-  "bundles": []
+  "bundles": [],
+  "description": "Loop e física com telemetria, editor isométrico 2.5D com histórico e profiler de Canvas com recomendações reais.",
+  "updatedAt": "2026-08-02T23:33:00-03:00"
 }
