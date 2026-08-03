@@ -15,7 +15,13 @@ const context={window:{LABDS:{}},navigator:{},console,Date,URL,URLSearchParams,s
 const configSource=read(path.join(lab,'js/config.js'));
 vm.runInNewContext(configSource,context,{filename:'config.js'});
 const {VERSION,TOOLS}=context.window.LABDS;
-assert(VERSION==='4.0.0-pages',`Versão inesperada: ${VERSION}`);
+assert(VERSION==='4.16.0',`Versão inesperada: ${VERSION}`);
+const release=context.window.LABDS.RELEASE;
+assert(release?.version===VERSION,'Metadados de versão não correspondem à versão instalada.');
+assert(Number.isFinite(new Date(release?.updatedAt).getTime()),'Data e hora da atualização são inválidas.');
+const versionFile=JSON.parse(read(path.join(lab,'version.json')));
+assert(versionFile.version===VERSION,'version.json não corresponde à versão instalada.');
+assert(versionFile.updatedAt===release.updatedAt,'version.json e config.js possuem horários diferentes.');
 assert(Array.isArray(TOOLS)&&TOOLS.length===50,`Catálogo deveria ter 50 ferramentas públicas; encontrado ${TOOLS?.length}`);
 const ids=TOOLS.map(tool=>tool.id);assert(new Set(ids).size===ids.length,'Há IDs duplicados no catálogo.');
 const modules=[...new Set(TOOLS.filter(tool=>tool.module).map(tool=>tool.module))];
@@ -102,18 +108,23 @@ const actionRegistry=JSON.parse(read(path.join(root,'eduauth-action-registry.jso
 for(const action of actionRegistry.actions||[])for(const point of action.integrationPoints||[])assert(fs.existsSync(path.join(root,point.file)),`Ponto de integração EduAuth ausente: ${point.file}`);
 
 const index=read(path.join(lab,'index.html'));
+for(const marker of ['homeVersionStatusBtn','versionDialog','versionRefreshBtn','versionPublishedAt'])assert(index.includes(marker),`Controle de versão ausente no HTML: ${marker}`);
+const appSource=read(path.join(lab,'js/app.js'));
+for(const marker of ['refreshVersionControl','relativeUpdate','compareVersions','./version.json'])assert(appSource.includes(marker),`Controle de versão ausente no app.js: ${marker}`);
+const versionStyles=read(path.join(lab,'css/v32.css'));
+for(const marker of ['.home-version-status','.version-overview','.version-details'])assert(versionStyles.includes(marker),`CSS de versão ausente: ${marker}`);
 const directScripts=[...index.matchAll(/<script[^>]+src=["']([^"']+)/g)].map(match=>match[1]);
 assert(directScripts.length===1&&directScripts[0]==='js/core/bootstrap.js','O HTML inicial deve chamar somente o bootstrap.');
 const pwaManifest=JSON.parse(read(path.join(lab,'manifest.webmanifest')));
 assert(pwaManifest.start_url.includes(VERSION),`Manifesto PWA não referencia a versão ${VERSION}.`);
-assert(index.includes('content="4.0.0"'), 'Meta de versão do HTML não está em 4.0.0.');
+assert(index.includes('content="4.16.0"'), 'Meta de versão do HTML não está em 4.16.0.');
 const voxelGame=read(path.join(lab,'games/voxelcraft/js/game.js'));
 assert(fs.existsSync(path.join(lab,'vendor/three/three.module.min.js')),'Three.js local do VoxelCraft está ausente.');
 assert(fs.existsSync(path.join(lab,'vendor/three/three.core.min.js')),'Núcleo local do Three.js está ausente.');
 assert(voxelGame.includes("../../../vendor/three/three.module.min.js"),'VoxelCraft não aponta para o renderizador Three.js local.');
 assert(!/https:\/\/cdn\.jsdelivr\.net\/npm\/three/.test(voxelGame),'VoxelCraft ainda depende da CDN do Three.js.');
 const sw=read(path.join(lab,'service-worker.js'));
-assert(sw.includes("labds-v4.15.0-drone-realistic-operation"),'Service Worker não está no cache da Fase 1.3 V4.15.0.');
+assert(sw.includes("labds-v4.16.0-version-control"),'Service Worker não está no cache da Fase 1.4 V4.16.0.');
 const coreBlock=sw.match(/CORE_FILES=\[(.*?)\];/s)?.[1]||'';
 const coreRefs=[...coreBlock.matchAll(/['"](\.\/?[^'"]+)['"]/g)].map(match=>match[1]);
 for(const raw of coreRefs){const clean=raw==='./'?'index.html':raw.replace(/^\.\//,'');assert(fs.existsSync(path.join(lab,clean)),`Arquivo do núcleo ausente no Service Worker: ${raw}`);}
