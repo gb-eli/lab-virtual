@@ -1,5 +1,21 @@
 # Histórico de versões — Laboratório Virtual DS
 
+## Hardware Studio 4.23.0 — Fase A3 — 03/08/2026
+
+- inclusão do motor modular `thermal-engine.js`, carregado antes da montagem e do módulo principal;
+- simulação separada das temperaturas estimadas de CPU, GPU e interior do gabinete;
+- cálculo de entrada, exaustão, vazão efetiva, pressão positiva, neutra ou negativa e risco de poeira;
+- perfis Balanceado, Pressão positiva, Pressão negativa, Silencioso e Desempenho;
+- curvas de ventoinhas Baixa, Automática e Turbo, combinadas com temperatura ambiente e carga de trabalho;
+- filtros limpo, usado, obstruído e ausente passam a alterar vazão e acúmulo de poeira;
+- cargas Ocioso, Estudo, Jogos, Renderização e Estresse total influenciam a geração de calor;
+- radiadores passam a respeitar o ponto de montagem escolhido e a compatibilidade física do gabinete;
+- ventoinhas de entrada e exaustão recebem identificação visual, direção e rotas de partículas próprias;
+- novo painel térmico mostra temperaturas, pressão, CFM, ruído, poeira, radiador e alertas de refrigeração;
+- modo Baixo 2.5D recebe setas direcionais e indicadores térmicos responsivos;
+- perfis prontos passam a aplicar também parâmetros térmicos coerentes com sua finalidade;
+- cache principal renovado para entregar o novo motor térmico e o manifesto 4.23.0.
+
 ## Hardware Studio 4.22.0 — Fase A2 — 03/08/2026
 
 - inclusão do motor modular `case-engine.js`, carregado antes da montagem e do módulo principal;
