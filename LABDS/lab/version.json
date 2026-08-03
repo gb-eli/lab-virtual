@@ -1,13 +1,13 @@
 {
   "schemaVersion": 1,
   "application": "Laboratório Virtual DS",
-  "version": "4.19.0",
-  "updatedAt": "2026-08-02T23:33:00-03:00",
+  "version": "4.20.0",
+  "updatedAt": "2026-08-03T00:17:00-03:00",
   "channel": "stable",
-  "title": "Acabamento de Hardware e Engine com versão por ferramenta",
+  "title": "Hardware Studio 3D com catálogo, periféricos e benchmarks",
   "notes": [
-    "Bancada de Hardware ganhou perfis rápidos, prontidão, inspeção detalhada e correção assistida.",
-    "Engine recebeu pausa, telemetria, predefinições, histórico de edição e recomendação de orçamento gráfico.",
-    "Hardware e Engine exibem versão e data/hora da atualização dentro de cada ferramenta."
+    "Montagem de Computador evoluiu para Hardware Studio 3D com mais peças, marcas, gerações, gabinetes, cores e configurações.",
+    "Foram adicionados dispositivos de entrada e saída, monitores, periféricos, diagnósticos e benchmarks didáticos para jogos, vídeo, trabalho e estudos.",
+    "Gráficos Baixo, Médio, Alto e Ultra controlam visualização 360°, materiais PBR, vidro, sombras, RGB, shader e partículas."
   ]
 }
