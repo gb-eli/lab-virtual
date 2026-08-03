@@ -54,10 +54,11 @@
     {
       "id": "code-games-lab",
       "name": "Simuladores Interativos DS",
-      "version": "4.13.0",
+      "version": "4.14.0",
       "weight": "heavy",
       "load": "on-demand",
-      "cache": "runtime"
+      "cache": "runtime",
+      "description": "Probabilidade, mercado e dados, e simulador de drone 360° com quatro modelos, pistas, climas e qualidade adaptativa."
     },
     {
       "id": "communication-lab",
