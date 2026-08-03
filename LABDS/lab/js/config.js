@@ -2,17 +2,17 @@
 
 window.LABDS = window.LABDS || {};
 
-window.LABDS.VERSION = '4.19.0';
+window.LABDS.VERSION = '4.21.0';
 window.LABDS.RELEASE_DATE = '2026-08-02';
 window.LABDS.RELEASE = Object.freeze({
-  version:'4.19.0',
-  updatedAt:'2026-08-02T23:33:00-03:00',
+  version:'4.21.0',
+  updatedAt:'2026-08-03T01:05:00-03:00',
   channel:'stable',
-  title:'Acabamento de Hardware e Engine com versão por ferramenta',
+  title:'Hardware Studio 3D com catálogo, periféricos e benchmarks',
   notes:Object.freeze([
-    'Bancada de Hardware ganhou perfis rápidos, prontidão, inspeção de peças e correção assistida.',
-    'Engine recebeu pausa, telemetria, predefinições, desfazer/refazer e recomendações do profiler.',
-    'As duas ferramentas agora exibem versão e data/hora da atualização dentro do próprio módulo.'
+    'Montagem de Computador evoluiu para Hardware Studio 3D com mais peças, marcas, gerações, gabinetes, cores e configurações.',
+    'Foram adicionados monitores, dispositivos de entrada e saída, periféricos, nobreaks, diagnósticos e benchmarks didáticos para jogos, vídeo, trabalho e estudos.',
+    'O laboratório agora possui gráficos Baixo, Médio, Alto e Ultra com visualização 360°, materiais 3D, vidro, sombras, RGB, shader e partículas conforme o desempenho.'
   ])
 });
 window.LABDS.REMOVED_TOOL_IDS = Object.freeze([
@@ -48,7 +48,7 @@ window.LABDS.TOOLS = [
   { id:'sql', type:'lab', module:'sql-lab', featured:true, category:'database', level:'intermediate', os:['browser','multi'], runtime:'real-online', runtimeLabel:'SQLite real no navegador', name:'Laboratório SQL', shortName:'SQL', description:'SQLite em WebAssembly, explorador de tabelas, resultados tabulares e persistência local.', icon:'DB', extension:'sql', mime:'application/sql', tags:['SQLite','SQL','Tabelas'] },
   { id:'network', type:'lab', module:'network-lab', featured:true, category:'network', level:'intermediate', os:['multi'], runtime:'simulation', runtimeLabel:'Simulação avançada', name:'Laboratório de Redes', shortName:'Redes', description:'Topologia, IP, DNS, gateway, latência, jitter, perda e falhas configuráveis.', icon:'⌁', extension:'json', mime:'application/json', tags:['TCP/IP','Ping','DNS'] },
   { id:'virtual-machine', type:'lab', module:'vm-lab', featured:true, category:'systems', level:'advanced', os:['multi'], runtime:'simulation', runtimeLabel:'Simulação educacional', name:'Sistemas Operacionais e Máquinas Virtuais', shortName:'Sistemas/VM', description:'Monte hardware virtual, configure BIOS/UEFI, discos e instale versões distintas de Windows, Linux, ChromeOS e macOS em uma simulação técnica.', icon:'VM', extension:'vm.json', mime:'application/json', tags:['Virtualização','BIOS','ISO'] },
-  { id:'hardware', type:'lab', module:'hardware-lab', featured:false, category:'systems', level:'intermediate', os:['multi'], runtime:'simulation', runtimeLabel:'Simulação visual', name:'Montagem de Computador', shortName:'Hardware', description:'Monte componentes em uma bancada pseudo-3D, use perfis rápidos, inspecione peças e acompanhe prontidão, compatibilidade, energia, temperatura e POST.', icon:'PC', extension:'pc.json', mime:'application/json', tags:['CPU','RAM','Fonte'] },
+  { id:'hardware', type:'lab', module:'hardware-lab', featured:false, category:'systems', level:'intermediate', os:['multi'], runtime:'simulation', runtimeLabel:'Simulação 3D/WebGL', name:'Hardware Studio 3D', shortName:'Hardware 3D', description:'Monte computadores completos em 3D com mais realismo, personalize gabinete, bancada, iluminação, ferramentas, periféricos e compare benchmarks didáticos para jogos, criação, trabalho e estudos.', icon:'PC', extension:'pc.json', mime:'application/json', tags:['CPU','RAM','Fonte'] },
   { id:'graphics', type:'lab', module:'graphics-lab', featured:true, category:'graphics', level:'basic', os:['browser','multi'], runtime:'real', runtimeLabel:'Execução visual real', name:'Cores, Pixels e Resolução', shortName:'Computação gráfica', description:'Conversões de cor, contraste, canais RGBA, grade de pixels e estimativa de tamanho.', icon:'RGB', extension:'png', mime:'image/png', tags:['Pixels','RGB','HEX'] },
   { id:'block-programming', type:'lab', module:'blocks-lab', featured:false, category:'programming', level:'basic', os:['browser','multi'], runtime:'demo', runtimeLabel:'Execução visual interativa', name:'Programação em Blocos', shortName:'Blocos', description:'Monte algoritmos, veja a rota 2D mudar em tempo real e execute cada bloco passo a passo com pseudocódigo e JavaScript equivalente.', icon:'▦', extension:'json', mime:'application/json', tags:['Lógica','Blocos','Pseudocódigo'] },
   { id:'data-tools', type:'lab', module:'data-tools-lab', featured:false, category:'programming', level:'basic', os:['browser','multi'], runtime:'real', runtimeLabel:'Execução real no navegador', name:'Bits, Bases e Codificações', shortName:'Conversores', description:'Conversão binária, hexadecimal, Base64, Unicode e hashes educacionais.', icon:'01', extension:'txt', mime:'text/plain', tags:['Binário','Base64','Hash'] },
