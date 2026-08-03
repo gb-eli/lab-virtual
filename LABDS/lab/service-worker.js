@@ -1,5 +1,5 @@
 'use strict';
-const VERSION='labds-v4.21.0-hardware-case-structure-phase-a2';
+const VERSION='labds-v4.21.0-hardware-thermal-airflow-phase-a3';
 const CORE=`${VERSION}-core`,RUNTIME=`${VERSION}-runtime`,EXTERNAL=`${VERSION}-external`;
 const CORE_FILES=[
   './','./index.html','./offline.html','./manifest.webmanifest','./assets/icon.svg','./assets/hero-tech-lab.svg','./css/boot.css',
