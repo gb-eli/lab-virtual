@@ -4,7 +4,7 @@
   window.LABDS = window.LABDS || {};
 
   const VERSION = 1;
-  const BLOCK_TYPES = new Set(['start','set','input','output','if','else','repeat','increment','wait','function','end']);
+  const BLOCK_TYPES = new Set(['start','set','input','output','if','else','repeat','increment','wait','function','call','move','turnRight','turnLeft','paint','close','end']);
   const DEVICES = new Set(['mobile','tablet','laptop','desktop','wide']);
   const THEMES = new Set(['system','dark','light','contrast']);
   const FONT_SIZES = new Set(['normal','large','xlarge']);
@@ -71,10 +71,21 @@
   function sanitizeBlocks(value){
     const input=isPlainObject(value)?value:{};
     const blocks=Array.isArray(input.blocks)?input.blocks:[];
+    const visual=isPlainObject(input.visual)?input.visual:{};
     return {
-      schemaVersion:VERSION,
-      blocks:blocks.slice(0,200).map(item=>({type:BLOCK_TYPES.has(item?.type)?item.type:'output'})),
-      logs:Array.isArray(input.logs)?input.logs.slice(-100).map(item=>text(item,500)):[]
+      schemaVersion:2,
+      blocks:blocks.slice(0,240).map(item=>({type:BLOCK_TYPES.has(item?.type)?item.type:'output'})),
+      logs:Array.isArray(input.logs)?input.logs.slice(-100).map(item=>text(item,500)):[],
+      speed:finite(input.speed,1,.5,2),
+      studentName:text(input.studentName||'Aluno',40),
+      visual:{
+        x:Math.round(finite(visual.x,4,0,8)),
+        y:Math.round(finite(visual.y,6,0,8)),
+        dir:Math.round(finite(visual.dir,0,0,3)),
+        color:color(visual.color,'#62e6ff'),
+        counter:Math.round(finite(visual.counter,0,-9999,9999)),
+        message:text(visual.message||'',120)
+      }
     };
   }
 
