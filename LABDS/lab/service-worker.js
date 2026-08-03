@@ -1,5 +1,5 @@
 'use strict';
-const VERSION='labds-v4.14.0-drone-simulator-expansion';
+const VERSION='labds-v4.15.0-drone-realistic-operation';
 const CORE=`${VERSION}-core`,RUNTIME=`${VERSION}-runtime`,EXTERNAL=`${VERSION}-external`;
 const CORE_FILES=[
   './','./index.html','./offline.html','./manifest.webmanifest','./assets/icon.svg','./assets/hero-tech-lab.svg','./css/boot.css',
