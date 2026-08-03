@@ -1,5 +1,5 @@
 'use strict';
-const VERSION='labds-v4.16.0-version-control';
+const VERSION='labds-v4.19.0-hardware-engine-polish';
 const CORE=`${VERSION}-core`,RUNTIME=`${VERSION}-runtime`,EXTERNAL=`${VERSION}-external`;
 const CORE_FILES=[
   './','./index.html','./offline.html','./manifest.webmanifest','./assets/icon.svg','./assets/hero-tech-lab.svg','./css/boot.css',
