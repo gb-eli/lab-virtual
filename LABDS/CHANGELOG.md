@@ -1,5 +1,32 @@
 # Histórico de versões — Laboratório Virtual DS
 
+## Hardware Studio 4.22.0 — Fase A2 — 03/08/2026
+
+- inclusão do motor modular `case-engine.js`, carregado antes da montagem e do módulo principal;
+- oito gabinetes passam a ter classes, dimensões reais, escalas de cena e volumes internos próprios;
+- frentes físicas diferenciadas em mesh, vidro panorâmico, sólida acústica, entrada lateral, perfurada, workstation e open bench;
+- painel lateral de vidro ou aço pode ser aberto ou removido conforme a construção do gabinete;
+- montagem manual exige acesso lateral antes de liberar os encaixes internos;
+- inclusão de chassi, moldura, bandeja da placa-mãe, standoffs, PSU shroud, baias, canais de cabos e divisão de câmara dupla;
+- radiadores passam a ser validados por tamanho e ponto de montagem real disponível;
+- placa-mãe, GPU, fonte, armazenamento, cooler e fans recebem posições proporcionais ao gabinete escolhido;
+- nova ficha estrutural mostra dimensões, frente, lateral, câmaras, baias e suportes;
+- modo Baixo recebe representação 2.5D das diferenças estruturais e do painel lateral;
+- cache principal renovado para entregar o novo motor estrutural e o manifesto 4.22.0.
+
+## Hardware Studio 4.21.1 — Fase 1 — 03/08/2026
+
+- inclusão do motor modular `assembly-engine.js`, carregado somente ao abrir o Hardware Studio 3D;
+- montagem manual por mouse, toque e caneta, com peças separadas em bancada;
+- pontos de encaixe visuais e validação de ordem, socket, memória, gabinete, GPU e refrigeração;
+- detecção de colisão durante reposicionamento de componentes;
+- rotação da peça selecionada, encaixe assistido, desfazer, refazer e reiniciar;
+- componentes opcionais são retirados automaticamente da sequência quando não existem na configuração;
+- POST e prontidão passam a considerar componentes ainda não instalados;
+- tentativas, encaixes corretos e falhas passam a integrar logs e exportação do laboratório;
+- suporte responsivo aos controles da montagem em celular, tablet, notebook e desktop;
+- cache principal renovado para garantir a entrega do novo manifesto e do motor de montagem.
+
 ## 4.0.0-pages — 31/07/2026
 
 - consolidação baseada na V3.8, que preserva 51 ferramentas e 42 módulos sob demanda;
