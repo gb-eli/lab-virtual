@@ -1,15 +1,17 @@
 {
   "id": "hardware-lab",
-  "name": "Bancada Técnica de Hardware",
-  "version": "4.19.0",
-  "weight": "medium",
+  "name": "Hardware Studio 3D",
+  "version": "4.20.0",
+  "weight": "heavy",
   "load": "on-demand",
   "cache": "runtime",
   "scripts": [
     "modules/hardware-lab/index.js"
   ],
-  "styles": [],
+  "styles": [
+    "modules/hardware-lab/styles.css"
+  ],
   "bundles": [],
-  "description": "Bancada pseudo-3D com perfis rápidos, inspeção de peças, prontidão, correção assistida, compatibilidade, energia, refrigeração, cabos e POST.",
-  "updatedAt": "2026-08-02T23:33:00-03:00"
+  "description": "Laboratório 3D de montagem completa com catálogo de gerações, periféricos, compatibilidade, diagnóstico, benchmarks didáticos e gráficos Baixo/Médio/Alto/Ultra.",
+  "updatedAt": "2026-08-03T00:17:00-03:00"
 }
