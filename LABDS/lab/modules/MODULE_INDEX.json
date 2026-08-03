@@ -151,12 +151,12 @@
     },
     {
       "id": "hardware-lab",
-      "name": "Bancada Técnica de Hardware",
-      "version": "4.19.0",
-      "weight": "medium",
+      "name": "Hardware Studio 3D",
+      "version": "4.20.0",
+      "weight": "heavy",
       "load": "on-demand",
       "cache": "runtime",
-      "description": "Bancada visual com perfis rápidos, inspeção de peças, prontidão e correção assistida."
+      "description": "Montagem 3D completa, catálogo de peças e periféricos, benchmarks didáticos, diagnóstico e quatro níveis gráficos."
     },
     {
       "id": "help-center-lab",
