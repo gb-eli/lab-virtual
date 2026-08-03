@@ -1,0 +1,13 @@
+{
+  "schemaVersion": 1,
+  "application": "Laboratório Virtual DS",
+  "version": "4.16.0",
+  "updatedAt": "2026-08-02T21:38:00-03:00",
+  "channel": "stable",
+  "title": "Controle de versão e última atualização",
+  "notes": [
+    "Versão e data da publicação visíveis na tela inicial.",
+    "Contador automático informa há quanto tempo ocorreu a atualização.",
+    "Verificação online identifica quando uma aba ainda usa uma versão anterior em cache."
+  ]
+}
