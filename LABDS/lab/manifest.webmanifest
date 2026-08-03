@@ -1,8 +1,8 @@
 {
   "name": "Lab Virtual DS",
   "short_name": "Lab DS",
-  "description": "Plataforma educacional modular com simuladores, emuladores, laboratórios, acessibilidade e controle público de versão.",
-  "start_url": "./index.html?v=4.16.0",
+  "description": "Plataforma educacional modular com simuladores, emuladores, bancada visual de hardware, engine 2.5D, impressão 3D, acessibilidade e controle público de versão.",
+  "start_url": "./index.html?v=4.19.0",
   "display": "standalone",
   "background_color": "#07101c",
   "theme_color": "#07111f",
