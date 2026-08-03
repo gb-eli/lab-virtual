@@ -46,8 +46,8 @@
     {
       "id": "blocks-lab",
       "name": "Blocks",
-      "version": "3.8.0",
-      "weight": "light",
+      "version": "4.17.0",
+      "weight": "medium",
       "load": "on-demand",
       "cache": "runtime"
     },
@@ -126,11 +126,12 @@
     },
     {
       "id": "game-engine-lab",
-      "name": "Game Engine",
-      "version": "3.8.0",
+      "name": "Laboratório de Engine e Renderização",
+      "version": "4.19.0",
       "weight": "heavy",
       "load": "on-demand",
-      "cache": "runtime"
+      "cache": "runtime",
+      "description": "Loop, física, telemetria, editor 2.5D com histórico e profiler real com recomendações."
     },
     {
       "id": "git-lab",
@@ -150,11 +151,12 @@
     },
     {
       "id": "hardware-lab",
-      "name": "Hardware",
-      "version": "3.8.0",
+      "name": "Bancada Técnica de Hardware",
+      "version": "4.19.0",
       "weight": "medium",
       "load": "on-demand",
-      "cache": "runtime"
+      "cache": "runtime",
+      "description": "Bancada visual com perfis rápidos, inspeção de peças, prontidão e correção assistida."
     },
     {
       "id": "help-center-lab",
@@ -207,8 +209,8 @@
     {
       "id": "printing3d-lab",
       "name": "Printing3D",
-      "version": "3.8.0",
-      "weight": "medium",
+      "version": "4.17.0",
+      "weight": "heavy",
       "load": "on-demand",
       "cache": "runtime"
     },
