@@ -15,7 +15,7 @@ const context={window:{LABDS:{}},navigator:{},console,Date,URL,URLSearchParams,s
 const configSource=read(path.join(lab,'js/config.js'));
 vm.runInNewContext(configSource,context,{filename:'config.js'});
 const {VERSION,TOOLS}=context.window.LABDS;
-assert(VERSION==='4.20.0',`Versão inesperada: ${VERSION}`);
+assert(VERSION==='4.21.0',`Versão inesperada: ${VERSION}`);
 const release=context.window.LABDS.RELEASE;
 assert(release?.version===VERSION,'Metadados de versão não correspondem à versão instalada.');
 assert(Number.isFinite(new Date(release?.updatedAt).getTime()),'Data e hora da atualização são inválidas.');
@@ -65,14 +65,14 @@ for(const marker of ['.printing-layout-v40','.printing-stage canvas','.printing-
 
 
 const hardwareManifest=JSON.parse(read(path.join(lab,'modules/hardware-lab/module.json')));
-assert(hardwareManifest.version==='4.20.0','Manifesto da Bancada Técnica de Hardware não está na V4.19.0.');
-assert(moduleIndex.modules.find(item=>item.id==='hardware-lab')?.version==='4.20.0','MODULE_INDEX não referencia Hardware V4.20.0.');
+assert(hardwareManifest.version==='4.21.0','Manifesto do Hardware Studio Premium 3D não está na V4.21.0.');
+assert(moduleIndex.modules.find(item=>item.id==='hardware-lab')?.version==='4.21.0','MODULE_INDEX não referencia Hardware V4.21.0.');
 const hardwareSource=read(path.join(lab,'modules/hardware-lab/index.js'));
-for(const marker of ['Hardware Studio 3D','hardwareCanvas3d','hardwareCanvas2d','benchmarkSuite','runBenchmark','runDiagnostic','buildPCScene','createFloor','ShaderMaterial','MeshPhysicalMaterial','data-hw-quality','labGraphics','componentOptions','storage2','webcams','controllers','ups','MODULE_UPDATED_AT'])assert(hardwareSource.includes(marker),`Hardware Studio 3D V4.20.0 incompleto: ${marker}`);
+for(const marker of ['Hardware Studio Premium 3D','hardwareCanvas3d','hardwareCanvas2d','benchmarkSuite','runBenchmark','runDiagnostic','runAssemblyDemo','buildPCScene','buildStudioEnvironment','addCurvedTube','createFloor','ShaderMaterial','MeshPhysicalMaterial','data-hw-quality','labGraphics','componentOptions','storage2','webcams','controllers','ups','MODULE_UPDATED_AT'])assert(hardwareSource.includes(marker),`Hardware Studio Premium 3D V4.21.0 incompleto: ${marker}`);
 assert(hardwareManifest.weight==='heavy','Hardware Studio 3D deve ser carregado como módulo pesado sob demanda.');
 assert(hardwareManifest.styles?.includes('modules/hardware-lab/styles.css'),'Hardware Studio 3D não referencia o CSS modular.');
 const hardwareStyles=read(path.join(lab,'modules/hardware-lab/styles.css'));
-for(const marker of ['.hardware-v420','.hardware-render-area','.hardware-quality','.hardware-benchmark-bars','.hardware-control-grid'])assert(hardwareStyles.includes(marker),`CSS modular do Hardware Studio incompleto: ${marker}`);
+for(const marker of ['.hardware-v421','.hardware-render-area','.hardware-quality','.hardware-benchmark-bars','.hardware-control-grid'])assert(hardwareStyles.includes(marker),`CSS modular do Hardware Studio incompleto: ${marker}`);
 const engineManifest=JSON.parse(read(path.join(lab,'modules/game-engine-lab/module.json')));
 assert(engineManifest.version==='4.19.0','Manifesto do Laboratório de Engine não está na V4.19.0.');
 assert(moduleIndex.modules.find(item=>item.id==='game-engine-lab')?.version==='4.19.0','MODULE_INDEX não referencia Engine V4.19.0.');
@@ -151,14 +151,14 @@ const directScripts=[...index.matchAll(/<script[^>]+src=["']([^"']+)/g)].map(mat
 assert(directScripts.length===1&&directScripts[0]==='js/core/bootstrap.js','O HTML inicial deve chamar somente o bootstrap.');
 const pwaManifest=JSON.parse(read(path.join(lab,'manifest.webmanifest')));
 assert(pwaManifest.start_url.includes(VERSION),`Manifesto PWA não referencia a versão ${VERSION}.`);
-assert(index.includes('content="4.20.0"'), 'Meta de versão do HTML não está em 4.20.0.');
+assert(index.includes('content="4.21.0"'), 'Meta de versão do HTML não está em 4.21.0.');
 const voxelGame=read(path.join(lab,'games/voxelcraft/js/game.js'));
 assert(fs.existsSync(path.join(lab,'vendor/three/three.module.min.js')),'Three.js local do VoxelCraft está ausente.');
 assert(fs.existsSync(path.join(lab,'vendor/three/three.core.min.js')),'Núcleo local do Three.js está ausente.');
 assert(voxelGame.includes("../../../vendor/three/three.module.min.js"),'VoxelCraft não aponta para o renderizador Three.js local.');
 assert(!/https:\/\/cdn\.jsdelivr\.net\/npm\/three/.test(voxelGame),'VoxelCraft ainda depende da CDN do Three.js.');
 const sw=read(path.join(lab,'service-worker.js'));
-assert(sw.includes("labds-v4.20.0-hardware-studio-3d"),'Service Worker não está no cache da Fase 1.8 V4.20.0.');
+assert(sw.includes("labds-v4.21.0-hardware-studio-premium-3d"),'Service Worker não está no cache da Fase 1.9 V4.21.0.');
 const coreBlock=sw.match(/CORE_FILES=\[(.*?)\];/s)?.[1]||'';
 const coreRefs=[...coreBlock.matchAll(/['"](\.\/?[^'"]+)['"]/g)].map(match=>match[1]);
 for(const raw of coreRefs){const clean=raw==='./'?'index.html':raw.replace(/^\.\//,'');assert(fs.existsSync(path.join(lab,clean)),`Arquivo do núcleo ausente no Service Worker: ${raw}`);}
