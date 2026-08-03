@@ -1,7 +1,7 @@
 {
   "id": "hardware-lab",
   "name": "Hardware Studio 3D",
-  "version": "4.20.0",
+  "version": "4.21.0",
   "weight": "heavy",
   "load": "on-demand",
   "cache": "runtime",
@@ -12,6 +12,6 @@
     "modules/hardware-lab/styles.css"
   ],
   "bundles": [],
-  "description": "Laboratório 3D de montagem completa com catálogo de gerações, periféricos, compatibilidade, diagnóstico, benchmarks didáticos e gráficos Baixo/Médio/Alto/Ultra.",
-  "updatedAt": "2026-08-03T00:17:00-03:00"
+  "description": "Laboratório premium de montagem 3D com mais realismo visual, cenários, bancada configurável, peças, acessórios, compatibilidade, diagnóstico, benchmarks didáticos e gráficos Baixo/Médio/Alto/Ultra.",
+  "updatedAt": "2026-08-03T01:05:00-03:00"
 }
