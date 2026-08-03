@@ -1,8 +1,8 @@
 {
   "id": "printing3d-lab",
   "name": "Printing3D",
-  "version": "3.8.0",
-  "weight": "medium",
+  "version": "4.17.0",
+  "weight": "heavy",
   "load": "on-demand",
   "cache": "runtime",
   "scripts": [
