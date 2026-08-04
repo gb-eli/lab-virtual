@@ -1,12 +1,13 @@
 {
   "id": "hardware-lab",
   "name": "Hardware Studio 3D",
-  "version": "4.25.0",
+  "version": "4.26.0",
   "weight": "heavy",
   "load": "on-demand",
   "cache": "runtime",
   "scripts": [
     "modules/hardware-lab/case-engine.js",
+    "modules/hardware-lab/peripheral-engine.js",
     "modules/hardware-lab/layout-engine.js",
     "modules/hardware-lab/thermal-engine.js",
     "modules/hardware-lab/material-engine.js",
@@ -17,6 +18,6 @@
     "modules/hardware-lab/styles.css"
   ],
   "bundles": [],
-  "description": "Laboratório premium de montagem 3D com materiais PBR, texturas procedurais, vidro físico, iluminação adaptativa, RGB, sombras de contato e modo Ultra otimizado, preservando montagem manual, estrutura física e simulação térmica.",
-  "updatedAt": "2026-08-03T21:46:00-03:00"
+  "description": "Laboratório premium de montagem 3D com materiais PBR, estrutura térmica, layout físico seguro e setups realistas com uma, duas ou três telas, suportes articulados e catálogo ampliado de periféricos.",
+  "updatedAt": "2026-08-03T22:16:00-03:00"
 }
