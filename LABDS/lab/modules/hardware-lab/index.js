@@ -2,10 +2,10 @@
 (function(){
   window.LABDS_LABS=window.LABDS_LABS||{};
 
-  const KEY='lab.hardware.v14';
-  const LEGACY_KEY='lab.hardware.v13';
-  const MODULE_VERSION='4.26.0';
-  const MODULE_UPDATED_AT='2026-08-03T22:16:00-03:00';
+  const KEY='lab.hardware.v15';
+  const LEGACY_KEY='lab.hardware.v14';
+  const MODULE_VERSION='4.27.0';
+  const MODULE_UPDATED_AT='2026-08-04T04:11:00-03:00';
   const THREE_URL='../../vendor/three/three.module.min.js';
   const GRAPHICS_LEVELS=['low','medium','high','ultra'];
   const COLORS={black:'#111827',white:'#e8eef5',graphite:'#334155',blue:'#175cd3',red:'#a61b2b',purple:'#6d28d9',green:'#08775d',orange:'#b45309'};
@@ -21,9 +21,13 @@
   const LAYOUT_API=window.LABDS_HARDWARE_LAYOUT;
   const MATERIAL_API=window.LABDS_HARDWARE_MATERIALS;
   const PERIPHERAL_API=window.LABDS_HARDWARE_PERIPHERALS;
+  const FAMILY_API=window.LABDS_HARDWARE_FAMILIES;
+  const INSPECTION_API=window.LABDS_HARDWARE_INSPECTION;
+  const CINEMATIC_API=window.LABDS_HARDWARE_CINEMATIC;
   const CASE_FINISHES={matte:'Pintura fosca',glossy:'Pintura brilhante',brushed:'Metal escovado',carbon:'Fibra de carbono'};
   const GLASS_STYLES={clear:'Vidro claro',smoked:'Vidro fumê',frosted:'Vidro fosco',opaque:'Painel opaco'};
   const RGB_INTENSITIES={subtle:'Discreto',balanced:'Equilibrado',showcase:'Showroom'};
+  const PRESET_FAMILIES={school:'school',office:'office',study:'developer',gamerBudget:'gamer_entry',gamerUltra:'gamer_ultra',creator:'creator',workstation:'workstation',compact:'mini_pc'};
   const ASSEMBLY_PARTS=ASSEMBLY_API?.PARTS||['board','cpu','ram','gpu','storage','storage2','psu','cooler'];
   const ASSEMBLY_LABELS=ASSEMBLY_API?.LABELS||{board:'Placa-mãe',cpu:'Processador',ram:'Memória RAM',gpu:'Placa de vídeo',storage:'Armazenamento principal',storage2:'Armazenamento secundário',psu:'Fonte de alimentação',cooler:'Sistema de refrigeração'};
 
@@ -182,7 +186,7 @@
 
   const defaultConnections={boardPower:true,cpuPower:true,gpuPower:true,ramSeated:true,storageData:true,storagePower:true,storage2Data:true,storage2Power:true,frontPanel:true,cpuPaste:true,coolerMounted:true,monitorCable:true,peripheralsPower:true};
   const defaults={
-    schema:16,tab:'build',mode:'guided',preset:'school',case:'airflow_atx',caseColor:'blue',caseFinish:'matte',glassStyle:'smoked',rgbIntensity:'balanced',materialDetail:true,contactShadows:true,caseSidePanel:'closed',caseStructureVisible:true,board:'asrock_b650m',cpu:'r5_7600',ram:'d5_16_5600',gpu:'integrated',storage:'nvme4_1tb',storage2:'none',psu:'p550',cooler:'stock',nic:'onboard',monitor:'fhd75',monitor2:'none',monitor3:'none',monitorCount:1,monitorLayout:'single',monitorMount:'stock',keyboard:'membrane',mouse:'office',audio:'speakers',webcam:'hd',printer:'ink',controller:'none',ups:'ups600',fans:2,fanProfile:'balanced',fanSpeed:'auto',filterCondition:'clean',workload:'study',ambientTemperature:23,radiatorPosition:'auto',thermalOverlay:true,lighting:'off',cableManagement:'standard',backdrop:'bench',deskFinish:'metal',ambientPreset:'neutral',toolkit:'pro',accentColor:'cyan',showProps:true,assemblyGuide:true,
+    schema:17,tab:'families',mode:'guided',preset:'school',family:'school',inspection:{active:false,target:'family',view:'iso',exploded:false,zoom:1,showInfo:true,distance:6.5},cinematic:{active:false,playing:false,shot:0,elapsed:0,speed:'normal',hideUi:false,loop:true},case:'airflow_atx',caseColor:'blue',caseFinish:'matte',glassStyle:'smoked',rgbIntensity:'balanced',materialDetail:true,contactShadows:true,caseSidePanel:'closed',caseStructureVisible:true,board:'asrock_b650m',cpu:'r5_7600',ram:'d5_16_5600',gpu:'integrated',storage:'nvme4_1tb',storage2:'none',psu:'p550',cooler:'stock',nic:'onboard',monitor:'fhd75',monitor2:'none',monitor3:'none',monitorCount:1,monitorLayout:'single',monitorMount:'stock',keyboard:'membrane',mouse:'office',audio:'speakers',webcam:'hd',printer:'ink',controller:'none',ups:'ups600',fans:2,fanProfile:'balanced',fanSpeed:'auto',filterCondition:'clean',workload:'study',ambientTemperature:23,radiatorPosition:'auto',thermalOverlay:true,lighting:'off',cableManagement:'standard',backdrop:'bench',deskFinish:'metal',ambientPreset:'neutral',toolkit:'pro',accentColor:'cyan',showProps:true,assemblyGuide:true,
     ...defaultConnections,state:'off',scenario:'standard',score:0,tests:0,logs:[],selectedPart:'board',exploded:false,airflow:true,cables:true,autorotate:false,labGraphics:'high',cameraYaw:-.72,cameraPitch:.36,cameraDistance:15,
     benchmarkTarget:'games',benchmarkResolution:'1080p',benchmarkQuality:'high',rayTracing:false,upscaling:'quality',benchmarkResults:null,benchmarkHistory:[],diagnosticResults:[],benchmarkRunning:false,
     assembly:{enabled:false,prepared:false,placed:{board:true,cpu:true,ram:true,gpu:true,storage:true,storage2:true,psu:true,cooler:true},positions:{},rotations:{},attempts:0,successful:0,invalid:0,history:[],future:[],lastAction:''}
@@ -209,7 +213,8 @@
   function calculateSetupLayout(e=evaluate()){
     const fallback={safe:true,status:'Layout básico',desk:{size:[16,.46,8.4],position:[4.7,-3.45,.2],topY:-3.22,left:-3.3,right:12.7},floor:{size:[34,.12,24],position:[3,-6.05,0]},supports:[],objects:[],warnings:[],errors:[],summary:{objects:0,collisions:0,unsupported:0,outOfBounds:0,deskWidth:16,deskDepth:8.4},camera:{target:[2,0,0],minDistance:9,maxDistance:32,minPitch:-.08,maxPitch:1.18}};
     if(!LAYOUT_API?.calculate)return fallback;
-    return LAYOUT_API.calculate({caseItem:e.parts.cs,caseGeometry:CASE_API?.sceneGeometry?.(e.parts.cs),monitor:e.parts.monitor,monitor2:e.parts.monitor2,monitor3:e.parts.monitor3,keyboard:e.parts.keyboard,mouse:e.parts.mouse,audio:e.parts.audio,webcam:e.parts.webcam,printer:e.parts.printer,controller:e.parts.controller,ups:e.parts.ups,state});
+    const caseGeometry=FAMILY_API?.sceneGeometry?.(state.family,CASE_API?.sceneGeometry?.(e.parts.cs))||CASE_API?.sceneGeometry?.(e.parts.cs);
+    return LAYOUT_API.calculate({caseItem:e.parts.cs,caseGeometry,monitor:e.parts.monitor,monitor2:e.parts.monitor2,monitor3:e.parts.monitor3,keyboard:e.parts.keyboard,mouse:e.parts.mouse,audio:e.parts.audio,webcam:e.parts.webcam,printer:e.parts.printer,controller:e.parts.controller,ups:e.parts.ups,state});
   }
 
   function normalize(raw){
@@ -217,9 +222,12 @@
     const output={...clone(defaults),...input};
     const selectors=[['case','cases'],['board','boards'],['cpu','cpus'],['ram','ram'],['gpu','gpus'],['storage','storages'],['storage2','storages'],['psu','psus'],['cooler','coolers'],['nic','nics'],['monitor','monitors'],['monitor2','monitors'],['monitor3','monitors'],['keyboard','keyboards'],['mouse','mice'],['audio','audio'],['webcam','webcams'],['printer','printers'],['controller','controllers'],['ups','ups']];
     for(const [key,group] of selectors)if(!parts[group][output[key]])output[key]=defaults[key];
-    output.tab=['build','peripherals','benchmark','diagnostics'].includes(output.tab)?output.tab:'build';
+    output.tab=['families','build','peripherals','inspection','cinema','benchmark','diagnostics'].includes(output.tab)?output.tab:'families';
     output.mode=['free','guided','challenge','diagnostic','maintenance'].includes(output.mode)?output.mode:'guided';
     output.preset=presets[output.preset]?output.preset:'custom';
+    output.family=FAMILY_API?.normalize?.(output.family)||'school';
+    output.inspection=INSPECTION_API?.normalize?.(output.inspection)||clone(defaults.inspection);
+    output.cinematic=CINEMATIC_API?.normalize?.(output.cinematic)||clone(defaults.cinematic);
     output.caseColor=COLORS[output.caseColor]?output.caseColor:'black';
     output.caseFinish=CASE_FINISHES[output.caseFinish]?output.caseFinish:'matte';
     output.glassStyle=GLASS_STYLES[output.glassStyle]?output.glassStyle:'smoked';
@@ -259,6 +267,7 @@
   }
 
   function activeAssemblyParts(){
+    if(FAMILY_API?.supportsManualAssembly&&!FAMILY_API.supportsManualAssembly(state.family))return [];
     const active=['board','psu','cpu','ram','storage'];
     if(state.storage2!=='none')active.push('storage2');
     if(select('coolers','cooler').type!=='none')active.push('cooler');
@@ -269,6 +278,7 @@
   function assemblyPlaced(key){return state?.assembly?.placed?.[key]!==false;}
 
   function validateAssemblyPart(key){
+    if(FAMILY_API?.supportsManualAssembly&&!FAMILY_API.supportsManualAssembly(state.family))return{ok:false,message:'Esta família usa manutenção compacta guiada, não montagem livre de gabinete.'};
     const e=evaluateBase();
     const placed=state.assembly?.placed||{};
     if(e.parts.cs.sidePanel!=='open'&&state.caseSidePanel==='closed')return{ok:false,message:'Abra ou remova o painel lateral antes de instalar componentes no gabinete.'};
@@ -398,15 +408,31 @@
   function tabButton(id,label){return`<button type="button" data-hw-tab="${id}">${label}</button>`;}
 
   function renderShell(){
-    root.innerHTML=`<div class="hardware-studio hardware-v421 hardware-v4211 hardware-v422 hardware-v423 hardware-v424 hardware-v425 hardware-v426">
+    root.innerHTML=`<div class="hardware-studio hardware-v421 hardware-v4211 hardware-v422 hardware-v423 hardware-v424 hardware-v425 hardware-v426 hardware-v427">
       <header class="hardware-studio-header">
-        <div><span class="module-release-stamp">v${MODULE_VERSION} • ${moduleDate()}</span><span class="eyebrow">LABORATÓRIO EDUCACIONAL</span><h2>Hardware Studio Premium 3D</h2><p>Monte computadores em uma bancada física validada, com montagem manual, materiais PBR, estrutura térmica e agora setups realistas com uma, duas ou três telas, suportes articulados e periféricos ampliados.</p></div>
+        <div><span class="module-release-stamp">v${MODULE_VERSION} • ${moduleDate()}</span><span class="eyebrow">LABORATÓRIO EDUCACIONAL</span><h2>Hardware Studio Premium 3D</h2><p>Explore famílias completas de computadores, faça inspeção individual em 360°, use vista explodida e apresente o setup em modo cinema, preservando montagem, PBR, térmica e segurança física.</p></div>
         <div class="simulator-badges"><span>XP <b id="hwScore">0</b></span><span>Testes <b id="hwTests">0</b></span><span>Prontidão <b id="hwReady">0%</b></span></div>
       </header>
-      <nav class="hardware-tabs" aria-label="Áreas do laboratório">${tabButton('build','Montagem 3D')}${tabButton('peripherals','Periféricos')}${tabButton('benchmark','Benchmarks')}${tabButton('diagnostics','Diagnóstico')}</nav>
+      <nav class="hardware-tabs" aria-label="Áreas do laboratório">${tabButton('families','Famílias')}${tabButton('build','Montagem 3D')}${tabButton('peripherals','Periféricos')}${tabButton('inspection','Inspeção 360°')}${tabButton('cinema','Modo cinema')}${tabButton('benchmark','Benchmarks')}${tabButton('diagnostics','Diagnóstico')}</nav>
       <div class="hardware-layout">
         <aside class="hardware-controls">
-          <section data-hw-panel="build">
+          <section data-hw-panel="families">
+            <h3>Famílias de computadores</h3><p class="hardware-note">Escolha uma máquina completa. Cada perfil ajusta estrutura, peças, telas, periféricos, faixa de preço e modos disponíveis.</p>
+            <div id="hwFamilyGrid" class="hardware-family-grid">${Object.entries(FAMILY_API?.FAMILIES||{}).map(([id,item])=>`<button type="button" data-hw-family="${id}"><span>${item.icon||'💻'}</span><strong>${esc(item.label)}</strong><small>${esc(item.category)}</small></button>`).join('')}</div>
+            <div id="hwFamilySummary" class="hardware-family-summary"></div>
+          </section>
+          <section data-hw-panel="inspection" hidden>
+            <h3>Inspeção individual 360°</h3><p class="hardware-note">Isole uma peça, gire em qualquer direção, aproxime, use vistas técnicas e ative a separação explodida.</p>
+            <div class="hardware-control-grid"><label>Item<select id="hw_inspectionTarget">${Object.entries(INSPECTION_API?.TARGETS||{}).map(([id,item])=>`<option value="${id}">${esc(item.label)}</option>`).join('')}</select></label><label>Zoom<input id="hw_inspectionZoom" type="range" min="0.7" max="2.5" step="0.1"><output id="hwInspectionZoomOutput"></output></label></div>
+            <div class="button-row"><button id="hwEnterInspection" class="btn primary" type="button">Inspecionar</button><button id="hwExitInspection" class="btn secondary" type="button">Voltar ao setup</button><button id="hwInspectionExploded" class="btn secondary" type="button">Vista explodida</button></div>
+            <div class="hardware-inspection-views">${Object.entries(INSPECTION_API?.VIEWS||{}).map(([id,item])=>`<button type="button" data-hw-inspection-view="${id}">${esc(item.label)}</button>`).join('')}</div><div id="hwInspectionSummary" class="hardware-inspection-summary"></div>
+          </section>
+          <section data-hw-panel="cinema" hidden>
+            <h3>Modo cinema e apresentação</h3><p class="hardware-note">Apresentação automática do ambiente, computador, peças internas, conexões, telas e periféricos.</p>
+            <div class="hardware-control-grid"><label>Velocidade<select id="hw_cinematicSpeed">${Object.entries(CINEMATIC_API?.SPEEDS||{}).map(([id])=>`<option value="${id}">${id==='slow'?'Lenta':id==='fast'?'Rápida':'Normal'}</option>`).join('')}</select></label><label class="hardware-switch"><input id="hw_cinematicLoop" type="checkbox"> Repetir apresentação</label><label class="hardware-switch"><input id="hw_cinematicHideUi" type="checkbox"> Ocultar painéis durante a apresentação</label></div>
+            <div class="button-row"><button id="hwCinemaStart" class="btn primary" type="button">Iniciar apresentação</button><button id="hwCinemaPause" class="btn secondary" type="button">Pausar</button><button id="hwCinemaPrev" class="btn secondary" type="button">Cena anterior</button><button id="hwCinemaNext" class="btn secondary" type="button">Próxima cena</button><button id="hwCinemaStop" class="btn secondary" type="button">Encerrar</button></div><div id="hwCinematicSummary" class="hardware-cinematic-summary"></div>
+          </section>
+          <section data-hw-panel="build" hidden>
             <h3>Perfis de montagem</h3><div class="hardware-preset-grid">${Object.entries(presets).map(([id,item])=>`<button type="button" data-hw-preset="${id}">${esc(item.label)}</button>`).join('')}</div>
             <div class="hardware-control-grid"><label>Modo<select id="hw_mode"><option value="free">Livre</option><option value="guided">Guiado</option><option value="challenge">Desafio</option><option value="diagnostic">Diagnóstico</option><option value="maintenance">Manutenção</option></select></label>${controlSelect('case','Gabinete','cases')}<label>Cor do computador<select id="hw_caseColor">${Object.entries(COLORS).map(([id])=>`<option value="${id}">${COLOR_LABELS[id]||id}</option>`).join('')}</select></label><label>Acabamento do gabinete<select id="hw_caseFinish">${Object.entries(CASE_FINISHES).map(([id,label])=>`<option value="${id}">${label}</option>`).join('')}</select></label><label>Tratamento do vidro<select id="hw_glassStyle">${Object.entries(GLASS_STYLES).map(([id,label])=>`<option value="${id}">${label}</option>`).join('')}</select></label>${controlSelect('board','Placa-mãe','boards')}${controlSelect('cpu','Processador','cpus')}${controlSelect('ram','Memória RAM','ram')}${controlSelect('gpu','Placa de vídeo','gpus')}${controlSelect('storage','Armazenamento principal','storages')}${controlSelect('storage2','Armazenamento secundário','storages')}${controlSelect('psu','Fonte','psus')}${controlSelect('cooler','Refrigeração','coolers')}${controlSelect('nic','Rede','nics')}<label>Ventoinhas<input id="hw_fans" type="range" min="0" max="10"><output id="hwFanOutput"></output></label><label>Perfil de ventilação<select id="hw_fanProfile">${Object.entries(THERMAL_API?.FAN_PROFILES||{}).map(([id,item])=>`<option value="${id}">${item.label}</option>`).join('')}</select></label><label>Curva das ventoinhas<select id="hw_fanSpeed">${Object.entries(THERMAL_API?.SPEED_PROFILES||{}).map(([id,item])=>`<option value="${id}">${item.label}</option>`).join('')}</select></label><label>Filtro de poeira<select id="hw_filterCondition">${Object.entries(THERMAL_API?.FILTERS||{}).map(([id,item])=>`<option value="${id}">${item.label}</option>`).join('')}</select></label><label>Carga de trabalho<select id="hw_workload">${Object.entries(THERMAL_API?.WORKLOADS||{}).map(([id,item])=>`<option value="${id}">${item.label}</option>`).join('')}</select></label><label>Temperatura ambiente<input id="hw_ambientTemperature" type="range" min="16" max="38"><output id="hwAmbientOutput"></output></label><label>Posição do radiador<select id="hw_radiatorPosition"><option value="auto">Automática</option><option value="front">Frente</option><option value="top">Topo</option><option value="side">Lateral</option><option value="bottom">Base</option><option value="rear">Traseira</option></select></label><label class="hardware-switch"><input id="hw_thermalOverlay" type="checkbox"> Mostrar mapa térmico e rotas de ar</label><label>Iluminação do PC<select id="hw_lighting"><option value="off">Desligada</option><option value="cyan">Ciano</option><option value="purple">Roxa</option><option value="red">Vermelha</option><option value="rainbow">RGB dinâmico</option></select></label><label>Intensidade do RGB<select id="hw_rgbIntensity">${Object.entries(RGB_INTENSITIES).map(([id,label])=>`<option value="${id}">${label}</option>`).join('')}</select></label><label class="hardware-switch"><input id="hw_materialDetail" type="checkbox"> Texturas PBR e detalhes de superfície</label><label class="hardware-switch"><input id="hw_contactShadows" type="checkbox"> Sombras de contato</label><label>Organização de cabos<select id="hw_cableManagement"><option value="basic">Básica</option><option value="standard">Padrão</option><option value="premium">Premium</option></select></label><label>Cenário<select id="hw_backdrop">${Object.entries(STUDIO_BACKDROPS).map(([id,label])=>`<option value="${id}">${label}</option>`).join('')}</select></label><label>Bancada / mesa<select id="hw_deskFinish">${Object.entries(DESK_FINISHES).map(([id,label])=>`<option value="${id}">${label}</option>`).join('')}</select></label><label>Iluminação ambiente<select id="hw_ambientPreset">${Object.entries(AMBIENT_PRESETS).map(([id,label])=>`<option value="${id}">${label}</option>`).join('')}</select></label><label>Kit de ferramentas<select id="hw_toolkit">${Object.entries(TOOL_LEVELS).map(([id,label])=>`<option value="${id}">${label}</option>`).join('')}</select></label><label>Cor de destaque<select id="hw_accentColor">${Object.entries(ACCENT_COLORS).map(([id,label])=>`<option value="${id}">${label}</option>`).join('')}</select></label><label class="hardware-switch"><input id="hw_showProps" type="checkbox"> Mostrar bancada, props e acessórios</label><label class="hardware-switch"><input id="hw_assemblyGuide" type="checkbox"> Animações guiadas de montagem</label><label class="hardware-switch"><input id="hw_caseStructureVisible" type="checkbox"> Mostrar estrutura, baias e pontos de fixação</label></div><div id="hwCaseStructure" class="hardware-case-structure"></div><div id="hwThermalPanel" class="hardware-thermal-panel"></div>
             <details><summary>Conexões e montagem manual</summary><div class="hardware-check-grid">${[['boardPower','ATX 24 pinos'],['cpuPower','EPS da CPU'],['gpuPower','Energia da GPU'],['ramSeated','RAM encaixada'],['storageData','Dados do disco principal'],['storagePower','Energia do disco principal'],['storage2Data','Dados do disco secundário'],['storage2Power','Energia do disco secundário'],['frontPanel','Front panel'],['cpuPaste','Pasta térmica'],['coolerMounted','Cooler fixado'],['monitorCable','Cabo do monitor'],['peripheralsPower','Periféricos energizados']].map(([id,label])=>`<label><input id="hw_${id}" type="checkbox"> ${label}</label>`).join('')}</div></details>
@@ -480,6 +506,30 @@
     $('#hwInspector').innerHTML=`<div><span>COMPONENTE SELECIONADO</span><strong>${esc(info.item.label)}</strong><small>Dados didáticos para comparação e compatibilidade.</small></div><dl>${info.rows.map(([name,value])=>`<div><dt>${esc(name)}</dt><dd>${esc(value)}</dd></div>`).join('')}</dl>`;
   }
 
+  function familyProfile(){return FAMILY_API?.profile?.(state.family)||{label:'Computador',category:'—',formFactor:'tower',description:'',manualAssembly:true};}
+  function familyPrice(e=evaluate()){return FAMILY_API?.estimate?.(e.parts,state)||{formatted:'—',reference:'—'};}
+  function renderFamilyPanel(e=evaluate()){
+    const family=familyProfile(),price=familyPrice(e),box=$('#hwFamilySummary');
+    $$('[data-hw-family]').forEach(button=>button.classList.toggle('active',button.dataset.hwFamily===state.family));
+    if(box)box.innerHTML=`<header><div><span>${esc(family.category)}</span><strong>${esc(family.icon||'💻')} ${esc(family.label)}</strong></div><b>${family.manualAssembly===false?'MANUTENÇÃO GUIADA':'MONTAGEM MANUAL'}</b></header><p>${esc(family.description)}</p><dl><div><dt>Formato</dt><dd>${esc(family.formFactor)}</dd></div><div><dt>Preço educativo</dt><dd>${esc(price.formatted)}</dd></div><div><dt>Referência</dt><dd>${esc(price.reference)}</dd></div><div><dt>Inspeções</dt><dd>${(family.inspection||[]).length}</dd></div></dl><small>Valores aproximados para comparação educacional; não são cotação ao vivo.</small>`;
+  }
+  function inspectionItem(e,target){const map={family:familyProfile(),case:e.parts.cs,board:e.parts.board,cpu:e.parts.cpu,ram:e.parts.ram,gpu:e.parts.gpu,storage:e.parts.storage,storage2:e.parts.storage2,psu:e.parts.psu,cooler:e.parts.cooler,monitor:e.parts.monitor,keyboard:e.parts.keyboard,mouse:e.parts.mouse,audio:e.parts.audio,webcam:e.parts.webcam,controller:e.parts.controller};return map[target]||familyProfile();}
+  function renderInspectionPanel(e=evaluate()){
+    const allowed=FAMILY_API?.availableInspectionTargets?.(state.family)||Object.keys(INSPECTION_API?.TARGETS||{}),selectBox=$('#hw_inspectionTarget');
+    if(selectBox){for(const option of selectBox.options)option.hidden=!allowed.includes(option.value);if(!allowed.includes(state.inspection.target))state.inspection.target=allowed[0]||'family';selectBox.value=state.inspection.target;}
+    const details=INSPECTION_API?.details?.(state.inspection.target,{item:inspectionItem(e,state.inspection.target),family:familyProfile()})||{label:'Inspeção',description:'',rows:[]};
+    const box=$('#hwInspectionSummary');if(box)box.innerHTML=`<header><div><span>${state.inspection.active?'INSPEÇÃO ATIVA':'PRONTO PARA INSPECIONAR'}</span><strong>${esc(details.label)}</strong></div><b>${state.inspection.exploded?'EXPLODIDO':'360°'}</b></header><p>${esc(details.description)}</p><dl>${details.rows.map(([label,value])=>`<div><dt>${esc(label)}</dt><dd>${esc(value)}</dd></div>`).join('')}</dl>`;
+    const zoom=$('#hw_inspectionZoom');if(zoom)zoom.value=String(state.inspection.zoom);const out=$('#hwInspectionZoomOutput');if(out)out.textContent=`${Math.round(state.inspection.zoom*100)}%`;
+    $$('[data-hw-inspection-view]').forEach(button=>button.classList.toggle('active',button.dataset.hwInspectionView===state.inspection.view));
+    $('#hwEnterInspection')?.classList.toggle('active',state.inspection.active);$('#hwInspectionExploded')?.classList.toggle('active',state.inspection.exploded);
+  }
+  function renderCinematicPanel(){
+    const shot=CINEMATIC_API?.current?.(state.cinematic),box=$('#hwCinematicSummary');
+    if(box)box.innerHTML=`<header><div><span>${state.cinematic.active?'APRESENTAÇÃO ATIVA':'MODO CINEMA'}</span><strong>${esc(shot?.label||'Visão geral')}</strong></div><b>${state.cinematic.shot+1}/${CINEMATIC_API?.SHOTS?.length||1}</b></header><div class="hardware-cinema-track"><i style="width:${state.cinematic.active?Math.min(100,(state.cinematic.elapsed/(shot?.duration||1))*100):0}%"></i></div><p>${state.cinematic.playing?'Câmera em movimento automático.':'Apresentação pausada ou pronta para iniciar.'}</p>`;
+    const speed=$('#hw_cinematicSpeed');if(speed)speed.value=state.cinematic.speed;const loop=$('#hw_cinematicLoop');if(loop)loop.checked=state.cinematic.loop;const hide=$('#hw_cinematicHideUi');if(hide)hide.checked=state.cinematic.hideUi;
+    $('.hardware-studio')?.classList.toggle('hardware-cinema-clean',Boolean(state.cinematic.active&&state.cinematic.hideUi));
+  }
+
   function renderBenchmark(result=state.benchmarkResults){
     const section=$('#hwBenchmarkResults');
     if(!result){section.hidden=true;section.innerHTML='';return;}
@@ -507,15 +557,17 @@
     if(help)help.textContent=assembly.enabled&&assembly.prepared?'Arraste a peça com mouse ou toque • alvo verde: disponível • amarelo: próximo • vermelho: bloqueado • pinça/roda: zoom':'Arraste para girar 360° • pinça/roda para zoom • toque em uma peça para inspecionar';
     const area=$('.hardware-render-area');if(area)area.dataset.assembly=assembly.enabled&&assembly.prepared?'active':'inspection';
     const toggle=$('#hwManualToggle');if(toggle){toggle.textContent=assembly.enabled?'Sair da montagem manual':'Ativar montagem manual';toggle.classList.toggle('active',assembly.enabled);}
-    const controls=['#hwPrepareAssembly','#hwResetAssembly'];for(const selector of controls){const button=$(selector);if(button)button.disabled=!assembly.enabled;}
-    for(const selector of ['#hwSnapSelected','#hwRotateLeft','#hwRotateRight']){const button=$(selector);if(button)button.disabled=!(assembly.enabled&&assembly.prepared&&selectedActive);}
+    const familyAllowsAssembly=!(FAMILY_API?.supportsManualAssembly)&&true||FAMILY_API.supportsManualAssembly(state.family);
+    const controls=['#hwPrepareAssembly','#hwResetAssembly'];for(const selector of controls){const button=$(selector);if(button)button.disabled=!familyAllowsAssembly||!assembly.enabled;}
+    if(toggle)toggle.disabled=!familyAllowsAssembly;
+    for(const selector of ['#hwSnapSelected','#hwRotateLeft','#hwRotateRight']){const button=$(selector);if(button)button.disabled=!(familyAllowsAssembly&&assembly.enabled&&assembly.prepared&&selectedActive);}
     const undo=$('#hwUndoAssembly'),redo=$('#hwRedoAssembly');if(undo)undo.disabled=!(assembly.enabled&&assembly.history.length);if(redo)redo.disabled=!(assembly.enabled&&assembly.future.length);
   }
 
   function renderPanels(){
     if(!root)return;
     const e=evaluate(),layout=calculateSetupLayout(e);
-    renderTabs();refreshControls();renderInspector(e);renderBenchmark();renderDiagnostics();renderAssemblyPanel();
+    renderTabs();refreshControls();renderInspector(e);renderFamilyPanel(e);renderInspectionPanel(e);renderCinematicPanel();renderBenchmark();renderDiagnostics();renderAssemblyPanel();
     $('#hwScore').textContent=String(state.score);$('#hwTests').textContent=String(state.tests);$('#hwReady').textContent=`${e.readiness}%`;
     $$('[data-hw-preset]').forEach(button=>button.classList.toggle('active',button.dataset.hwPreset===state.preset));
     $$('[data-hw-part]').forEach(button=>button.classList.toggle('active',button.dataset.hwPart===state.selectedPart));
@@ -556,6 +608,7 @@
   }
 
   function prepareManualAssembly(){
+    if(FAMILY_API?.supportsManualAssembly&&!FAMILY_API.supportsManualAssembly(state.family)){ctx.toast?.('Esta família utiliza manutenção compacta guiada e inspeção 360°, sem montagem livre de gabinete.','warning');return;}
     if(state.labGraphics==='low'){
       state.labGraphics='medium';
       ctx.toast?.('A montagem manual usa WebGL. Qualidade Média ativada.','info');
@@ -570,6 +623,7 @@
   }
 
   function toggleManualAssembly(){
+    if(FAMILY_API?.supportsManualAssembly&&!FAMILY_API.supportsManualAssembly(state.family)){ctx.toast?.('Esta família utiliza manutenção compacta guiada e inspeção 360°, sem montagem livre de gabinete.','warning');return;}
     if(!state.assembly.enabled){prepareManualAssembly();return;}
     state.assembly.enabled=false;state.assembly.prepared=false;state.exploded=false;
     assemblyEngine?.setEnabled(false);renderPanels();persist();
@@ -619,10 +673,20 @@
 
   function applyPreset(id){
     const preset=presets[id];if(!preset)return;
-    Object.assign(state,preset,thermalPresets[id]||{},visualPresets[id]||{},defaultConnections,{preset:id,scenario:'standard',state:'off',benchmarkResults:null,diagnosticResults:[]});
+    Object.assign(state,preset,thermalPresets[id]||{},visualPresets[id]||{},defaultConnections,{preset:id,family:PRESET_FAMILIES[id]||state.family,scenario:'standard',state:'off',benchmarkResults:null,diagnosticResults:[]});
     state.caseSidePanel=CASE_API?.normalizePanel?.(parts.cases[state.case],'closed')||'closed';
     resetAssemblyForConfiguration();
     refreshControls();renderPanels();scheduleSceneRebuild();persist();ctx.toast?.(`Perfil aplicado: ${preset.label}.`,'success');
+  }
+
+  function applyFamily(id){
+    const family=FAMILY_API?.profile?.(id);if(!family)return;
+    const baseId=family.preset,patch=FAMILY_API.patch(id,presets),thermal=thermalPresets[baseId]||thermalPresets.school,visual=visualPresets[baseId]||visualPresets.school;
+    exitInspection(false);CINEMATIC_API?.stop?.(state.cinematic);
+    Object.assign(state,patch,thermal,visual,defaultConnections,{family:id,preset:baseId||'custom',scenario:'standard',state:'off',benchmarkResults:null,diagnosticResults:[]});
+    state.caseSidePanel=family.manualAssembly===false?'removed':(CASE_API?.normalizePanel?.(parts.cases[state.case],'closed')||'closed');
+    state.assembly.enabled=false;state.assembly.prepared=false;resetAssemblyForConfiguration();
+    refreshControls();renderPanels();scheduleSceneRebuild();persist();log(`Família selecionada: ${family.label}.`,'success');ctx.toast?.(`Família aplicada: ${family.label}.`,'success');
   }
 
   function repairBuild(){
@@ -720,6 +784,11 @@
 
   function syncFromControls(event){
     const el=event?.target;if(!el?.id?.startsWith('hw_'))return;
+    if(el.id==='hw_inspectionTarget'){state.inspection.target=el.value;renderInspectionPanel();persist();return;}
+    if(el.id==='hw_inspectionZoom'){state.inspection.zoom=Number(el.value);if(state.inspection.active){if(state.labGraphics==='low')drawLow();else rebuildInspectionScene();}renderInspectionPanel();persist();return;}
+    if(el.id==='hw_cinematicSpeed'){state.cinematic.speed=el.value;renderCinematicPanel();persist();return;}
+    if(el.id==='hw_cinematicLoop'){state.cinematic.loop=el.checked;renderCinematicPanel();persist();return;}
+    if(el.id==='hw_cinematicHideUi'){state.cinematic.hideUi=el.checked;renderCinematicPanel();persist();return;}
     const key=el.id.slice(3);if(!(key in state))return;
     state[key]=el.type==='checkbox'?el.checked:el.type==='range'?Number(el.value):el.value;
     if(['monitorCount','monitorLayout','monitorMount'].includes(key))Object.assign(state,PERIPHERAL_API?.normalize?.(state)||{});
@@ -742,6 +811,23 @@
     renderPanels();scheduleSceneRebuild();persist();
   }
 
+  function inspectionSource(target){if(!three)return null;if(target==='family')return three.partGroups.family||three.partGroups.case;return three.partGroups[target]||(['keyboard','mouse','audio','webcam','controller'].includes(target)?three.partGroups.peripherals:null);}
+  function rebuildInspectionScene(){
+    if(!three||!state.inspection.active)return;if(three.inspectionRoot){three.scene.remove(three.inspectionRoot);INSPECTION_API?.dispose?.(three.inspectionRoot);three.inspectionRoot=null;}
+    const source=inspectionSource(state.inspection.target);if(!source){state.inspection.active=false;ctx.toast?.('O item selecionado não está disponível neste setup.','warning');return;}
+    const prepared=INSPECTION_API?.prepare?.({THREE,source,maxSize:6.4});if(!prepared)return;
+    three.inspectionPrepared=prepared;three.inspectionRoot=prepared.root;three.scene.add(prepared.root);if(three.contentRoot)three.contentRoot.visible=false;INSPECTION_API.applyExploded(prepared,state.inspection.exploded?1.15:0);
+    const camera=INSPECTION_API.camera(state.inspection.view,prepared.size,state.inspection.zoom);state.inspection.distance=camera.distance;state.cameraYaw=camera.yaw;state.cameraPitch=camera.pitch;three.target.set(0,0,0);updateThreeCamera();
+  }
+  function enterInspection(target=state.inspection.target){
+    state.inspection.target=target;state.inspection.active=true;state.cinematic.active=false;state.cinematic.playing=false;if(state.labGraphics==='low'){drawLow();}else rebuildInspectionScene();renderPanels();persist();log(`Inspeção 360° iniciada: ${INSPECTION_API?.TARGETS?.[target]?.label||target}.`,'info');
+  }
+  function exitInspection(render=true){if(!state?.inspection)return;state.inspection.active=false;if(three?.inspectionRoot){three.scene.remove(three.inspectionRoot);INSPECTION_API?.dispose?.(three.inspectionRoot);three.inspectionRoot=null;three.inspectionPrepared=null;}if(three?.contentRoot)three.contentRoot.visible=true;if(three?.setupLayout)three.target.set(...three.setupLayout.camera.target);if(render){renderPanels();updateThreeCamera();persist();}}
+  function setInspectionView(view){if(!INSPECTION_API?.VIEWS?.[view])return;state.inspection.view=view;if(state.labGraphics==='low'){drawLow();}else rebuildInspectionScene();renderPanels();persist();}
+  function toggleInspectionExploded(){state.inspection.exploded=!state.inspection.exploded;if(three?.inspectionPrepared)INSPECTION_API?.applyExploded?.(three.inspectionPrepared,state.inspection.exploded?1.15:0);renderPanels();persist();}
+  function startCinema(){exitInspection(false);CINEMATIC_API?.start?.(state.cinematic);state.tab='cinema';renderPanels();persist();log('Modo cinema iniciado.','info');}
+  function stopCinema(){CINEMATIC_API?.stop?.(state.cinematic);$('.hardware-studio')?.classList.remove('hardware-cinema-clean');if(three?.setupLayout)three.target.set(...three.setupLayout.camera.target);renderPanels();updateThreeCamera();persist();}
+
   function setView(view){
     const views={front:[0,.18,15],side:[Math.PI/2,.22,15],top:[0,1.18,17],iso:[-.72,.36,15]};const target=views[view]||views.iso;
     state.cameraYaw=target[0];state.cameraPitch=target[1];state.cameraDistance=target[2];updateThreeCamera();persist();
@@ -756,15 +842,19 @@
     root.addEventListener('change',syncFromControls);
     root.addEventListener('click',event=>{
       const tab=event.target.closest('[data-hw-tab]');if(tab){state.tab=tab.dataset.hwTab;renderPanels();persist();return;}
+      const family=event.target.closest('[data-hw-family]');if(family){applyFamily(family.dataset.hwFamily);return;}
       const preset=event.target.closest('[data-hw-preset]');if(preset){applyPreset(preset.dataset.hwPreset);return;}
       const scenario=event.target.closest('[data-hw-scenario]');if(scenario){applyScenario(scenario.dataset.hwScenario);return;}
       const test=event.target.closest('[data-hw-test]');if(test){runDiagnostic(test.dataset.hwTest);return;}
+      const inspectView=event.target.closest('[data-hw-inspection-view]');if(inspectView){setInspectionView(inspectView.dataset.hwInspectionView);return;}
       const view=event.target.closest('[data-hw-view]');if(view){setView(view.dataset.hwView);return;}
       const quality=event.target.closest('[data-hw-quality]');if(quality){setQuality(quality.dataset.hwQuality);return;}
       const casePanel=event.target.closest('[data-hw-case-panel]');if(casePanel){cycleCasePanel();return;}
       const toggle=event.target.closest('[data-hw-toggle]');if(toggle){const key=toggle.dataset.hwToggle;state[key]=!state[key];renderPanels();updateSceneState();persist();return;}
       const part=event.target.closest('[data-hw-part]');if(part){state.selectedPart=part.dataset.hwPart;renderPanels();highlightSelected();persist();return;}
     });
+    $('#hwEnterInspection')?.addEventListener('click',()=>enterInspection($('#hw_inspectionTarget')?.value||state.inspection.target));$('#hwExitInspection')?.addEventListener('click',()=>exitInspection());$('#hwInspectionExploded')?.addEventListener('click',toggleInspectionExploded);
+    $('#hwCinemaStart')?.addEventListener('click',startCinema);$('#hwCinemaPause')?.addEventListener('click',()=>{CINEMATIC_API?.pause?.(state.cinematic);renderCinematicPanel();persist();});$('#hwCinemaPrev')?.addEventListener('click',()=>{CINEMATIC_API?.previous?.(state.cinematic);state.cinematic.active=true;renderCinematicPanel();persist();});$('#hwCinemaNext')?.addEventListener('click',()=>{CINEMATIC_API?.next?.(state.cinematic);state.cinematic.active=true;renderCinematicPanel();persist();});$('#hwCinemaStop')?.addEventListener('click',stopCinema);
     $('#hwPower').addEventListener('click',powerOn);$('#hwAssemblyDemo')?.addEventListener('click',runAssemblyDemo);$('#hwRepair').addEventListener('click',repairBuild);$('#hwRunBenchmark').addEventListener('click',runBenchmark);
     $('#hwManualToggle')?.addEventListener('click',toggleManualAssembly);$('#hwPrepareAssembly')?.addEventListener('click',prepareManualAssembly);$('#hwSnapSelected')?.addEventListener('click',()=>assemblyAction('snap'));$('#hwRotateLeft')?.addEventListener('click',()=>assemblyAction('rotateLeft'));$('#hwRotateRight')?.addEventListener('click',()=>assemblyAction('rotateRight'));$('#hwUndoAssembly')?.addEventListener('click',()=>assemblyAction('undo'));$('#hwRedoAssembly')?.addEventListener('click',()=>assemblyAction('redo'));$('#hwResetAssembly')?.addEventListener('click',()=>assemblyAction('reset'));
     $('#hwShutdown').addEventListener('click',()=>{clearTimers();state.state='off';log('Sistema desligado.','warning');renderPanels();persist();});
@@ -947,13 +1037,33 @@
     return THERMAL_API?.chooseRadiatorLocation?.(cs,{...cooler,radiator:size},state.radiatorPosition)||(CASE_API?.mountLocations?.(cs,size)||[])[0]||'top';
   }
 
+  function buildSpecialFamilyDevice(rootGroup,e,layout,family){
+    const g=FAMILY_API?.sceneGeometry?.(state.family,{width:5,height:3,depth:4})||{width:5,height:3,depth:4},shell=COLORS[state.caseColor]?parseInt(COLORS[state.caseColor].slice(1),16):0x263342;
+    const familyGroup=markPart(new THREE.Group(),'family');familyGroup.name='family';rootGroup.add(familyGroup);three.partGroups.family=familyGroup;three.partGroups.case=familyGroup;three.caseGeometry=g;
+    const makeGroup=(key,position)=>{const group=markPart(new THREE.Group(),key);group.position.set(...position);familyGroup.add(group);three.partGroups[key]=group;return group;};
+    if(family.formFactor==='mini-pc'){
+      addBox(familyGroup,'family',[g.width,g.height,g.depth],[0,0,0],shell,{preset:'case',metalness:.62,roughness:.34});addBox(familyGroup,'family',[g.width-.3,.08,g.depth-.3],[0,g.height/2+.045,0],0x1a2530,{preset:'brushedMetal'});addVentSlats(familyGroup,'family',{axis:'x',count:10,start:-g.width*.38,step:g.width*.075,position:[0,0,g.depth/2+.03],length:g.height*.65,color:0x0a121a});
+      const board=makeGroup('board',[0,-.08,0]);addBox(board,'board',[g.width*.76,.12,g.depth*.72],[0,0,0],0x174c3b,{preset:'pcb'});const cpu=makeGroup('cpu',[-.55,.05,-.2]);addBox(cpu,'cpu',[.86,.12,.86],[0,0,0],0xd5d9de,{preset:'brushedMetal',metalness:.9});const ram=makeGroup('ram',[.5,.08,.15]);for(let i=0;i<2;i++)addBox(ram,'ram',[.18,.16,1.18],[-.16+i*.32,0,0],0x196f69,{preset:'pcb'});const storage=makeGroup('storage',[.65,.08,-.78]);addBox(storage,'storage',[1.35,.12,.42],[0,0,0],0x256d5d,{preset:'pcb'});const cooler=makeGroup('cooler',[-.55,.24,-.2]);createFan(cooler,'cooler',[0,0,0],.48,'cpu',[Math.PI/2,0,0]);
+      for(let i=0;i<5;i++)addBox(familyGroup,'family',[.22,.16,.08],[-g.width*.28+i*.36,-g.height*.18,g.depth/2+.05],i===0?0x2d8bd3:0x111827,{preset:'glossyPlastic'});
+    }else if(family.formFactor==='all-in-one'){
+      addBox(familyGroup,'family',[g.width,g.height*.72,.65],[0,.55,0],0x111923,{preset:'glossyPlastic',metalness:.25});addBox(familyGroup,'family',[g.width-.32,g.height*.72-.32,.08],[0,.55,.37],0x071827,{preset:'screen',emissive:state.state==='ready'?0x0b6e9e:0x02070d,emissiveIntensity:state.state==='ready'?1.1:.18});addBox(familyGroup,'family',[.36,1.4,.42],[0,-1.42,0],0x425160,{preset:'brushedMetal'});addBox(familyGroup,'family',[2.5,.18,1.3],[0,-2.15,.15],0x425160,{preset:'brushedMetal'});
+      const board=makeGroup('board',[0,.42,-.38]);addBox(board,'board',[3.1,2.05,.08],[0,0,0],0x174c3b,{preset:'pcb'});const cpu=makeGroup('cpu',[-.5,.62,-.3]);addBox(cpu,'cpu',[.8,.8,.12],[0,0,0],0xd5d9de,{preset:'brushedMetal'});const ram=makeGroup('ram',[.55,.6,-.28]);addBox(ram,'ram',[.22,1.35,.12],[0,0,0],0x196f69,{preset:'pcb'});const storage=makeGroup('storage',[1.35,.1,-.28]);addBox(storage,'storage',[1.2,.42,.12],[0,0,0],0x256d5d,{preset:'pcb'});const cooler=makeGroup('cooler',[-1.75,.55,-.25]);createFan(cooler,'cooler',[0,0,0],.52,'cpu',[Math.PI/2,0,0]);
+    }else{
+      const baseY=-g.height/2+.38,screenY=baseY+g.height*.52;addBox(familyGroup,'family',[g.width,.55,g.depth],[0,baseY,0],shell,{preset:'case',metalness:.48});addBox(familyGroup,'family',[g.width*.96,.18,g.depth*.76],[0,baseY+.36,.36],0x182431,{preset:'mattePlastic'});addBox(familyGroup,'family',[g.width*.58,.04,g.depth*.34],[0,baseY+.48,.88],0x273744,{preset:'mattePlastic'});addBox(familyGroup,'family',[g.width*.98,g.height*.7,.28],[0,screenY,-g.depth*.42],0x111923,{preset:'glossyPlastic',rotation:[-.1,0,0]});addBox(familyGroup,'family',[g.width*.9,g.height*.62,.05],[0,screenY,-g.depth*.42+.17],0x071827,{preset:'screen',emissive:state.state==='ready'?0x0b6e9e:0x02070d,emissiveIntensity:state.state==='ready'?1.1:.2,rotation:[-.1,0,0]});
+      const board=makeGroup('board',[0,baseY+.12,-.2]);addBox(board,'board',[g.width*.67,.1,g.depth*.5],[0,0,0],0x174c3b,{preset:'pcb'});const cpu=makeGroup('cpu',[-.65,baseY+.2,-.35]);addBox(cpu,'cpu',[.76,.12,.76],[0,0,0],0xd5d9de,{preset:'brushedMetal'});const ram=makeGroup('ram',[.25,baseY+.2,-.25]);for(let i=0;i<2;i++)addBox(ram,'ram',[.18,.12,1.05],[-.14+i*.28,0,0],0x196f69,{preset:'pcb'});const storage=makeGroup('storage',[1.15,baseY+.2,-.35]);addBox(storage,'storage',[1.22,.12,.4],[0,0,0],0x256d5d,{preset:'pcb'});const cooler=makeGroup('cooler',[-1.75,baseY+.24,-.25]);for(let i=0;i<(family.formFactor==='gaming-notebook'?2:1);i++)createFan(cooler,'cooler',[i*.95,0,0],.44,'cpu',[Math.PI/2,0,0]);if(family.formFactor==='gaming-notebook'){const gpu=makeGroup('gpu',[.95,baseY+.2,-.2]);addBox(gpu,'gpu',[1.25,.12,.72],[0,0,0],0x263238,{preset:'pcb'});}
+    }
+    return g;
+  }
+
   function buildPCScene(){
     if(!three||!THREE)return;
-    if(three.contentRoot){three.scene.remove(three.contentRoot);disposeObject(three.contentRoot);}
+    if(three.contentRoot){three.scene.remove(three.contentRoot);disposeObject(three.contentRoot);}assemblyEngine?.destroy?.();assemblyEngine=null;
     const e=evaluate(),layout=calculateSetupLayout(e),rootGroup=new THREE.Group();three.contentRoot=rootGroup;three.scene.add(rootGroup);three.partGroups={};three.fans=[];three.rgbMaterials=[];three.rgbGlows=[];three.caseSidePanel=null;three.setupLayout=layout;
     createFloor(layout);buildStudioEnvironment(rootGroup,e,layout);
     three.target.set(...layout.camera.target);state.cameraDistance=LAYOUT_API?.clampCameraDistance?.(layout,state.cameraDistance)||state.cameraDistance;state.cameraPitch=LAYOUT_API?.clampCameraPitch?.(layout,state.cameraPitch)||state.cameraPitch;
-    const caseGroup=markPart(new THREE.Group(),'case');caseGroup.name='case';rootGroup.add(caseGroup);three.partGroups.case=caseGroup;
+    const family=familyProfile(),special=['mini-pc','all-in-one','notebook','gaming-notebook'].includes(family.formFactor);
+    if(special){const g=buildSpecialFamilyDevice(rootGroup,e,layout,family);buildExternalDevices(rootGroup,e,layout);if(['all-in-one','notebook','gaming-notebook'].includes(family.formFactor)&&!activeMonitorItems(e).length)three.partGroups.monitor=three.partGroups.family;buildVisualAccents(rootGroup,e,layout);highlightSelected();if(state.inspection.active)rebuildInspectionScene();return;}
+    const caseGroup=markPart(new THREE.Group(),'case');caseGroup.name='case';rootGroup.add(caseGroup);three.partGroups.case=caseGroup;three.partGroups.family=caseGroup;
     const g=buildCaseChassis(caseGroup,e),backZ=-g.depth/2+.42,[boardW,boardH]=boardDimensions(e.parts.board.format),boardX=-g.width/2+boardW/2+.34;
 
     const boardGroup=markPart(new THREE.Group(),'board');boardGroup.position.set(boardX,.05,backZ);rootGroup.add(boardGroup);three.partGroups.board=boardGroup;addBox(boardGroup,'board',[boardW,boardH,.18],[0,0,0],0x184b3b,{preset:'pcb',metalness:.12,roughness:.46});
@@ -987,7 +1097,7 @@
     for(let i=0;i<Math.min(e.thermal.intakeFans,intakePoints.length);i++)createFan(caseGroup,'case',intakePoints[i].p,.58,'intake',intakePoints[i].r);
     for(let i=0;i<Math.min(e.thermal.exhaustFans,exhaustPoints.length);i++)createFan(caseGroup,'case',exhaustPoints[i].p,.58,'exhaust',exhaustPoints[i].r);
 
-    buildCables(rootGroup,e);buildExternalDevices(rootGroup,e,layout);buildAirflow(rootGroup,e);buildVisualAccents(rootGroup,e,layout);applyExploded();setupAssemblyEngine();highlightSelected();
+    buildCables(rootGroup,e);buildExternalDevices(rootGroup,e,layout);buildAirflow(rootGroup,e);buildVisualAccents(rootGroup,e,layout);applyExploded();setupAssemblyEngine();highlightSelected();if(state.inspection.active)rebuildInspectionScene();
   }
 
 
@@ -1132,7 +1242,7 @@
   }
 
   function bindThreeControls(canvas){
-    const down=event=>{
+    const down=event=>{if(state.cinematic?.playing){CINEMATIC_API?.pause?.(state.cinematic);renderCinematicPanel();}
       if(assemblyEngine?.pointerDown(event)){three.dragging=true;return;}
       canvas.setPointerCapture?.(event.pointerId);three.pointers.set(event.pointerId,{x:event.clientX,y:event.clientY,startX:event.clientX,startY:event.clientY});three.dragging=true;
     };
@@ -1146,7 +1256,7 @@
       if(assemblyEngine?.dragging){assemblyEngine.pointerUp(event);if(three)three.dragging=false;renderPanels();persist();return;}
       const pointer=three?.pointers.get(event.pointerId);if(pointer&&Math.hypot(event.clientX-pointer.startX,event.clientY-pointer.startY)<7)pickThreePart(event);three?.pointers.delete(event.pointerId);if(three){three.dragging=three.pointers.size>0;if(three.pointers.size<2)three.lastPinch=0;}persist();
     };
-    const wheel=event=>{event.preventDefault();state.cameraDistance=LAYOUT_API?.clampCameraDistance?.(three.setupLayout,state.cameraDistance+Math.sign(event.deltaY)*1.1)||clamp(state.cameraDistance+Math.sign(event.deltaY)*1.1,9,32);updateThreeCamera();persist();};
+    const wheel=event=>{event.preventDefault();if(state.inspection?.active)state.inspection.distance=clamp(state.inspection.distance+Math.sign(event.deltaY)*.45,3,18);else state.cameraDistance=LAYOUT_API?.clampCameraDistance?.(three.setupLayout,state.cameraDistance+Math.sign(event.deltaY)*1.1)||clamp(state.cameraDistance+Math.sign(event.deltaY)*1.1,9,32);updateThreeCamera();persist();};
     const keydown=event=>{if(!state.assembly?.enabled||!state.assembly?.prepared)return;if(event.key.toLowerCase()==='r'){event.preventDefault();assemblyAction(event.shiftKey?'rotateLeft':'rotateRight');}else if((event.ctrlKey||event.metaKey)&&event.key.toLowerCase()==='z'){event.preventDefault();assemblyAction(event.shiftKey?'redo':'undo');}};
     canvas.addEventListener('pointerdown',down);canvas.addEventListener('pointermove',move);canvas.addEventListener('pointerup',up);canvas.addEventListener('pointercancel',up);canvas.addEventListener('wheel',wheel,{passive:false});canvas.addEventListener('dblclick',()=>setView('iso'));window.addEventListener('keydown',keydown);
     three.cleanup=()=>{canvas.removeEventListener('pointerdown',down);canvas.removeEventListener('pointermove',move);canvas.removeEventListener('pointerup',up);canvas.removeEventListener('pointercancel',up);canvas.removeEventListener('wheel',wheel);window.removeEventListener('keydown',keydown);};
@@ -1156,10 +1266,10 @@
     if(!three)return;const selected=assemblyEngine?.selectAt?.(event);if(selected){state.selectedPart=selected;renderPanels();highlightSelected();persist();return;}const rect=$('#hardwareCanvas3d').getBoundingClientRect();three.pointer.x=(event.clientX-rect.left)/rect.width*2-1;three.pointer.y=-(event.clientY-rect.top)/rect.height*2+1;three.raycaster.setFromCamera(three.pointer,three.camera);const hit=three.raycaster.intersectObjects(three.contentRoot?.children||[],true).find(item=>item.object.userData.partKey);if(hit){state.selectedPart=hit.object.userData.partKey;renderPanels();highlightSelected();persist();}
   }
 
-  function updateThreeCamera(){if(!three)return;const layout=three.setupLayout;state.cameraDistance=LAYOUT_API?.clampCameraDistance?.(layout,state.cameraDistance)||clamp(state.cameraDistance,9,32);state.cameraPitch=LAYOUT_API?.clampCameraPitch?.(layout,state.cameraPitch)||clamp(state.cameraPitch,-.08,1.18);const d=state.cameraDistance,p=state.cameraPitch,y=state.cameraYaw;three.camera.position.set(three.target.x+Math.cos(p)*Math.sin(y)*d,three.target.y+Math.sin(p)*d,three.target.z+Math.cos(p)*Math.cos(y)*d);three.camera.lookAt(three.target);}
+  function updateThreeCamera(){if(!three)return;const layout=three.setupLayout;if(state.inspection?.active){state.inspection.distance=clamp(state.inspection.distance,3,18);state.cameraPitch=clamp(state.cameraPitch,-.85,1.35);}else{state.cameraDistance=LAYOUT_API?.clampCameraDistance?.(layout,state.cameraDistance)||clamp(state.cameraDistance,9,32);state.cameraPitch=LAYOUT_API?.clampCameraPitch?.(layout,state.cameraPitch)||clamp(state.cameraPitch,-.08,1.18);}const d=state.inspection?.active?state.inspection.distance:state.cameraDistance,p=state.cameraPitch,y=state.cameraYaw;three.camera.position.set(three.target.x+Math.cos(p)*Math.sin(y)*d,three.target.y+Math.sin(p)*d,three.target.z+Math.cos(p)*Math.cos(y)*d);three.camera.lookAt(three.target);}
   function resizeRenderer(){if(!three)return;const canvas=$('#hardwareCanvas3d'),rect=canvas?.getBoundingClientRect();if(!rect?.width||!rect?.height)return;const height=Math.max(430,rect.height);three.renderer.setSize(rect.width,height,false);three.camera.aspect=rect.width/height;three.camera.updateProjectionMatrix();}
   function animateThree(time=performance.now()){
-    if(!three)return;const dt=Math.min(.05,(time-three.last)/1000);three.last=time;if(state.autorotate&&!three.dragging){state.cameraYaw+=dt*.2;updateThreeCamera();}
+    if(!three)return;const dt=Math.min(.05,(time-three.last)/1000);three.last=time;if(state.cinematic?.active){const tick=CINEMATIC_API?.tick?.(state.cinematic,dt),pose=CINEMATIC_API?.cameraPose?.(state.cinematic,three.setupLayout);if(pose){state.cameraYaw+=(pose.yaw-state.cameraYaw)*Math.min(1,dt*2.4);state.cameraPitch+=(pose.pitch-state.cameraPitch)*Math.min(1,dt*2.4);state.cameraDistance+=(pose.distance-state.cameraDistance)*Math.min(1,dt*2.1);three.target.lerp(new THREE.Vector3(...pose.target),Math.min(1,dt*2.2));updateThreeCamera();}const track=$('#hwCinematicSummary .hardware-cinema-track i');if(track)track.style.width=`${Math.round((tick?.progress||0)*100)}%`;if(tick?.changed)renderCinematicPanel();}else if(state.autorotate&&!three.dragging){state.cameraYaw+=dt*.2;updateThreeCamera();}
     const running=state.state==='ready'||state.benchmarkRunning;for(const fan of three.fans)fan.blades.rotation.z-=dt*(running?8:1.2)*(fan.direction||1)*(state.fanSpeed==='turbo'?1.3:state.fanSpeed==='quiet'?.72:1);
     const color=rgbColor(time);for(const material of three.rgbMaterials){if(material.emissive){material.emissive.copy(color);material.emissiveIntensity=state.lighting==='off'?0:(state.rgbIntensity==='showcase'?1.05:state.rgbIntensity==='subtle'?.42:.72);}}
     if(three.airflowPoints&&three.airflowParticles){const pos=three.airflowPoints.geometry.attributes.position;for(let i=0;i<pos.count;i++){const particle=three.airflowParticles[i];particle.progress+=dt*particle.speed*(running?1.45:.55);if(particle.progress>1)particle.progress-=1;const point=particle.start.clone().lerp(particle.end,particle.progress).add(particle.jitter);pos.setXYZ(i,point.x,point.y,point.z);}pos.needsUpdate=true;three.airflowPoints.visible=state.airflow&&state.thermalOverlay;}
@@ -1175,7 +1285,11 @@
   function drawLow(time=performance.now()){
     if(state.labGraphics!=='low'||!root)return;
     const setup=setupLowCanvas();if(!setup){lowRaf=requestAnimationFrame(drawLow);return;}
-    const{canvas,c,width:w,height:h}=setup,e=evaluate(),layout=calculateSetupLayout(e),color=COLORS[state.caseColor]||COLORS.black,g=CASE_API?.sceneGeometry?.(e.parts.cs)||{width:6.9,height:7.25,depth:7.35};
+    const{canvas,c,width:w,height:h}=setup,e=evaluate(),layout=calculateSetupLayout(e);
+    const lowDt=Math.min(.05,(time-(canvas._lastFrameTime||time))/1000);canvas._lastFrameTime=time;
+    if(state.cinematic?.active){const tick=CINEMATIC_API?.tick?.(state.cinematic,lowDt),pose=CINEMATIC_API?.cameraPose?.(state.cinematic,layout);if(pose){state.cameraYaw+=(pose.yaw-state.cameraYaw)*Math.min(1,lowDt*2.4);state.cameraPitch+=(pose.pitch-state.cameraPitch)*Math.min(1,lowDt*2.4);state.cameraDistance+=(pose.distance-state.cameraDistance)*Math.min(1,lowDt*2.1);}const track=$('#hwCinematicSummary .hardware-cinema-track i');if(track)track.style.width=`${Math.round((tick?.progress||0)*100)}%`;if(tick?.changed)renderCinematicPanel();}
+    if(state.inspection?.active){c.clearRect(0,0,w,h);const bg=c.createLinearGradient(0,0,w,h);bg.addColorStop(0,'#07121f');bg.addColorStop(1,'#15243a');c.fillStyle=bg;c.fillRect(0,0,w,h);c.strokeStyle='rgba(73,215,255,.22)';for(let x=0;x<w;x+=30){c.beginPath();c.moveTo(x,0);c.lineTo(x,h);c.stroke();}const label=INSPECTION_API?.TARGETS?.[state.inspection.target]?.label||'Componente';const scale=Math.min(w,h)*.26*state.inspection.zoom;c.save();c.translate(w/2,h/2);c.rotate(state.cameraYaw*.16);c.fillStyle='#263848';c.strokeStyle='#61e4ff';c.lineWidth=3;if(state.inspection.target==='cpu'){c.fillRect(-scale*.5,-scale*.5,scale,scale);c.strokeRect(-scale*.5,-scale*.5,scale,scale);}else if(state.inspection.target==='gpu'){c.fillRect(-scale,-scale*.35,scale*2,scale*.7);c.strokeRect(-scale,-scale*.35,scale*2,scale*.7);}else{c.fillRect(-scale*.8,-scale*.55,scale*1.6,scale*1.1);c.strokeRect(-scale*.8,-scale*.55,scale*1.6,scale*1.1);}if(state.inspection.exploded){c.strokeStyle='#ffb454';for(let i=0;i<4;i++)c.strokeRect(-scale*.8-i*10,-scale*.55-i*7,scale*1.6+i*20,scale*1.1+i*14);}c.restore();c.fillStyle='#e8f8ff';c.font='700 18px system-ui';c.fillText(`INSPEÇÃO 360° • ${label}`,24,42);c.fillStyle='#90b9ca';c.font='13px system-ui';c.fillText(`${INSPECTION_API?.VIEWS?.[state.inspection.view]?.label||'Isométrica'} • Zoom ${Math.round(state.inspection.zoom*100)}%`,24,66);$('#hwRenderStatus').textContent='Inspeção 2.5D • Modo Baixo';$('#hwRenderStats').textContent=state.inspection.exploded?'Vista explodida':'Vista isolada';lowRaf=requestAnimationFrame(drawLow);return;}
+    const color=COLORS[state.caseColor]||COLORS.black,g=FAMILY_API?.sceneGeometry?.(state.family,CASE_API?.sceneGeometry?.(e.parts.cs))||CASE_API?.sceneGeometry?.(e.parts.cs)||{width:6.9,height:7.25,depth:7.35};
     c.clearRect(0,0,w,h);const bg=c.createLinearGradient(0,0,w,h);bg.addColorStop(0,'#06111d');bg.addColorStop(1,'#111b2a');c.fillStyle=bg;c.fillRect(0,0,w,h);c.strokeStyle='rgba(80,210,245,.1)';for(let x=0;x<w;x+=28){c.beginPath();c.moveTo(x,0);c.lineTo(x,h);c.stroke();}for(let y=0;y<h;y+=28){c.beginPath();c.moveTo(0,y);c.lineTo(w,y);c.stroke();}
     const margin=28,span=Math.max(1,layout.desk.right-layout.desk.left),unit=Math.min((w-margin*2)/span,(h-155)/Math.max(g.height,6)),worldX=x=>margin+(x-layout.desk.left)*unit,deskY=h*.78,cx=worldX(0),cy=deskY-g.height*unit/2,caseW=g.width*unit,caseH=g.height*unit,scale=unit/1.05,panelOpen=state.caseSidePanel!=='closed',front=e.parts.cs.frontPanel;
     c.fillStyle=state.deskFinish==='white'?'#dbe8f3':state.deskFinish==='wood'?'#7c5b3b':state.deskFinish==='carbon'?'#232a33':'#465464';c.fillRect(worldX(layout.desk.left),deskY,layout.summary.deskWidth*unit,Math.max(8,.46*unit));
@@ -1191,12 +1305,13 @@
     c.restore();
     for(const lowScreen of layout.objects.filter(item=>item.meta?.kind==='screen')){const sx=worldX(lowScreen.position[0]),sw=lowScreen.size[0]*unit,sh=lowScreen.size[1]*unit,sy=deskY-(lowScreen.position[1]-layout.desk.topY)*unit;c.fillStyle='#101b25';c.fillRect(sx-sw/2,sy-sh/2,sw,sh);c.fillStyle=state.state==='ready'?'#0b6e9e':'#02070d';c.fillRect(sx-sw*.44,sy-sh*.4,sw*.88,sh*.8);}for(const support of layout.objects.filter(item=>['base','neck','pole','rail','arm','clamp'].includes(item.meta?.kind))){const x=worldX(support.position[0]),y=deskY-(support.position[1]-layout.desk.topY)*unit;c.fillStyle='#283443';c.fillRect(x-support.size[0]*unit/2,y-support.size[1]*unit/2,Math.max(3,support.size[0]*unit),Math.max(3,support.size[1]*unit));}
     for(const id of ['keyboard','mouse','controller']){const item=layout.objects.find(entry=>entry.id===id);if(!item)continue;const x=worldX(item.position[0]),width=Math.max(5,item.size[0]*unit);c.fillStyle=id==='keyboard'?'#263542':id==='mouse'?'#39495a':'#202833';c.fillRect(x-width/2,deskY-Math.max(4,item.size[1]*unit),width,Math.max(4,item.size[1]*unit));}
+    if(state.cinematic?.active){const shot=CINEMATIC_API?.current?.(state.cinematic);c.fillStyle='rgba(5,13,22,.76)';c.fillRect(18,18,Math.min(w-36,330),52);c.fillStyle='#75e8ff';c.font='700 11px system-ui';c.fillText('MODO CINEMA',30,39);c.fillStyle='#f2fbff';c.font='700 14px system-ui';c.fillText(shot?.label||'Apresentação automática',30,59,Math.min(w-60,290));}
     c.fillStyle=layout.safe?'#62e6b0':'#ff8090';c.font='700 11px system-ui';c.fillText(layout.safe?'SETUP FÍSICO SEGURO':'REVISAR COLISÕES',20,118);
     c.fillStyle='#e5f8ff';c.font='700 15px system-ui';c.fillText(`${e.parts.cs.caseClass} • ${e.parts.cpu.label}`,20,78,Math.max(160,w-40));c.fillStyle='#8db6c9';c.font='12px system-ui';c.fillText(`Modo Baixo • ${CASE_API?.dimensionsText?.(e.parts.cs)||''}`,20,98,Math.max(160,w-40));c.fillStyle='#d5f7ff';c.fillText(`Painel: ${CASE_API?.panelLabel?.(e.parts.cs,state.caseSidePanel)||state.caseSidePanel} • Prontidão ${e.readiness}%`,20,h-42);c.fillStyle='#91b9ca';c.fillText(`${STUDIO_BACKDROPS[state.backdrop]} • ${DESK_FINISHES[state.deskFinish]} • ${AMBIENT_PRESETS[state.ambientPreset]}`,20,h-22);$('#hwRenderStatus').textContent='Canvas 2D/2.5D • Modo Baixo';$('#hwRenderStats').textContent=`CPU ${e.thermal.cpuTemperature} °C • GPU ${e.thermal.gpuTemperature} °C • ${e.thermal.pressure}`;canvas._lastDraw=time;lowRaf=requestAnimationFrame(drawLow);
   }
 
   function bindLowControls(){
-    const canvas=$('#hardwareCanvas2d');if(!canvas)return;const down=event=>{lowDrag={x:event.clientX,y:event.clientY,yaw:state.cameraYaw,pitch:state.cameraPitch};canvas.setPointerCapture?.(event.pointerId);};const move=event=>{if(!lowDrag)return;state.cameraYaw=lowDrag.yaw+(event.clientX-lowDrag.x)*.009;state.cameraPitch=LAYOUT_API?.clampCameraPitch?.(calculateSetupLayout(),lowDrag.pitch+(event.clientY-lowDrag.y)*.006)||clamp(lowDrag.pitch+(event.clientY-lowDrag.y)*.006,-.08,1.18);};const up=()=>{lowDrag=null;persist();};const wheel=event=>{event.preventDefault();state.cameraDistance=LAYOUT_API?.clampCameraDistance?.(calculateSetupLayout(),state.cameraDistance+Math.sign(event.deltaY))||clamp(state.cameraDistance+Math.sign(event.deltaY),9,32);persist();};canvas.addEventListener('pointerdown',down);canvas.addEventListener('pointermove',move);canvas.addEventListener('pointerup',up);canvas.addEventListener('pointercancel',up);canvas.addEventListener('wheel',wheel,{passive:false});canvas._cleanup=()=>{canvas.removeEventListener('pointerdown',down);canvas.removeEventListener('pointermove',move);canvas.removeEventListener('pointerup',up);canvas.removeEventListener('pointercancel',up);canvas.removeEventListener('wheel',wheel);};
+    const canvas=$('#hardwareCanvas2d');if(!canvas)return;const down=event=>{lowDrag={x:event.clientX,y:event.clientY,yaw:state.cameraYaw,pitch:state.cameraPitch};canvas.setPointerCapture?.(event.pointerId);};const move=event=>{if(!lowDrag)return;state.cameraYaw=lowDrag.yaw+(event.clientX-lowDrag.x)*.009;state.cameraPitch=LAYOUT_API?.clampCameraPitch?.(calculateSetupLayout(),lowDrag.pitch+(event.clientY-lowDrag.y)*.006)||clamp(lowDrag.pitch+(event.clientY-lowDrag.y)*.006,-.08,1.18);};const up=()=>{lowDrag=null;persist();};const wheel=event=>{event.preventDefault();if(state.inspection?.active){state.inspection.zoom=clamp(state.inspection.zoom-Math.sign(event.deltaY)*.1,.7,2.5);renderInspectionPanel();}else state.cameraDistance=LAYOUT_API?.clampCameraDistance?.(calculateSetupLayout(),state.cameraDistance+Math.sign(event.deltaY))||clamp(state.cameraDistance+Math.sign(event.deltaY),9,32);persist();};canvas.addEventListener('pointerdown',down);canvas.addEventListener('pointermove',move);canvas.addEventListener('pointerup',up);canvas.addEventListener('pointercancel',up);canvas.addEventListener('wheel',wheel,{passive:false});canvas._cleanup=()=>{canvas.removeEventListener('pointerdown',down);canvas.removeEventListener('pointermove',move);canvas.removeEventListener('pointerup',up);canvas.removeEventListener('pointercancel',up);canvas.removeEventListener('wheel',wheel);};
   }
 
   function startLowRenderer(){destroyThree();cancelAnimationFrame(lowRaf);const canvas=$('#hardwareCanvas2d');canvas?._cleanup?.();const area=$('.hardware-render-area');area.dataset.quality='low';canvas.hidden=false;$('#hardwareCanvas3d').hidden=true;bindLowControls();lowRaf=requestAnimationFrame(drawLow);}
@@ -1209,10 +1324,10 @@
     root=host;ctx=context;const legacy=await ctx.storage.get(LEGACY_KEY,null);state=normalize(await ctx.storage.get(KEY,legacy||defaults));renderShell();refreshControls();bindEvents();bindLowControls();renderPanels();renderLog();resizeObserver=new ResizeObserver(()=>{resizeRenderer();if(state.labGraphics==='low')drawLow();});resizeObserver.observe($('.hardware-render-area'));startRenderer();
   }
 
-  function hardwareContext(e=evaluate()){const layout=calculateSetupLayout(e);return{case:e.parts.cs.label,board:e.parts.board.label,cpu:e.parts.cpu.label,ram:e.parts.ram.label,gpu:e.parts.gpu.label,storage:e.parts.storage.label,storage2:e.parts.storage2.label,psu:e.parts.psu.label,cooling:e.parts.cooler.label,monitor:e.parts.monitor.label,monitors:activeMonitorItems(e).map(item=>item.label),monitorSetup:{count:state.monitorCount,layout:state.monitorLayout,mount:state.monitorMount},peripherals:[e.parts.keyboard.label,e.parts.mouse.label,e.parts.audio.label,e.parts.webcam.label,e.parts.printer.label],consumptionW:e.consumption,recommendedW:e.recommended,temperatureC:e.temperature,airflow:e.airflow,thermal:e.thermal,readiness:e.readiness,balance:e.balance,compatible:e.ok&&layout.safe,graphics:state.labGraphics,physicalLayout:{safe:layout.safe,status:layout.status,desk:layout.summary,camera:layout.camera,warnings:layout.warnings,errors:layout.errors},visual:{quality:state.labGraphics,caseFinish:state.caseFinish,glassStyle:state.glassStyle,rgbIntensity:state.rgbIntensity,materialDetail:state.materialDetail,contactShadows:state.contactShadows,pipeline:MATERIAL_API?.stats?.(state.labGraphics)||null},caseStructure:{class:e.parts.cs.caseClass,dimensionsMm:e.parts.cs.dimensionsMm,frontPanel:e.parts.cs.frontPanel,sidePanel:e.parts.cs.sidePanel,panelState:state.caseSidePanel,chambers:e.parts.cs.chambers,mounts:e.parts.cs.mounts},assembly:{enabled:state.assembly.enabled,prepared:state.assembly.prepared,progress:assemblyEngine?.progress?.()||null,attempts:state.assembly.attempts,successful:state.assembly.successful,invalid:state.assembly.invalid,placed:state.assembly.placed},warnings:[...layout.warnings,...e.warnings],errors:[...layout.errors,...e.errors]};}
-  function exportPayload(){const e=evaluate(),benchmark=state.benchmarkResults,layout=calculateSetupLayout(e);return{text:['HARDWARE STUDIO 3D',`Versão do módulo: ${MODULE_VERSION}`,`Atualizado em: ${moduleDate()}`,`Qualidade gráfica: ${state.labGraphics}`,`Pipeline visual: ${CASE_FINISHES[state.caseFinish]} • ${GLASS_STYLES[state.glassStyle]} • RGB ${RGB_INTENSITIES[state.rgbIntensity]}`,`Texturas PBR: ${state.materialDetail?'ativas':'simplificadas'} • Sombras de contato: ${state.contactShadows?'ativas':'desligadas'}`,`Modo: ${state.mode}`,`Studio: ${STUDIO_BACKDROPS[state.backdrop]} / ${DESK_FINISHES[state.deskFinish]} / ${AMBIENT_PRESETS[state.ambientPreset]}`,`Ferramentas: ${TOOL_LEVELS[state.toolkit]} • Destaque ${ACCENT_COLORS[state.accentColor]}`,`Gabinete: ${e.parts.cs.label} — ${e.parts.cs.caseClass} — ${state.caseColor}`,`Dimensões: ${CASE_API?.dimensionsText?.(e.parts.cs)||'—'}`,`Painel frontal: ${e.parts.cs.frontPanelLabel||e.parts.cs.frontPanel}`,`Painel lateral: ${CASE_API?.panelLabel?.(e.parts.cs,state.caseSidePanel)||state.caseSidePanel}`,`Montagens de radiador: ${CASE_API?.mountSummary?.(e.parts.cs)||'—'}`,`Placa-mãe: ${e.parts.board.label}`,`Processador: ${e.parts.cpu.label} (${e.parts.cpu.generation})`,`Memória: ${e.parts.ram.label}`,`GPU: ${e.parts.gpu.label} (${e.parts.gpu.generation})`,`Armazenamento principal: ${e.parts.storage.label}`,`Armazenamento secundário: ${e.parts.storage2.label}`,`Fonte: ${e.parts.psu.label}`,`Refrigeração: ${e.parts.cooler.label}`,`Monitores: ${activeMonitorItems(e).map(item=>item.label).join(' • ')}`,`Layout de telas: ${layoutMonitorDescription(e)}`,`Layout físico: ${layout.status} • bancada ${layout.summary.deskWidth.toFixed(1)} × ${layout.summary.deskDepth.toFixed(1)} u`,`Entrada: ${e.parts.keyboard.label} / ${e.parts.mouse.label}`,`Saída: ${e.parts.audio.label} / ${e.parts.printer.label}`,`Consumo: ${e.consumption} W`,`Temperatura CPU/GPU/Gabinete: ${e.thermal.cpuTemperature}/${e.thermal.gpuTemperature}/${e.thermal.caseTemperature} °C`,`Fluxo: ${e.thermal.effectiveCfm} CFM • ${e.thermal.pressure} • entrada ${e.thermal.intakeFans} / exaustão ${e.thermal.exhaustFans}`,`Filtro: ${e.thermal.labels.filter} • risco de poeira ${e.thermal.dustRisk}%`,`Carga térmica: ${e.thermal.labels.workload} • ambiente ${state.ambientTemperature} °C`,`Radiador: ${e.thermal.labels.radiator}`,`Prontidão: ${e.readiness}%`,`Equilíbrio: ${e.balance}%`,`Compatibilidade: ${e.ok?'OK':'FALHA'}`,`Montagem manual: ${state.assembly.enabled?(state.assembly.prepared?'ativa':'ativada'):'desativada'}`,`Encaixes corretos: ${state.assembly.successful} • tentativas inválidas: ${state.assembly.invalid}`,benchmark?`Benchmark ${benchmark.target}: ${benchmark.overall}/100`:'Benchmark: não executado','',...state.logs.map(item=>`[${new Date(item.time).toLocaleString('pt-BR')}] ${item.text}`)].join('\n'),native:JSON.stringify({state,context:hardwareContext(e)},null,2),backup:state,meta:[{label:'Compatibilidade',value:e.ok&&layout.safe?'OK':'Falha'},{label:'Prontidão',value:`${e.readiness}%`},{label:'Benchmark',value:benchmark?`${benchmark.overall}/100`:'—'}]};}
-  function help(){return`<h3>Hardware Studio Premium 3D</h3><p><strong>Versão ${MODULE_VERSION}</strong> • atualizada em ${moduleDate()}.</p><p>Escolha perfis ou monte livremente. O laboratório valida socket, memória, formato, energia, refrigeração, armazenamento, monitor e periféricos. Agora também oferece montagem manual 3D por mouse ou toque, gabinetes com classes e dimensões próprias, painel lateral manipulável, motor térmico por zonas e um motor de layout físico que dimensiona a bancada, apoia monitor e periféricos, impede sobreposição e mantém a câmera fora dos objetos. A estação agora suporta uma, duas ou três telas, braços articulados, trilho profissional, telas verticais, empilhadas e cockpit panorâmico. Os modos Baixo, Médio, Alto e Ultra ajustam a qualidade da cena; Ultra ativa materiais PBR, vidro, sombras, shader de grade, RGB e partículas. Os benchmarks são didáticos e não representam medições oficiais.</p>`;}
-  async function unmount(){clearTimers();resizeObserver?.disconnect();resizeObserver=null;destroyThree();cancelAnimationFrame(lowRaf);$('#hardwareCanvas2d')?._cleanup?.();await persist();root=null;ctx=null;state=null;}
+  function hardwareContext(e=evaluate()){const layout=calculateSetupLayout(e),family=familyProfile(),price=familyPrice(e);return{family:{id:state.family,label:family.label,category:family.category,formFactor:family.formFactor,price},inspection:state.inspection,cinematic:state.cinematic,case:e.parts.cs.label,board:e.parts.board.label,cpu:e.parts.cpu.label,ram:e.parts.ram.label,gpu:e.parts.gpu.label,storage:e.parts.storage.label,storage2:e.parts.storage2.label,psu:e.parts.psu.label,cooling:e.parts.cooler.label,monitor:e.parts.monitor.label,monitors:activeMonitorItems(e).map(item=>item.label),monitorSetup:{count:state.monitorCount,layout:state.monitorLayout,mount:state.monitorMount},peripherals:[e.parts.keyboard.label,e.parts.mouse.label,e.parts.audio.label,e.parts.webcam.label,e.parts.printer.label],consumptionW:e.consumption,recommendedW:e.recommended,temperatureC:e.temperature,airflow:e.airflow,thermal:e.thermal,readiness:e.readiness,balance:e.balance,compatible:e.ok&&layout.safe,graphics:state.labGraphics,physicalLayout:{safe:layout.safe,status:layout.status,desk:layout.summary,camera:layout.camera,warnings:layout.warnings,errors:layout.errors},visual:{quality:state.labGraphics,caseFinish:state.caseFinish,glassStyle:state.glassStyle,rgbIntensity:state.rgbIntensity,materialDetail:state.materialDetail,contactShadows:state.contactShadows,pipeline:MATERIAL_API?.stats?.(state.labGraphics)||null},caseStructure:{class:e.parts.cs.caseClass,dimensionsMm:e.parts.cs.dimensionsMm,frontPanel:e.parts.cs.frontPanel,sidePanel:e.parts.cs.sidePanel,panelState:state.caseSidePanel,chambers:e.parts.cs.chambers,mounts:e.parts.cs.mounts},assembly:{enabled:state.assembly.enabled,prepared:state.assembly.prepared,progress:assemblyEngine?.progress?.()||null,attempts:state.assembly.attempts,successful:state.assembly.successful,invalid:state.assembly.invalid,placed:state.assembly.placed},warnings:[...layout.warnings,...e.warnings],errors:[...layout.errors,...e.errors]};}
+  function exportPayload(){const e=evaluate(),benchmark=state.benchmarkResults,layout=calculateSetupLayout(e);return{text:['HARDWARE STUDIO 3D',`Versão do módulo: ${MODULE_VERSION}`,`Atualizado em: ${moduleDate()}`,`Qualidade gráfica: ${state.labGraphics}`,`Pipeline visual: ${CASE_FINISHES[state.caseFinish]} • ${GLASS_STYLES[state.glassStyle]} • RGB ${RGB_INTENSITIES[state.rgbIntensity]}`,`Texturas PBR: ${state.materialDetail?'ativas':'simplificadas'} • Sombras de contato: ${state.contactShadows?'ativas':'desligadas'}`,`Família: ${familyProfile().label} (${familyProfile().formFactor})`,`Preço educativo: ${familyPrice(e).formatted} — referência ${familyPrice(e).reference}`,`Modo: ${state.mode}`,`Studio: ${STUDIO_BACKDROPS[state.backdrop]} / ${DESK_FINISHES[state.deskFinish]} / ${AMBIENT_PRESETS[state.ambientPreset]}`,`Ferramentas: ${TOOL_LEVELS[state.toolkit]} • Destaque ${ACCENT_COLORS[state.accentColor]}`,`Gabinete: ${e.parts.cs.label} — ${e.parts.cs.caseClass} — ${state.caseColor}`,`Dimensões: ${CASE_API?.dimensionsText?.(e.parts.cs)||'—'}`,`Painel frontal: ${e.parts.cs.frontPanelLabel||e.parts.cs.frontPanel}`,`Painel lateral: ${CASE_API?.panelLabel?.(e.parts.cs,state.caseSidePanel)||state.caseSidePanel}`,`Montagens de radiador: ${CASE_API?.mountSummary?.(e.parts.cs)||'—'}`,`Placa-mãe: ${e.parts.board.label}`,`Processador: ${e.parts.cpu.label} (${e.parts.cpu.generation})`,`Memória: ${e.parts.ram.label}`,`GPU: ${e.parts.gpu.label} (${e.parts.gpu.generation})`,`Armazenamento principal: ${e.parts.storage.label}`,`Armazenamento secundário: ${e.parts.storage2.label}`,`Fonte: ${e.parts.psu.label}`,`Refrigeração: ${e.parts.cooler.label}`,`Monitores: ${activeMonitorItems(e).map(item=>item.label).join(' • ')}`,`Layout de telas: ${layoutMonitorDescription(e)}`,`Layout físico: ${layout.status} • bancada ${layout.summary.deskWidth.toFixed(1)} × ${layout.summary.deskDepth.toFixed(1)} u`,`Entrada: ${e.parts.keyboard.label} / ${e.parts.mouse.label}`,`Saída: ${e.parts.audio.label} / ${e.parts.printer.label}`,`Consumo: ${e.consumption} W`,`Temperatura CPU/GPU/Gabinete: ${e.thermal.cpuTemperature}/${e.thermal.gpuTemperature}/${e.thermal.caseTemperature} °C`,`Fluxo: ${e.thermal.effectiveCfm} CFM • ${e.thermal.pressure} • entrada ${e.thermal.intakeFans} / exaustão ${e.thermal.exhaustFans}`,`Filtro: ${e.thermal.labels.filter} • risco de poeira ${e.thermal.dustRisk}%`,`Carga térmica: ${e.thermal.labels.workload} • ambiente ${state.ambientTemperature} °C`,`Radiador: ${e.thermal.labels.radiator}`,`Prontidão: ${e.readiness}%`,`Equilíbrio: ${e.balance}%`,`Compatibilidade: ${e.ok?'OK':'FALHA'}`,`Montagem manual: ${state.assembly.enabled?(state.assembly.prepared?'ativa':'ativada'):'desativada'}`,`Encaixes corretos: ${state.assembly.successful} • tentativas inválidas: ${state.assembly.invalid}`,benchmark?`Benchmark ${benchmark.target}: ${benchmark.overall}/100`:'Benchmark: não executado','',...state.logs.map(item=>`[${new Date(item.time).toLocaleString('pt-BR')}] ${item.text}`)].join('\n'),native:JSON.stringify({state,context:hardwareContext(e)},null,2),backup:state,meta:[{label:'Compatibilidade',value:e.ok&&layout.safe?'OK':'Falha'},{label:'Prontidão',value:`${e.readiness}%`},{label:'Benchmark',value:benchmark?`${benchmark.overall}/100`:'—'}]};}
+  function help(){return`<h3>Hardware Studio Premium 3D</h3><p><strong>Versão ${MODULE_VERSION}</strong> • atualizada em ${moduleDate()}.</p><p>Esta versão adiciona famílias completas de computadores, inspeção isolada em 360°, vistas técnicas, modo explodido e apresentação cinematográfica automática. Escolha perfis ou monte livremente. O laboratório valida socket, memória, formato, energia, refrigeração, armazenamento, monitor e periféricos. Agora também oferece montagem manual 3D por mouse ou toque, gabinetes com classes e dimensões próprias, painel lateral manipulável, motor térmico por zonas e um motor de layout físico que dimensiona a bancada, apoia monitor e periféricos, impede sobreposição e mantém a câmera fora dos objetos. A estação agora suporta uma, duas ou três telas, braços articulados, trilho profissional, telas verticais, empilhadas e cockpit panorâmico. Os modos Baixo, Médio, Alto e Ultra ajustam a qualidade da cena; Ultra ativa materiais PBR, vidro, sombras, shader de grade, RGB e partículas. Os benchmarks são didáticos e não representam medições oficiais.</p>`;}
+  async function unmount(){if(state?.cinematic)CINEMATIC_API?.stop?.(state.cinematic);exitInspection(false);clearTimers();resizeObserver?.disconnect();resizeObserver=null;destroyThree();cancelAnimationFrame(lowRaf);$('#hardwareCanvas2d')?._cleanup?.();await persist();root=null;ctx=null;state=null;}
 
   window.LABDS_LABS['hardware-lab']={mount,unmount,exportPayload,help};
 })();
