@@ -1,5 +1,22 @@
 # Histórico de versões — Laboratório Virtual DS
 
+## Hardware Studio 4.26.0 — Fase A5.3 — 03/08/2026
+
+- inclusão do motor modular `peripheral-engine.js`, carregado antes do motor de layout físico;
+- configurações com uma, duas ou três telas, podendo repetir o monitor principal ou usar modelos independentes;
+- layouts tela única, dupla, tripla, principal com laterais verticais, empilhado e cockpit panorâmico;
+- bases originais, braço individual, suporte duplo, suporte triplo e trilho profissional;
+- bancada, câmera, caixas de som, webcam, teclado, mouse e acessórios passam a considerar a largura total do conjunto de telas;
+- monitor secundário e terciário recebem modelo, resolução, painel e frequência independentes;
+- catálogo ampliado com monitor profissional vertical, super ultrawide de 49 polegadas, tela 6K e CRT histórico;
+- teclados full size RGB, 60% compacto e dividido; mouse ultraleve e trackball; headset sem fio e soundbar;
+- controles diferenciados para Xbox/PlayStation, volante, joystick HOTAS, arcade e realidade virtual;
+- renderização 3D de braços, trilho, bases, telas, soundbar e diferentes categorias de controle;
+- modo Baixo/2.5D atualizado para representar todas as telas e seus suportes;
+- nova ficha multitela mostra organização, suporte, modelos, resoluções, frequências e painéis;
+- validação automatizada de 5.850 combinações multitela, áudio e controles, além da regressão de 19.200 configurações físicas;
+- cache principal renovado para entregar o motor de periféricos e o manifesto 4.26.0.
+
 ## Hardware Studio 4.25.0 — Fase A5.2 — 03/08/2026
 
 - inclusão do motor modular `material-engine.js`, carregado antes do motor de montagem e do módulo principal;
