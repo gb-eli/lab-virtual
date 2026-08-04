@@ -1,5 +1,24 @@
 # Histórico de versões — Laboratório Virtual DS
 
+## Hardware Studio 4.25.0 — Fase A5.2 — 03/08/2026
+
+- inclusão do motor modular `material-engine.js`, carregado antes do motor de montagem e do módulo principal;
+- pipeline PBR progressivo para Médio, Alto e Ultra, preservando o modo Baixo/2.5D;
+- 20 perfis reutilizáveis para metal pintado, metal escovado, aço, plástico fosco e brilhante, borracha, tecido, PCB, cobre, madeira, carbono, mesh, cerâmica, tela, RGB e quatro tratamentos de vidro;
+- texturas procedurais geradas localmente, sem dependência de CDN ou criação de nova pasta de assets;
+- texturas de 256 px no Alto e 512 px no Ultra, com cache, repetição e anisotropia limitados pelo dispositivo;
+- vidro lateral configurável como claro, fumê, fosco ou painel opaco, com transmissão, espessura, IOR e roughness progressivos;
+- acabamentos configuráveis do gabinete: pintura fosca, brilhante, metal escovado e fibra de carbono;
+- RGB com intensidade discreta, equilibrada ou showroom, glow aditivo controlado e emissivo ajustado pela qualidade;
+- environment map procedural para reflexos aproximados em materiais físicos, sem exigir ray tracing real;
+- iluminação adaptativa com luz principal, preenchimento, recorte e apresentação adicional no Ultra;
+- sombras com orçamento de 512 px no Médio, 1024 px no Alto e 2048 px no Ultra;
+- sombras de contato opcionais sob gabinete e monitor;
+- placa-mãe, CPU, GPU, armazenamento, cooler, cabos, monitor e periféricos passam a usar perfis de superfície apropriados;
+- novo painel gráfico informa pipeline, texturas, sombras, reflexos, vidro, acabamento, draw calls, triângulos, materiais e texturas ativas;
+- teste automatizado valida perfis gráficos, materiais físicos, vidro, iluminação, DPR, shadow map e API do environment map;
+- cache principal renovado para entregar o novo motor PBR e o manifesto 4.25.0.
+
 ## Hardware Studio 4.24.0 — Fase A5.1 — 03/08/2026
 
 - inclusão do motor modular `layout-engine.js`, carregado antes dos motores térmico e de montagem;
