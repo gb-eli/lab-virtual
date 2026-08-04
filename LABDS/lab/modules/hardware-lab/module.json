@@ -1,7 +1,7 @@
 {
   "id": "hardware-lab",
   "name": "Hardware Studio 3D",
-  "version": "4.24.0",
+  "version": "4.25.0",
   "weight": "heavy",
   "load": "on-demand",
   "cache": "runtime",
@@ -9,6 +9,7 @@
     "modules/hardware-lab/case-engine.js",
     "modules/hardware-lab/layout-engine.js",
     "modules/hardware-lab/thermal-engine.js",
+    "modules/hardware-lab/material-engine.js",
     "modules/hardware-lab/assembly-engine.js",
     "modules/hardware-lab/index.js"
   ],
@@ -16,6 +17,6 @@
     "modules/hardware-lab/styles.css"
   ],
   "bundles": [],
-  "description": "Laboratório premium de montagem 3D com motor físico de layout para bancada, apoio, escala, prevenção de colisões e câmera segura, além de oito gabinetes estruturais, montagem manual e simulação térmica por zonas.",
-  "updatedAt": "2026-08-03T21:20:00-03:00"
+  "description": "Laboratório premium de montagem 3D com materiais PBR, texturas procedurais, vidro físico, iluminação adaptativa, RGB, sombras de contato e modo Ultra otimizado, preservando montagem manual, estrutura física e simulação térmica.",
+  "updatedAt": "2026-08-03T21:46:00-03:00"
 }
