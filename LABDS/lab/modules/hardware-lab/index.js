@@ -4,8 +4,8 @@
 
   const KEY='lab.hardware.v12';
   const LEGACY_KEY='lab.hardware.v11';
-  const MODULE_VERSION='4.23.0';
-  const MODULE_UPDATED_AT='2026-08-03T20:35:00-03:00';
+  const MODULE_VERSION='4.24.0';
+  const MODULE_UPDATED_AT='2026-08-03T21:20:00-03:00';
   const THREE_URL='../../vendor/three/three.module.min.js';
   const GRAPHICS_LEVELS=['low','medium','high','ultra'];
   const COLORS={black:'#111827',white:'#e8eef5',graphite:'#334155',blue:'#175cd3',red:'#a61b2b',purple:'#6d28d9',green:'#08775d',orange:'#b45309'};
@@ -18,6 +18,7 @@
   const ASSEMBLY_API=window.LABDS_HARDWARE_ASSEMBLY;
   const CASE_API=window.LABDS_HARDWARE_CASES;
   const THERMAL_API=window.LABDS_HARDWARE_THERMAL;
+  const LAYOUT_API=window.LABDS_HARDWARE_LAYOUT;
   const ASSEMBLY_PARTS=ASSEMBLY_API?.PARTS||['board','cpu','ram','gpu','storage','storage2','psu','cooler'];
   const ASSEMBLY_LABELS=ASSEMBLY_API?.LABELS||{board:'Placa-mãe',cpu:'Processador',ram:'Memória RAM',gpu:'Placa de vídeo',storage:'Armazenamento principal',storage2:'Armazenamento secundário',psu:'Fonte de alimentação',cooler:'Sistema de refrigeração'};
 
@@ -161,7 +162,7 @@
 
   const defaultConnections={boardPower:true,cpuPower:true,gpuPower:true,ramSeated:true,storageData:true,storagePower:true,storage2Data:true,storage2Power:true,frontPanel:true,cpuPaste:true,coolerMounted:true,monitorCable:true,peripheralsPower:true};
   const defaults={
-    schema:13,tab:'build',mode:'guided',preset:'school',case:'airflow_atx',caseColor:'blue',caseSidePanel:'closed',caseStructureVisible:true,board:'asrock_b650m',cpu:'r5_7600',ram:'d5_16_5600',gpu:'integrated',storage:'nvme4_1tb',storage2:'none',psu:'p550',cooler:'stock',nic:'onboard',monitor:'fhd75',keyboard:'membrane',mouse:'office',audio:'speakers',webcam:'hd',printer:'ink',controller:'none',ups:'ups600',fans:2,fanProfile:'balanced',fanSpeed:'auto',filterCondition:'clean',workload:'study',ambientTemperature:23,radiatorPosition:'auto',thermalOverlay:true,lighting:'off',cableManagement:'standard',backdrop:'bench',deskFinish:'metal',ambientPreset:'neutral',toolkit:'pro',accentColor:'cyan',showProps:true,assemblyGuide:true,
+    schema:14,tab:'build',mode:'guided',preset:'school',case:'airflow_atx',caseColor:'blue',caseSidePanel:'closed',caseStructureVisible:true,board:'asrock_b650m',cpu:'r5_7600',ram:'d5_16_5600',gpu:'integrated',storage:'nvme4_1tb',storage2:'none',psu:'p550',cooler:'stock',nic:'onboard',monitor:'fhd75',keyboard:'membrane',mouse:'office',audio:'speakers',webcam:'hd',printer:'ink',controller:'none',ups:'ups600',fans:2,fanProfile:'balanced',fanSpeed:'auto',filterCondition:'clean',workload:'study',ambientTemperature:23,radiatorPosition:'auto',thermalOverlay:true,lighting:'off',cableManagement:'standard',backdrop:'bench',deskFinish:'metal',ambientPreset:'neutral',toolkit:'pro',accentColor:'cyan',showProps:true,assemblyGuide:true,
     ...defaultConnections,state:'off',scenario:'standard',score:0,tests:0,logs:[],selectedPart:'board',exploded:false,airflow:true,cables:true,autorotate:false,labGraphics:'high',cameraYaw:-.72,cameraPitch:.36,cameraDistance:15,
     benchmarkTarget:'games',benchmarkResolution:'1080p',benchmarkQuality:'high',rayTracing:false,upscaling:'quality',benchmarkResults:null,benchmarkHistory:[],diagnosticResults:[],benchmarkRunning:false,
     assembly:{enabled:false,prepared:false,placed:{board:true,cpu:true,ram:true,gpu:true,storage:true,storage2:true,psu:true,cooler:true},positions:{},rotations:{},attempts:0,successful:0,invalid:0,history:[],future:[],lastAction:''}
@@ -184,6 +185,12 @@
     daylight:{bg:0xcad8e5,fog:0xdbe5ef,fill:0xffffff,rim:0x7ba7d9}
   }[state?.ambientPreset]||{bg:0x050d16,fog:0x07111d,fill:0x3dc9ff,rim:0x8d5bff});
   const deskColor=()=>({metal:0x465464,wood:0x7c5b3b,carbon:0x232a33,white:0xdbe8f3}[state?.deskFinish]||0x465464);
+
+  function calculateSetupLayout(e=evaluate()){
+    const fallback={safe:true,status:'Layout básico',desk:{size:[16,.46,8.4],position:[4.7,-3.45,.2],topY:-3.22,left:-3.3,right:12.7},floor:{size:[34,.12,24],position:[3,-6.05,0]},supports:[],objects:[],warnings:[],errors:[],summary:{objects:0,collisions:0,unsupported:0,outOfBounds:0,deskWidth:16,deskDepth:8.4},camera:{target:[2,0,0],minDistance:9,maxDistance:32,minPitch:-.08,maxPitch:1.18}};
+    if(!LAYOUT_API?.calculate)return fallback;
+    return LAYOUT_API.calculate({caseItem:e.parts.cs,caseGeometry:CASE_API?.sceneGeometry?.(e.parts.cs),monitor:e.parts.monitor,keyboard:e.parts.keyboard,mouse:e.parts.mouse,audio:e.parts.audio,webcam:e.parts.webcam,printer:e.parts.printer,controller:e.parts.controller,ups:e.parts.ups,state});
+  }
 
   function normalize(raw){
     const input=raw&&typeof raw==='object'?raw:{};
@@ -363,9 +370,9 @@
   function tabButton(id,label){return`<button type="button" data-hw-tab="${id}">${label}</button>`;}
 
   function renderShell(){
-    root.innerHTML=`<div class="hardware-studio hardware-v421 hardware-v4211 hardware-v422 hardware-v423">
+    root.innerHTML=`<div class="hardware-studio hardware-v421 hardware-v4211 hardware-v422 hardware-v423 hardware-v424">
       <header class="hardware-studio-header">
-        <div><span class="module-release-stamp">v${MODULE_VERSION} • ${moduleDate()}</span><span class="eyebrow">LABORATÓRIO EDUCACIONAL</span><h2>Hardware Studio Premium 3D</h2><p>Monte computadores com estrutura física, refrigeração e fluxo de ar por zonas. Configure entrada e exaustão, filtros, pressão, carga térmica e posição do radiador enquanto acompanha CPU, GPU e gabinete.</p></div>
+        <div><span class="module-release-stamp">v${MODULE_VERSION} • ${moduleDate()}</span><span class="eyebrow">LABORATÓRIO EDUCACIONAL</span><h2>Hardware Studio Premium 3D</h2><p>Monte computadores em uma bancada física validada, com escala coerente, apoio real dos periféricos, prevenção de colisões, câmera segura, estrutura interna e simulação térmica por zonas.</p></div>
         <div class="simulator-badges"><span>XP <b id="hwScore">0</b></span><span>Testes <b id="hwTests">0</b></span><span>Prontidão <b id="hwReady">0%</b></span></div>
       </header>
       <nav class="hardware-tabs" aria-label="Áreas do laboratório">${tabButton('build','Montagem 3D')}${tabButton('peripherals','Periféricos')}${tabButton('benchmark','Benchmarks')}${tabButton('diagnostics','Diagnóstico')}</nav>
@@ -394,6 +401,7 @@
             <section class="hardware-assembly-dock" aria-label="Controles da montagem manual"><header><div><span>MONTAGEM MANUAL 3D</span><strong id="hwAssemblyTitle">Modo de inspeção</strong></div><b id="hwAssemblyPercent">100%</b></header><div class="hardware-assembly-progress"><i id="hwAssemblyProgressBar"></i></div><p id="hwAssemblyDescription">Ative o modo manual para separar, arrastar, girar e encaixar os componentes.</p><div class="hardware-assembly-actions"><button id="hwManualToggle" type="button">Ativar montagem manual</button><button id="hwPrepareAssembly" type="button">Separar peças</button><button id="hwSnapSelected" type="button">Encaixar selecionada</button><button id="hwRotateLeft" type="button" aria-label="Girar peça selecionada para a esquerda">Girar −15°</button><button id="hwRotateRight" type="button" aria-label="Girar peça selecionada para a direita">Girar +15°</button><button id="hwUndoAssembly" type="button">Desfazer</button><button id="hwRedoAssembly" type="button">Refazer</button><button id="hwResetAssembly" type="button">Reiniciar</button></div><div id="hwAssemblyParts" class="hardware-assembly-parts" aria-live="polite"></div></section>
             <div class="hardware-part-strip">${[['case','Gabinete'],['board','Placa-mãe'],['cpu','CPU'],['ram','RAM'],['gpu','GPU'],['storage','Disco 1'],['storage2','Disco 2'],['psu','Fonte'],['cooler','Cooler'],['monitor','Monitor'],['peripherals','Periféricos']].map(([id,label])=>`<button type="button" data-hw-part="${id}">${label}</button>`).join('')}</div>
             <div id="hwInspector" class="hardware-inspector"></div>
+            <div id="hwLayoutSafety" class="hardware-layout-safety" aria-live="polite"></div>
           </section>
           <section class="hardware-overview-grid"><div id="hwStatus" class="state-card"></div><div id="hwMetrics" class="hardware-metrics"></div><div id="hwTechMatrix" class="hardware-tech-matrix"></div></section>
           <section id="hwBenchmarkResults" class="hardware-results" hidden></section>
@@ -470,14 +478,14 @@
 
   function renderPanels(){
     if(!root)return;
-    const e=evaluate();
+    const e=evaluate(),layout=calculateSetupLayout(e);
     renderTabs();refreshControls();renderInspector(e);renderBenchmark();renderDiagnostics();renderAssemblyPanel();
     $('#hwScore').textContent=String(state.score);$('#hwTests').textContent=String(state.tests);$('#hwReady').textContent=`${e.readiness}%`;
     $$('[data-hw-preset]').forEach(button=>button.classList.toggle('active',button.dataset.hwPreset===state.preset));
     $$('[data-hw-part]').forEach(button=>button.classList.toggle('active',button.dataset.hwPart===state.selectedPart));
     $$('[data-hw-quality]').forEach(button=>button.classList.toggle('active',button.dataset.hwQuality===state.labGraphics));
     $$('[data-hw-toggle]').forEach(button=>button.classList.toggle('active',Boolean(state[button.dataset.hwToggle])));
-    const status=$('#hwStatus');status.className=`state-card ${e.ok?'success':'error'}`;status.innerHTML=`<strong>${e.ok?'Montagem compatível':'Correções necessárias'}</strong><div class="hardware-readiness"><i style="width:${e.readiness}%"></i></div><p>Prontidão ${e.readiness}% • Equilíbrio ${e.balance}%</p><ul>${[...e.errors,...e.warnings,...e.info].slice(0,9).map(item=>`<li>${esc(item)}</li>`).join('')}</ul>`;
+    const fullOk=e.ok&&layout.safe,status=$('#hwStatus');status.className=`state-card ${fullOk?'success':'error'}`;status.innerHTML=`<strong>${fullOk?'Montagem e setup compatíveis':'Correções necessárias'}</strong><div class="hardware-readiness"><i style="width:${e.readiness}%"></i></div><p>Prontidão ${e.readiness}% • Equilíbrio ${e.balance}%</p><ul>${[...layout.errors,...e.errors,...layout.warnings,...e.warnings,...e.info].slice(0,9).map(item=>`<li>${esc(item)}</li>`).join('')}</ul>`;
     const metrics=[['Consumo',`${e.consumption} W`],['Fonte',`${e.parts.psu.watts} W`],['CPU',`${e.thermal.cpuTemperature} °C`],['GPU',`${e.thermal.gpuTemperature} °C`],['Gabinete',`${e.thermal.caseTemperature} °C`],['Fluxo de ar',`${e.airflow}%`],['Pressão',e.thermal.pressure],['Ruído',`${e.noise} dB`],['Poeira',`${e.thermal.dustRisk}%`],['Equilíbrio',`${e.balance}%`]];
     $('#hwMetrics').innerHTML=metrics.map(([label,value])=>`<div><span>${label}</span><b>${value}</b></div>`).join('');
     $('#hwTechMatrix').innerHTML=`<h3>Gerações, studio e tecnologias</h3><div><span>CPU</span><b>${esc(e.parts.cpu.generation)}</b></div><div><span>GPU</span><b>${esc(e.parts.gpu.generation)}</b></div><div><span>Memória</span><b>${esc(e.parts.ram.generation)}</b></div><div><span>Armazenamento</span><b>${esc(e.parts.storage.generation)}</b></div><div><span>Plataforma</span><b>${esc(e.parts.board.generation)}</b></div><div><span>Rede</span><b>${esc(e.parts.nic.generation)}</b></div><div><span>Cenário</span><b>${esc(STUDIO_BACKDROPS[state.backdrop])}</b></div><div><span>Bancada</span><b>${esc(DESK_FINISHES[state.deskFinish])}</b></div>`;
@@ -487,6 +495,7 @@
     const panelButton=$('#hwCasePanel');if(panelButton){panelButton.textContent=CASE_API?.panelLabel?.(e.parts.cs,state.caseSidePanel)||'Painel lateral';panelButton.classList.toggle('active',state.caseSidePanel!=='closed');panelButton.disabled=e.parts.cs.sidePanel==='open';}
     $('#hwPeripheralSummary').innerHTML=`<strong>Estação completa</strong><p>${esc(e.parts.monitor.label)} • ${esc(e.parts.keyboard.label)} • ${esc(e.parts.mouse.label)}</p><p>${esc(e.parts.audio.label)} • ${esc(e.parts.webcam.label)} • ${esc(e.parts.printer.label)}</p>`;
     const studioSummary=$('#hwStudioSummary');if(studioSummary)studioSummary.innerHTML=`<strong>Studio e gabinete</strong><p>${esc(e.parts.cs.caseClass||e.parts.cs.generation)} • ${esc(CASE_API?.dimensionsText?.(e.parts.cs)||'')}</p><p>${esc(STUDIO_BACKDROPS[state.backdrop])} • ${esc(DESK_FINISHES[state.deskFinish])}</p><p>Ambiente ${esc(AMBIENT_PRESETS[state.ambientPreset])} • Ferramentas ${esc(TOOL_LEVELS[state.toolkit])} • Destaque ${esc(ACCENT_COLORS[state.accentColor])}</p><p>Módulo v${MODULE_VERSION} • ${moduleDate()}</p>`;
+    const layoutBox=$('#hwLayoutSafety');if(layoutBox){layoutBox.dataset.status=layout.safe?'safe':'error';const notes=[...layout.errors,...layout.warnings].slice(0,6);layoutBox.innerHTML=`<header><div><span>SEGURANÇA FÍSICA DO SETUP</span><strong>${esc(layout.status)}</strong></div><b>${layout.safe?'OK':'REVISAR'}</b></header><dl><div><dt>Bancada</dt><dd>${layout.summary.deskWidth.toFixed(1)} × ${layout.summary.deskDepth.toFixed(1)} u</dd></div><div><dt>Objetos</dt><dd>${layout.summary.objects}</dd></div><div><dt>Colisões</dt><dd>${layout.summary.collisions}</dd></div><div><dt>Sem apoio</dt><dd>${layout.summary.unsupported}</dd></div><div><dt>Fora da área</dt><dd>${layout.summary.outOfBounds}</dd></div><div><dt>Câmera segura</dt><dd>${layout.camera.minDistance.toFixed(1)}–${layout.camera.maxDistance.toFixed(1)} u</dd></div></dl><p>${esc(notes[0]||'Todos os objetos estão apoiados, dentro da bancada e sem sobreposição.')}</p>`;}
     $('#hwBenchmarkStatus').innerHTML=state.benchmarkRunning?'<strong>Benchmark em andamento…</strong><p>CPU, GPU, memória e armazenamento estão sendo avaliados.</p>':state.benchmarkResults?`<strong>Último resultado: ${state.benchmarkResults.overall}/100</strong><p>${esc(state.benchmarkResults.warning)}</p>`:'<strong>Pronto para testar</strong><p>Selecione o uso, resolução e qualidade.</p>';
     const screen=$('#hwScreen');screen.dataset.state=state.state;
     $('#hwScreenTitle').textContent=state.state==='ready'?'SISTEMA INICIADO':state.state==='post'?'POWER-ON SELF-TEST':state.state==='error'?'FALHA NO POST':'SEM SINAL';
@@ -748,32 +757,29 @@
     const color=new THREE.Color();color.setHSL(((time*.00008)+(index*.17))%1,.88,.58);return color;
   }
 
-  function buildStudioEnvironment(rootGroup){
+  function buildStudioEnvironment(rootGroup,e,layout){
     const studio=markPart(new THREE.Group(),'peripherals');
     rootGroup.add(studio);
-    const accent=accentHex();
-    const desk=addBox(studio,'peripherals',[16,.45,8.4],[4.7,-3.45,.2],deskColor(),{metalness:state.deskFinish==='metal'||state.deskFinish==='carbon'?.62:.28,roughness:state.deskFinish==='wood'?.74:.42});
-    addBox(studio,'peripherals',[2.6,2.6,2.2],[10.9,-2.2,-2.5],0x28303a,{metalness:.45});
-    addBox(studio,'peripherals',[2.6,2.6,2.2],[-.8,-2.2,-2.5],0x28303a,{metalness:.45});
-    if(state.backdrop!=='bench')addBox(studio,'peripherals',[16,8,.4],[4.4,.7,-5.6],state.backdrop==='showcase'?0x281737:state.backdrop==='classroom'?0x1c3551:0x09111d,{metalness:.18,roughness:.82});
+    const accent=accentHex(),desk=layout.desk;
+    addBox(studio,'peripherals',desk.size,desk.position,deskColor(),{metalness:(state.deskFinish==='metal'||state.deskFinish==='carbon')?.62:.28,roughness:state.deskFinish==='wood'?.74:.42});
+    for(const support of layout.supports)addBox(studio,'peripherals',support.size,support.position,0x283442,{metalness:.55,roughness:.5});
+    addBox(studio,'peripherals',[Math.max(4,desk.size[0]-.9),.18,.5],[desk.position[0],layout.summary.floorY+.72,desk.position[2]-.15],0x1a2631,{metalness:.58,roughness:.52});
+    const backY=desk.topY+4.2,backZ=desk.back-.32;
+    if(state.backdrop!=='bench')addBox(studio,'peripherals',[desk.size[0],8,.36],[desk.position[0],backY,backZ],state.backdrop==='showcase'?0x281737:state.backdrop==='classroom'?0x1c3551:0x09111d,{metalness:.18,roughness:.82});
     if(state.backdrop==='studio'||state.backdrop==='showcase'){
-      addBox(studio,'peripherals',[7.2,.16,.16],[4.1,3.2,-5.15],accent,{emissive:accent,emissiveIntensity:.45,metalness:.3});
-      addBox(studio,'peripherals',[.16,4.2,.16],[-2.7,0,-5.1],accent,{emissive:accent,emissiveIntensity:.35,metalness:.3});
-      addBox(studio,'peripherals',[.16,4.2,.16],[11.1,0,-5.1],accent,{emissive:accent,emissiveIntensity:.35,metalness:.3});
+      addBox(studio,'peripherals',[Math.min(8.5,desk.size[0]*.52),.16,.16],[desk.position[0],backY+2.5,backZ+.25],accent,{emissive:accent,emissiveIntensity:.45,metalness:.3});
+      addBox(studio,'peripherals',[.16,4.2,.16],[layout.desk.left+.55,backY,backZ+.25],accent,{emissive:accent,emissiveIntensity:.35,metalness:.3});
+      addBox(studio,'peripherals',[.16,4.2,.16],[layout.desk.right-.55,backY,backZ+.25],accent,{emissive:accent,emissiveIntensity:.35,metalness:.3});
     }
     if(state.showProps){
-      addBox(studio,'peripherals',[1.9,.22,1.2],[.2,-2.95,2.45],0x374151,{metalness:.25});
-      addBox(studio,'peripherals',[.75,.35,.75],[-.2,-2.65,2.45],0x6b7280,{metalness:.35});
-      addBox(studio,'peripherals',[1.2,.55,1.2],[1.25,-2.78,2.45],0xf59e0b,{metalness:.22});
-      if(state.toolkit!=='compact'){
-        addBox(studio,'peripherals',[2.1,.4,1.1],[10.2,-2.85,2.4],0x1f2937,{metalness:.35});
-        addBox(studio,'peripherals',[.16,1.7,.16],[9.45,-2.15,2.82],0xd0d7df,{metalness:.85});
-        addBox(studio,'peripherals',[.16,1.9,.16],[9.8,-2.05,2.82],0xd0d7df,{metalness:.85});
-      }
-      if(state.toolkit==='lab'){
-        addBox(studio,'peripherals',[2.8,1.8,.9],[12.2,-1.65,1.6],0x0f172a,{metalness:.48});
-        addBox(studio,'peripherals',[2.2,.12,.6],[12.2,-1.05,2.05],accent,{emissive:accent,emissiveIntensity:.28});
-      }
+      const pegX=layout.desk.left+1.8,pegY=desk.topY+2.1,pegZ=backZ+.24;
+      addBox(studio,'peripherals',[3.3,2.35,.12],[pegX,pegY,pegZ],0x253746,{metalness:.45,roughness:.58});
+      for(let row=0;row<5;row++)for(let col=0;col<7;col++)addCylinder(studio,'peripherals',.035,.12,[pegX-1.25+col*.42,pegY-.82+row*.42,pegZ+.09],0x6d8291,{rotation:[Math.PI/2,0,0],segments:10,metalness:.75});
+      addBox(studio,'peripherals',[.16,1.55,.16],[pegX-.92,pegY,.2+pegZ],0xd0d7df,{metalness:.88});
+      addBox(studio,'peripherals',[.22,1.35,.16],[pegX-.35,pegY+.1,.2+pegZ],0xd0d7df,{metalness:.88});
+      addBox(studio,'peripherals',[.32,1.05,.18],[pegX+.3,pegY-.05,.2+pegZ],0xf59e0b,{metalness:.35});
+      if(state.toolkit!=='compact')addBox(studio,'peripherals',[1.45,.65,.25],[pegX+.75,pegY-.62,.2+pegZ],0x111827,{metalness:.48});
+      if(state.toolkit==='lab')addBox(studio,'peripherals',[2.4,.8,.55],[layout.desk.right-1.65,layout.summary.floorY+.42,desk.front-.75],0x0f172a,{metalness:.5});
     }
     return studio;
   }
@@ -903,8 +909,9 @@
   function buildPCScene(){
     if(!three||!THREE)return;
     if(three.contentRoot){three.scene.remove(three.contentRoot);disposeObject(three.contentRoot);}
-    const e=evaluate(),rootGroup=new THREE.Group();three.contentRoot=rootGroup;three.scene.add(rootGroup);three.partGroups={};three.fans=[];three.rgbMaterials=[];three.caseSidePanel=null;
-    buildStudioEnvironment(rootGroup);
+    const e=evaluate(),layout=calculateSetupLayout(e),rootGroup=new THREE.Group();three.contentRoot=rootGroup;three.scene.add(rootGroup);three.partGroups={};three.fans=[];three.rgbMaterials=[];three.caseSidePanel=null;three.setupLayout=layout;
+    createFloor(layout);buildStudioEnvironment(rootGroup,e,layout);
+    three.target.set(...layout.camera.target);state.cameraDistance=LAYOUT_API?.clampCameraDistance?.(layout,state.cameraDistance)||state.cameraDistance;state.cameraPitch=LAYOUT_API?.clampCameraPitch?.(layout,state.cameraPitch)||state.cameraPitch;
     const caseGroup=markPart(new THREE.Group(),'case');caseGroup.name='case';rootGroup.add(caseGroup);three.partGroups.case=caseGroup;
     const g=buildCaseChassis(caseGroup,e),backZ=-g.depth/2+.42,[boardW,boardH]=boardDimensions(e.parts.board.format),boardX=-g.width/2+boardW/2+.34;
 
@@ -939,7 +946,7 @@
     for(let i=0;i<Math.min(e.thermal.intakeFans,intakePoints.length);i++)createFan(caseGroup,'case',intakePoints[i].p,.58,'intake',intakePoints[i].r);
     for(let i=0;i<Math.min(e.thermal.exhaustFans,exhaustPoints.length);i++)createFan(caseGroup,'case',exhaustPoints[i].p,.58,'exhaust',exhaustPoints[i].r);
 
-    buildCables(rootGroup,e);buildExternalDevices(rootGroup,e);buildAirflow(rootGroup,e);applyExploded();setupAssemblyEngine();highlightSelected();
+    buildCables(rootGroup,e);buildExternalDevices(rootGroup,e,layout);buildAirflow(rootGroup,e);applyExploded();setupAssemblyEngine();highlightSelected();
   }
 
   function createFan(group,key,position,radius,type,rotation=[0,0,0]){
@@ -959,15 +966,47 @@
     if(state.cableManagement==='premium'){cable([-2.5,-2.5,2.3],[-2.9,-1.2,-2.4],0x202a34,'board');cable([-2.2,-2.5,2.3],[2.5,1.8,-2.7],0x202a34,'storage');}
   }
 
-  function buildExternalDevices(rootGroup,e){
-    const monitorGroup=markPart(new THREE.Group(),'monitor');monitorGroup.position.set(6.3,-.7,-.2);rootGroup.add(monitorGroup);three.partGroups.monitor=monitorGroup;
-    if(state.monitor!=='none'){addBox(monitorGroup,'monitor',[5.2,3,.22],[0,1.6,0],e.parts.monitor.panel==='OLED'?0x05080c:0x101b25,{metalness:.45});addBox(monitorGroup,'monitor',[4.75,2.55,.08],[0,1.6,.16],0x10263a,{emissive:state.state==='ready'?0x0b6e9e:0x02070d,emissiveIntensity:state.state==='ready'?1.1:.15,roughness:.12});addBox(monitorGroup,'monitor',[.35,1.6,.35],[0,-.55,0],0x283443,{metalness:.55});addBox(monitorGroup,'monitor',[2.2,.18,1.2],[0,-1.4,0],0x283443,{metalness:.55});}
+  function buildExternalDevices(rootGroup,e,layout){
+    const byId=id=>layout.objects.find(item=>item.id===id);
+    const monitorGroup=markPart(new THREE.Group(),'monitor');rootGroup.add(monitorGroup);three.partGroups.monitor=monitorGroup;
+    const screen=byId('monitor-screen'),neck=byId('monitor-neck'),base=byId('monitor-base');
+    if(screen&&neck&&base){
+      addBox(monitorGroup,'monitor',screen.size,screen.position,e.parts.monitor.panel==='OLED'?0x05080c:0x101b25,{metalness:.46,roughness:.2});
+      addBox(monitorGroup,'monitor',[Math.max(.2,screen.size[0]-.36),Math.max(.2,screen.size[1]-.36),.075],[screen.position[0],screen.position[1],screen.position[2]+.16],0x10263a,{emissive:state.state==='ready'?0x0b6e9e:0x02070d,emissiveIntensity:state.state==='ready'?1.1:.15,roughness:.1});
+      addBox(monitorGroup,'monitor',neck.size,neck.position,0x283443,{metalness:.6});
+      addBox(monitorGroup,'monitor',base.size,base.position,0x283443,{metalness:.62});
+    }
     const peripherals=markPart(new THREE.Group(),'peripherals');rootGroup.add(peripherals);three.partGroups.peripherals=peripherals;
-    if(state.keyboard!=='none')addBox(peripherals,'peripherals',[4.1,.22,1.25],[5.8,-3.05,2.3],state.keyboard==='creator'?0xd8dce2:0x202a36,{metalness:.32});
-    if(state.mouse!=='none')addBox(peripherals,'peripherals',[.75,.24,1.05],[8.45,-3.0,2.15],state.mouse==='gaming'?0x202733:0x39495a,{metalness:.35});
-    if(state.audio!=='none'){addBox(peripherals,'peripherals',[.75,2.05,.7],[3.25,-1.4,.4],0x202833,{metalness:.25});addBox(peripherals,'peripherals',[.75,2.05,.7],[9.25,-1.4,.4],0x202833,{metalness:.25});}
-    if(state.webcam!=='none')addBox(peripherals,'peripherals',[1.1,.32,.35],[6.3,3.02,.1],0x111827,{metalness:.45});
-    if(state.printer!=='none')addBox(peripherals,'peripherals',[3,1.6,2.5],[10.4,-2.3,-2.2],0xcbd5e1,{metalness:.18});
+    for(const item of layout.objects){
+      if(['case','monitor-screen','monitor-neck','monitor-base'].includes(item.id))continue;
+      const [x,y,z]=item.position;
+      if(item.id==='keyboard'){
+        addBox(peripherals,'peripherals',item.size,item.position,state.keyboard==='creator'?0xd8dce2:0x202a36,{metalness:.32,roughness:.48});
+        const rows=state.labGraphics==='ultra'?5:3,cols=state.labGraphics==='ultra'?15:10;
+        for(let row=0;row<rows;row++)for(let col=0;col<cols;col++)addBox(peripherals,'peripherals',[item.size[0]/cols*.68,.035,item.size[2]/rows*.48],[x-item.size[0]*.43+col*item.size[0]/cols,y+item.size[1]/2+.02,z-item.size[2]*.32+row*item.size[2]/rows],0x516273,{metalness:.18,roughness:.6});
+      }else if(item.id==='mouse'){
+        const mouse=mesh(new THREE.SphereGeometry(.5,18,12),createMaterial(state.mouse==='gaming'?0x202733:0x39495a,{metalness:.34,roughness:.4}),item.position);mouse.scale.set(item.size[0],item.size[1]*1.45,item.size[2]);markPart(mouse,'peripherals');peripherals.add(mouse);
+      }else if(item.id.startsWith('speaker')){
+        addBox(peripherals,'peripherals',item.size,item.position,0x202833,{metalness:.28,roughness:.46});
+        addCylinder(peripherals,'peripherals',item.size[0]*.25,.08,[x,y+.22,z+item.size[2]/2+.05],0x080d12,{rotation:[Math.PI/2,0,0],metalness:.18});
+      }else if(item.id==='headset-stand'){
+        addBox(peripherals,'peripherals',[.18,item.size[1],.18],item.position,0x7f8d99,{metalness:.82});
+        addBox(peripherals,'peripherals',[.75,.12,.5],[x,y-item.size[1]/2+.06,z],0x26323d,{metalness:.55});
+      }else if(item.id==='headset'){
+        const band=mesh(new THREE.TorusGeometry(.48,.09,10,28,Math.PI),createMaterial(0x18232d,{metalness:.38,roughness:.46}),item.position,[0,0,Math.PI]);markPart(band,'peripherals');peripherals.add(band);
+        addBox(peripherals,'peripherals',[.3,.58,.42],[x-.48,y-.25,z],0x202c38,{metalness:.3});addBox(peripherals,'peripherals',[.3,.58,.42],[x+.48,y-.25,z],0x202c38,{metalness:.3});
+      }else if(item.id==='microphone'){
+        addCylinder(peripherals,'peripherals',.16,.65,[x,y+.25,z],0x151e27,{segments:20,metalness:.55});addBox(peripherals,'peripherals',[.5,.1,.5],[x,y-item.size[1]/2+.05,z],0x2d3945,{metalness:.65});
+      }else if(item.id==='webcam'){
+        addBox(peripherals,'peripherals',item.size,item.position,0x111827,{metalness:.5});addCylinder(peripherals,'peripherals',.09,.08,[x,y,z+item.size[2]/2+.06],0x0d6c91,{rotation:[Math.PI/2,0,0],metalness:.24});
+      }else if(item.id==='printer'){
+        addBox(peripherals,'peripherals',item.size,item.position,0xcbd5e1,{metalness:.2,roughness:.58});addBox(peripherals,'peripherals',[item.size[0]*.72,.08,item.size[2]*.55],[x,y+item.size[1]/2+.05,z],0x1f2937,{metalness:.25});
+      }else if(item.id==='controller'){
+        addBox(peripherals,'peripherals',item.size,item.position,state.controller==='playstation'?0xe5e7eb:0x202833,{metalness:.25,roughness:.42});addCylinder(peripherals,'peripherals',.11,.08,[x-.38,y+.2,z+.22],0x111827,{rotation:[Math.PI/2,0,0]});addCylinder(peripherals,'peripherals',.11,.08,[x+.38,y+.2,z+.22],0x111827,{rotation:[Math.PI/2,0,0]});
+      }else if(item.id==='ups'){
+        addBox(peripherals,'peripherals',item.size,item.position,0x1d2731,{metalness:.55});addBox(peripherals,'peripherals',[item.size[0]*.55,.22,.08],[x,y+.28,z+item.size[2]/2+.05],0x0b1822,{emissive:0x38d9ff,emissiveIntensity:.18});
+      }
+    }
   }
 
   function buildAirflow(rootGroup,e){
@@ -998,10 +1037,12 @@
     if(!three?.scene)return;three.scene.traverse(node=>{if(!node.material||!node.userData.partKey)return;const selected=node.userData.partKey===state.selectedPart;if('emissive' in node.material){node.material.emissive.set(selected?0x176f8a:node.material.userData?.baseEmissive||0x000000);node.material.emissiveIntensity=selected ? .72 : (node.material.userData?.baseIntensity||0);}});
   }
 
-  function createFloor(){
+  function createFloor(layout){
+    if(three.floor){three.scene.remove(three.floor);disposeObject(three.floor);three.floor=null;three.gridMaterial=null;}
+    const width=layout?.floor?.size?.[0]||34,depth=layout?.floor?.size?.[2]||24,x=layout?.floor?.position?.[0]||3,y=(layout?.floor?.position?.[1]||-6.11)+(layout?.floor?.size?.[1]||.12)/2;
     if(state.labGraphics==='ultra'){
-      const material=new THREE.ShaderMaterial({transparent:true,depthWrite:false,uniforms:{uTime:{value:0},uColor:{value:new THREE.Color(0x35c9ee)}},vertexShader:'varying vec2 vUv; void main(){vUv=uv; gl_Position=projectionMatrix*modelViewMatrix*vec4(position,1.0);}',fragmentShader:'varying vec2 vUv; uniform float uTime; uniform vec3 uColor; void main(){vec2 grid=abs(fract(vUv*28.0-.5)-.5)/fwidth(vUv*28.0);float line=1.0-min(min(grid.x,grid.y),1.0);float pulse=.35+.25*sin(uTime+vUv.x*8.0);gl_FragColor=vec4(uColor,line*.22*pulse);}' });const floor=mesh(new THREE.PlaneGeometry(34,24),material,[3,-3.62,0],[-Math.PI/2,0,0]);three.scene.add(floor);three.gridMaterial=material;
-    }else{const floor=mesh(new THREE.PlaneGeometry(34,24),createMaterial(0x08131f,{roughness:.9,metalness:.08}),[3,-3.62,0],[-Math.PI/2,0,0]);floor.receiveShadow=true;three.scene.add(floor);}
+      const material=new THREE.ShaderMaterial({transparent:true,depthWrite:false,uniforms:{uTime:{value:0},uColor:{value:new THREE.Color(0x35c9ee)}},vertexShader:'varying vec2 vUv; void main(){vUv=uv; gl_Position=projectionMatrix*modelViewMatrix*vec4(position,1.0);}',fragmentShader:'varying vec2 vUv; uniform float uTime; uniform vec3 uColor; void main(){vec2 grid=abs(fract(vUv*28.0-.5)-.5)/fwidth(vUv*28.0);float line=1.0-min(min(grid.x,grid.y),1.0);float pulse=.35+.25*sin(uTime+vUv.x*8.0);gl_FragColor=vec4(uColor,line*.22*pulse);}' });const floor=mesh(new THREE.PlaneGeometry(width,depth),material,[x,y,0],[-Math.PI/2,0,0]);three.scene.add(floor);three.floor=floor;three.gridMaterial=material;
+    }else{const floor=mesh(new THREE.PlaneGeometry(width,depth),createMaterial(0x08131f,{roughness:.9,metalness:.08}),[x,y,0],[-Math.PI/2,0,0]);floor.receiveShadow=true;three.scene.add(floor);three.floor=floor;}
   }
 
   async function initThree(){
@@ -1021,8 +1062,8 @@
       const quality=state.labGraphics,renderer=new THREE.WebGLRenderer({canvas,antialias:quality!=='medium',alpha:false,powerPreference:quality==='medium'?'default':'high-performance'}),scene=new THREE.Scene(),camera=new THREE.PerspectiveCamera(48,1,.1,120),target=new THREE.Vector3(2,0,0);
       const palette=ambientScene();renderer.setPixelRatio(Math.min(devicePixelRatio||1,quality==='ultra'?2:quality==='high'?1.55:1.15));renderer.setClearColor(palette.bg,1);renderer.outputColorSpace=THREE.SRGBColorSpace;renderer.toneMapping=THREE.ACESFilmicToneMapping;renderer.toneMappingExposure=quality==='ultra'?1.22:1.08;renderer.shadowMap.enabled=quality!=='medium';renderer.shadowMap.type=THREE.PCFSoftShadowMap;
       scene.fog=new THREE.FogExp2(palette.fog,quality==='ultra'?.022:.032);scene.add(new THREE.HemisphereLight(state.ambientPreset==='daylight'?0xfafcff:0xc9f5ff,state.ambientPreset==='daylight'?0x8fa4b8:0x0c111b,quality==='ultra'?2.4:1.8));const key=new THREE.DirectionalLight(0xffffff,quality==='ultra'?4.2:3);key.position.set(10,18,12);key.castShadow=renderer.shadowMap.enabled;scene.add(key);const fill=new THREE.PointLight(palette.fill,quality==='ultra'?35:18,32);fill.position.set(-6,4,8);scene.add(fill);const rim=new THREE.PointLight(palette.rim,quality==='ultra'?28:14,28);rim.position.set(10,6,-10);scene.add(rim);
-      three={renderer,scene,camera,target,partGroups:{},fans:[],rgbMaterials:[],contentRoot:null,last:performance.now(),dragging:false,pointers:new Map(),raycaster:new THREE.Raycaster(),pointer:new THREE.Vector2(),fill,rim,cleanup:null};
-      createFloor();buildPCScene();bindThreeControls(canvas);resizeRenderer();updateThreeCamera();animateThree();$('#hwRenderStatus').textContent=`WebGL 3D • ${quality.toUpperCase()}`;
+      three={renderer,scene,camera,target,partGroups:{},fans:[],rgbMaterials:[],contentRoot:null,last:performance.now(),dragging:false,pointers:new Map(),raycaster:new THREE.Raycaster(),pointer:new THREE.Vector2(),fill,rim,cleanup:null,floor:null,setupLayout:null};
+      buildPCScene();bindThreeControls(canvas);resizeRenderer();updateThreeCamera();animateThree();$('#hwRenderStatus').textContent=`WebGL 3D • ${quality.toUpperCase()}`;
     }catch(error){fallbackToLow(`Contexto WebGL indisponível: ${error?.message||error}`,renderToken);}
   }
 
@@ -1034,14 +1075,14 @@
     const move=event=>{
       if(assemblyEngine?.dragging){assemblyEngine.pointerMove(event);return;}
       if(!three?.pointers.has(event.pointerId))return;const pointer=three.pointers.get(event.pointerId),dx=event.clientX-pointer.x,dy=event.clientY-pointer.y;pointer.x=event.clientX;pointer.y=event.clientY;
-      if(three.pointers.size===1){state.cameraYaw-=dx*.008;state.cameraPitch=clamp(state.cameraPitch+dy*.006,-.15,1.25);updateThreeCamera();}
-      else if(three.pointers.size===2){const values=[...three.pointers.values()],distance=Math.hypot(values[0].x-values[1].x,values[0].y-values[1].y),previous=three.lastPinch||distance;state.cameraDistance=clamp(state.cameraDistance-(distance-previous)*.025,7,28);three.lastPinch=distance;updateThreeCamera();}
+      if(three.pointers.size===1){state.cameraYaw-=dx*.008;state.cameraPitch=LAYOUT_API?.clampCameraPitch?.(three.setupLayout,state.cameraPitch+dy*.006)||clamp(state.cameraPitch+dy*.006,-.08,1.18);updateThreeCamera();}
+      else if(three.pointers.size===2){const values=[...three.pointers.values()],distance=Math.hypot(values[0].x-values[1].x,values[0].y-values[1].y),previous=three.lastPinch||distance;state.cameraDistance=LAYOUT_API?.clampCameraDistance?.(three.setupLayout,state.cameraDistance-(distance-previous)*.025)||clamp(state.cameraDistance-(distance-previous)*.025,9,32);three.lastPinch=distance;updateThreeCamera();}
     };
     const up=event=>{
       if(assemblyEngine?.dragging){assemblyEngine.pointerUp(event);if(three)three.dragging=false;renderPanels();persist();return;}
       const pointer=three?.pointers.get(event.pointerId);if(pointer&&Math.hypot(event.clientX-pointer.startX,event.clientY-pointer.startY)<7)pickThreePart(event);three?.pointers.delete(event.pointerId);if(three){three.dragging=three.pointers.size>0;if(three.pointers.size<2)three.lastPinch=0;}persist();
     };
-    const wheel=event=>{event.preventDefault();state.cameraDistance=clamp(state.cameraDistance+Math.sign(event.deltaY)*1.1,7,28);updateThreeCamera();persist();};
+    const wheel=event=>{event.preventDefault();state.cameraDistance=LAYOUT_API?.clampCameraDistance?.(three.setupLayout,state.cameraDistance+Math.sign(event.deltaY)*1.1)||clamp(state.cameraDistance+Math.sign(event.deltaY)*1.1,9,32);updateThreeCamera();persist();};
     const keydown=event=>{if(!state.assembly?.enabled||!state.assembly?.prepared)return;if(event.key.toLowerCase()==='r'){event.preventDefault();assemblyAction(event.shiftKey?'rotateLeft':'rotateRight');}else if((event.ctrlKey||event.metaKey)&&event.key.toLowerCase()==='z'){event.preventDefault();assemblyAction(event.shiftKey?'redo':'undo');}};
     canvas.addEventListener('pointerdown',down);canvas.addEventListener('pointermove',move);canvas.addEventListener('pointerup',up);canvas.addEventListener('pointercancel',up);canvas.addEventListener('wheel',wheel,{passive:false});canvas.addEventListener('dblclick',()=>setView('iso'));window.addEventListener('keydown',keydown);
     three.cleanup=()=>{canvas.removeEventListener('pointerdown',down);canvas.removeEventListener('pointermove',move);canvas.removeEventListener('pointerup',up);canvas.removeEventListener('pointercancel',up);canvas.removeEventListener('wheel',wheel);window.removeEventListener('keydown',keydown);};
@@ -1051,7 +1092,7 @@
     if(!three)return;const selected=assemblyEngine?.selectAt?.(event);if(selected){state.selectedPart=selected;renderPanels();highlightSelected();persist();return;}const rect=$('#hardwareCanvas3d').getBoundingClientRect();three.pointer.x=(event.clientX-rect.left)/rect.width*2-1;three.pointer.y=-(event.clientY-rect.top)/rect.height*2+1;three.raycaster.setFromCamera(three.pointer,three.camera);const hit=three.raycaster.intersectObjects(three.contentRoot?.children||[],true).find(item=>item.object.userData.partKey);if(hit){state.selectedPart=hit.object.userData.partKey;renderPanels();highlightSelected();persist();}
   }
 
-  function updateThreeCamera(){if(!three)return;const d=state.cameraDistance,p=state.cameraPitch,y=state.cameraYaw;three.camera.position.set(three.target.x+Math.cos(p)*Math.sin(y)*d,three.target.y+Math.sin(p)*d,three.target.z+Math.cos(p)*Math.cos(y)*d);three.camera.lookAt(three.target);}
+  function updateThreeCamera(){if(!three)return;const layout=three.setupLayout;state.cameraDistance=LAYOUT_API?.clampCameraDistance?.(layout,state.cameraDistance)||clamp(state.cameraDistance,9,32);state.cameraPitch=LAYOUT_API?.clampCameraPitch?.(layout,state.cameraPitch)||clamp(state.cameraPitch,-.08,1.18);const d=state.cameraDistance,p=state.cameraPitch,y=state.cameraYaw;three.camera.position.set(three.target.x+Math.cos(p)*Math.sin(y)*d,three.target.y+Math.sin(p)*d,three.target.z+Math.cos(p)*Math.cos(y)*d);three.camera.lookAt(three.target);}
   function resizeRenderer(){if(!three)return;const canvas=$('#hardwareCanvas3d'),rect=canvas?.getBoundingClientRect();if(!rect?.width||!rect?.height)return;const height=Math.max(430,rect.height);three.renderer.setSize(rect.width,height,false);three.camera.aspect=rect.width/height;three.camera.updateProjectionMatrix();}
   function animateThree(time=performance.now()){
     if(!three)return;const dt=Math.min(.05,(time-three.last)/1000);three.last=time;if(state.autorotate&&!three.dragging){state.cameraYaw+=dt*.2;updateThreeCamera();}
@@ -1070,9 +1111,11 @@
   function drawLow(time=performance.now()){
     if(state.labGraphics!=='low'||!root)return;
     const setup=setupLowCanvas();if(!setup){lowRaf=requestAnimationFrame(drawLow);return;}
-    const{canvas,c,width:w,height:h}=setup,e=evaluate(),color=COLORS[state.caseColor]||COLORS.black,g=CASE_API?.sceneGeometry?.(e.parts.cs)||{width:6.9,height:7.25,depth:7.35};
+    const{canvas,c,width:w,height:h}=setup,e=evaluate(),layout=calculateSetupLayout(e),color=COLORS[state.caseColor]||COLORS.black,g=CASE_API?.sceneGeometry?.(e.parts.cs)||{width:6.9,height:7.25,depth:7.35};
     c.clearRect(0,0,w,h);const bg=c.createLinearGradient(0,0,w,h);bg.addColorStop(0,'#06111d');bg.addColorStop(1,'#111b2a');c.fillStyle=bg;c.fillRect(0,0,w,h);c.strokeStyle='rgba(80,210,245,.1)';for(let x=0;x<w;x+=28){c.beginPath();c.moveTo(x,0);c.lineTo(x,h);c.stroke();}for(let y=0;y<h;y+=28){c.beginPath();c.moveTo(0,y);c.lineTo(w,y);c.stroke();}
-    const scale=Math.min(w/650,h/590),cx=w*.46,cy=h*.54,caseW=330*scale*(g.width/6.9),caseH=410*scale*(g.height/7.25),panelOpen=state.caseSidePanel!=='closed',front=e.parts.cs.frontPanel;
+    const margin=28,span=Math.max(1,layout.desk.right-layout.desk.left),unit=Math.min((w-margin*2)/span,(h-155)/Math.max(g.height,6)),worldX=x=>margin+(x-layout.desk.left)*unit,deskY=h*.78,cx=worldX(0),cy=deskY-g.height*unit/2,caseW=g.width*unit,caseH=g.height*unit,scale=unit/1.05,panelOpen=state.caseSidePanel!=='closed',front=e.parts.cs.frontPanel;
+    c.fillStyle=state.deskFinish==='white'?'#dbe8f3':state.deskFinish==='wood'?'#7c5b3b':state.deskFinish==='carbon'?'#232a33':'#465464';c.fillRect(worldX(layout.desk.left),deskY,layout.summary.deskWidth*unit,Math.max(8,.46*unit));
+    c.fillStyle='#283442';for(const support of layout.supports){const x=worldX(support.position[0]),height=support.size[1]*unit;c.fillRect(x-support.size[0]*unit/2,deskY+Math.max(8,.46*unit),Math.max(4,support.size[0]*unit),Math.max(12,height));}
     c.save();c.translate(cx,cy);c.rotate(Math.sin(state.cameraYaw)*.06);c.fillStyle=color;c.fillRect(-caseW/2,-caseH/2,caseW,caseH);c.fillStyle='rgba(15,35,52,.92)';c.fillRect(-caseW/2+17*scale,-caseH/2+17*scale,caseW-34*scale,caseH-34*scale);c.strokeStyle='#79e7ff';c.lineWidth=1.2;c.strokeRect(-caseW/2,-caseH/2,caseW,caseH);
     if(front==='mesh'||front==='perforated'||front==='workstation'){c.strokeStyle='rgba(150,190,207,.52)';for(let y=-caseH*.42;y<caseH*.43;y+=10*scale){c.beginPath();c.moveTo(-caseW/2+5*scale,y);c.lineTo(caseW/2-5*scale,y);c.stroke();}}
     if(front==='glass'){c.fillStyle='rgba(122,198,229,.13)';c.fillRect(-caseW/2+5*scale,-caseH/2+5*scale,caseW-10*scale,caseH-10*scale);}
@@ -1081,11 +1124,15 @@
     const explode=state.exploded?1.18:1;c.fillStyle='#185342';c.fillRect((-caseW*.35)*explode,-caseH*.28,caseW*.42,caseH*.58);c.fillStyle='#d1d7de';c.fillRect(-caseW*.22,-caseH*.12,caseW*.12,caseW*.12);c.fillStyle='#1683a8';for(let i=0;i<e.parts.ram.sticks;i++)c.fillRect(caseW*.03+i*12*scale,-caseH*.24,7*scale,Math.min(105*scale,caseH*.35));if(state.gpu!=='integrated'){c.fillStyle=e.parts.gpu.brand==='AMD'?'#8f2633':'#26343d';c.fillRect(-caseW*.05,caseH*.04,caseW*.52,55*scale);}c.fillStyle='#27313b';c.fillRect(-caseW*.35,caseH*.26,caseW*.38,caseH*.18);c.fillStyle='#2d657d';c.fillRect(caseW*.13,-caseH*.32,caseW*.22,45*scale);
     if(e.parts.cs.sidePanel!=='open'){c.strokeStyle=panelOpen?'rgba(103,239,185,.8)':'rgba(143,207,233,.65)';c.lineWidth=panelOpen?3:2;c.strokeRect(panelOpen?caseW*.54:-caseW/2+3*scale,panelOpen?-caseH*.42:-caseH/2+3*scale,panelOpen?caseW*.32:caseW-6*scale,panelOpen?caseH*.84:caseH-6*scale);}
     if(state.thermalOverlay&&state.airflow){c.lineWidth=3;c.strokeStyle='rgba(56,217,255,.78)';for(let i=0;i<Math.max(1,e.thermal.intakeFans);i++){const y=-caseH*.28+i*caseH*.18;c.beginPath();c.moveTo(caseW*.52,y);c.lineTo(caseW*.12,y);c.stroke();}c.strokeStyle='rgba(255,135,92,.78)';for(let i=0;i<Math.max(1,e.thermal.exhaustFans);i++){const x=-caseW*.18+i*caseW*.18;c.beginPath();c.moveTo(x,-caseH*.05);c.lineTo(x,-caseH*.5);c.stroke();}}
-    c.restore();c.fillStyle='#e5f8ff';c.font='700 15px system-ui';c.fillText(`${e.parts.cs.caseClass} • ${e.parts.cpu.label}`,20,78,Math.max(160,w-40));c.fillStyle='#8db6c9';c.font='12px system-ui';c.fillText(`Modo Baixo • ${CASE_API?.dimensionsText?.(e.parts.cs)||''}`,20,98,Math.max(160,w-40));c.fillStyle='#d5f7ff';c.fillText(`Painel: ${CASE_API?.panelLabel?.(e.parts.cs,state.caseSidePanel)||state.caseSidePanel} • Prontidão ${e.readiness}%`,20,h-42);c.fillStyle='#91b9ca';c.fillText(`${STUDIO_BACKDROPS[state.backdrop]} • ${DESK_FINISHES[state.deskFinish]} • ${AMBIENT_PRESETS[state.ambientPreset]}`,20,h-22);$('#hwRenderStatus').textContent='Canvas 2D/2.5D • Modo Baixo';$('#hwRenderStats').textContent=`CPU ${e.thermal.cpuTemperature} °C • GPU ${e.thermal.gpuTemperature} °C • ${e.thermal.pressure}`;canvas._lastDraw=time;lowRaf=requestAnimationFrame(drawLow);
+    c.restore();
+    const lowScreen=layout.objects.find(item=>item.id==='monitor-screen'),lowBase=layout.objects.find(item=>item.id==='monitor-base');if(lowScreen&&lowBase){const sx=worldX(lowScreen.position[0]),sw=lowScreen.size[0]*unit,sh=lowScreen.size[1]*unit,sy=deskY-(lowScreen.position[1]-layout.desk.topY)*unit;c.fillStyle='#101b25';c.fillRect(sx-sw/2,sy-sh/2,sw,sh);c.fillStyle=state.state==='ready'?'#0b6e9e':'#02070d';c.fillRect(sx-sw*.44,sy-sh*.4,sw*.88,sh*.8);c.fillStyle='#283443';c.fillRect(sx-2,sy+sh/2,4,Math.max(8,(lowScreen.position[1]-lowBase.position[1])*unit));c.fillRect(sx-lowBase.size[0]*unit/2,deskY-lowBase.size[1]*unit,lowBase.size[0]*unit,Math.max(4,lowBase.size[1]*unit));}
+    for(const id of ['keyboard','mouse','controller']){const item=layout.objects.find(entry=>entry.id===id);if(!item)continue;const x=worldX(item.position[0]),width=Math.max(5,item.size[0]*unit);c.fillStyle=id==='keyboard'?'#263542':id==='mouse'?'#39495a':'#202833';c.fillRect(x-width/2,deskY-Math.max(4,item.size[1]*unit),width,Math.max(4,item.size[1]*unit));}
+    c.fillStyle=layout.safe?'#62e6b0':'#ff8090';c.font='700 11px system-ui';c.fillText(layout.safe?'SETUP FÍSICO SEGURO':'REVISAR COLISÕES',20,118);
+    c.fillStyle='#e5f8ff';c.font='700 15px system-ui';c.fillText(`${e.parts.cs.caseClass} • ${e.parts.cpu.label}`,20,78,Math.max(160,w-40));c.fillStyle='#8db6c9';c.font='12px system-ui';c.fillText(`Modo Baixo • ${CASE_API?.dimensionsText?.(e.parts.cs)||''}`,20,98,Math.max(160,w-40));c.fillStyle='#d5f7ff';c.fillText(`Painel: ${CASE_API?.panelLabel?.(e.parts.cs,state.caseSidePanel)||state.caseSidePanel} • Prontidão ${e.readiness}%`,20,h-42);c.fillStyle='#91b9ca';c.fillText(`${STUDIO_BACKDROPS[state.backdrop]} • ${DESK_FINISHES[state.deskFinish]} • ${AMBIENT_PRESETS[state.ambientPreset]}`,20,h-22);$('#hwRenderStatus').textContent='Canvas 2D/2.5D • Modo Baixo';$('#hwRenderStats').textContent=`CPU ${e.thermal.cpuTemperature} °C • GPU ${e.thermal.gpuTemperature} °C • ${e.thermal.pressure}`;canvas._lastDraw=time;lowRaf=requestAnimationFrame(drawLow);
   }
 
   function bindLowControls(){
-    const canvas=$('#hardwareCanvas2d');if(!canvas)return;const down=event=>{lowDrag={x:event.clientX,y:event.clientY,yaw:state.cameraYaw,pitch:state.cameraPitch};canvas.setPointerCapture?.(event.pointerId);};const move=event=>{if(!lowDrag)return;state.cameraYaw=lowDrag.yaw+(event.clientX-lowDrag.x)*.009;state.cameraPitch=clamp(lowDrag.pitch+(event.clientY-lowDrag.y)*.006,-.15,1.25);};const up=()=>{lowDrag=null;persist();};const wheel=event=>{event.preventDefault();state.cameraDistance=clamp(state.cameraDistance+Math.sign(event.deltaY),7,28);persist();};canvas.addEventListener('pointerdown',down);canvas.addEventListener('pointermove',move);canvas.addEventListener('pointerup',up);canvas.addEventListener('pointercancel',up);canvas.addEventListener('wheel',wheel,{passive:false});canvas._cleanup=()=>{canvas.removeEventListener('pointerdown',down);canvas.removeEventListener('pointermove',move);canvas.removeEventListener('pointerup',up);canvas.removeEventListener('pointercancel',up);canvas.removeEventListener('wheel',wheel);};
+    const canvas=$('#hardwareCanvas2d');if(!canvas)return;const down=event=>{lowDrag={x:event.clientX,y:event.clientY,yaw:state.cameraYaw,pitch:state.cameraPitch};canvas.setPointerCapture?.(event.pointerId);};const move=event=>{if(!lowDrag)return;state.cameraYaw=lowDrag.yaw+(event.clientX-lowDrag.x)*.009;state.cameraPitch=LAYOUT_API?.clampCameraPitch?.(calculateSetupLayout(),lowDrag.pitch+(event.clientY-lowDrag.y)*.006)||clamp(lowDrag.pitch+(event.clientY-lowDrag.y)*.006,-.08,1.18);};const up=()=>{lowDrag=null;persist();};const wheel=event=>{event.preventDefault();state.cameraDistance=LAYOUT_API?.clampCameraDistance?.(calculateSetupLayout(),state.cameraDistance+Math.sign(event.deltaY))||clamp(state.cameraDistance+Math.sign(event.deltaY),9,32);persist();};canvas.addEventListener('pointerdown',down);canvas.addEventListener('pointermove',move);canvas.addEventListener('pointerup',up);canvas.addEventListener('pointercancel',up);canvas.addEventListener('wheel',wheel,{passive:false});canvas._cleanup=()=>{canvas.removeEventListener('pointerdown',down);canvas.removeEventListener('pointermove',move);canvas.removeEventListener('pointerup',up);canvas.removeEventListener('pointercancel',up);canvas.removeEventListener('wheel',wheel);};
   }
 
   function startLowRenderer(){destroyThree();cancelAnimationFrame(lowRaf);const canvas=$('#hardwareCanvas2d');canvas?._cleanup?.();const area=$('.hardware-render-area');area.dataset.quality='low';canvas.hidden=false;$('#hardwareCanvas3d').hidden=true;bindLowControls();lowRaf=requestAnimationFrame(drawLow);}
@@ -1098,9 +1145,9 @@
     root=host;ctx=context;const legacy=await ctx.storage.get(LEGACY_KEY,null);state=normalize(await ctx.storage.get(KEY,legacy||defaults));renderShell();refreshControls();bindEvents();bindLowControls();renderPanels();renderLog();resizeObserver=new ResizeObserver(()=>{resizeRenderer();if(state.labGraphics==='low')drawLow();});resizeObserver.observe($('.hardware-render-area'));startRenderer();
   }
 
-  function hardwareContext(e=evaluate()){return{case:e.parts.cs.label,board:e.parts.board.label,cpu:e.parts.cpu.label,ram:e.parts.ram.label,gpu:e.parts.gpu.label,storage:e.parts.storage.label,storage2:e.parts.storage2.label,psu:e.parts.psu.label,cooling:e.parts.cooler.label,monitor:e.parts.monitor.label,peripherals:[e.parts.keyboard.label,e.parts.mouse.label,e.parts.audio.label,e.parts.webcam.label,e.parts.printer.label],consumptionW:e.consumption,recommendedW:e.recommended,temperatureC:e.temperature,airflow:e.airflow,thermal:e.thermal,readiness:e.readiness,balance:e.balance,compatible:e.ok,graphics:state.labGraphics,caseStructure:{class:e.parts.cs.caseClass,dimensionsMm:e.parts.cs.dimensionsMm,frontPanel:e.parts.cs.frontPanel,sidePanel:e.parts.cs.sidePanel,panelState:state.caseSidePanel,chambers:e.parts.cs.chambers,mounts:e.parts.cs.mounts},assembly:{enabled:state.assembly.enabled,prepared:state.assembly.prepared,progress:assemblyEngine?.progress?.()||null,attempts:state.assembly.attempts,successful:state.assembly.successful,invalid:state.assembly.invalid,placed:state.assembly.placed},warnings:e.warnings,errors:e.errors};}
-  function exportPayload(){const e=evaluate(),benchmark=state.benchmarkResults;return{text:['HARDWARE STUDIO 3D',`Versão do módulo: ${MODULE_VERSION}`,`Atualizado em: ${moduleDate()}`,`Qualidade gráfica: ${state.labGraphics}`,`Modo: ${state.mode}`,`Studio: ${STUDIO_BACKDROPS[state.backdrop]} / ${DESK_FINISHES[state.deskFinish]} / ${AMBIENT_PRESETS[state.ambientPreset]}`,`Ferramentas: ${TOOL_LEVELS[state.toolkit]} • Destaque ${ACCENT_COLORS[state.accentColor]}`,`Gabinete: ${e.parts.cs.label} — ${e.parts.cs.caseClass} — ${state.caseColor}`,`Dimensões: ${CASE_API?.dimensionsText?.(e.parts.cs)||'—'}`,`Painel frontal: ${e.parts.cs.frontPanelLabel||e.parts.cs.frontPanel}`,`Painel lateral: ${CASE_API?.panelLabel?.(e.parts.cs,state.caseSidePanel)||state.caseSidePanel}`,`Montagens de radiador: ${CASE_API?.mountSummary?.(e.parts.cs)||'—'}`,`Placa-mãe: ${e.parts.board.label}`,`Processador: ${e.parts.cpu.label} (${e.parts.cpu.generation})`,`Memória: ${e.parts.ram.label}`,`GPU: ${e.parts.gpu.label} (${e.parts.gpu.generation})`,`Armazenamento principal: ${e.parts.storage.label}`,`Armazenamento secundário: ${e.parts.storage2.label}`,`Fonte: ${e.parts.psu.label}`,`Refrigeração: ${e.parts.cooler.label}`,`Monitor: ${e.parts.monitor.label}`,`Entrada: ${e.parts.keyboard.label} / ${e.parts.mouse.label}`,`Saída: ${e.parts.audio.label} / ${e.parts.printer.label}`,`Consumo: ${e.consumption} W`,`Temperatura CPU/GPU/Gabinete: ${e.thermal.cpuTemperature}/${e.thermal.gpuTemperature}/${e.thermal.caseTemperature} °C`,`Fluxo: ${e.thermal.effectiveCfm} CFM • ${e.thermal.pressure} • entrada ${e.thermal.intakeFans} / exaustão ${e.thermal.exhaustFans}`,`Filtro: ${e.thermal.labels.filter} • risco de poeira ${e.thermal.dustRisk}%`,`Carga térmica: ${e.thermal.labels.workload} • ambiente ${state.ambientTemperature} °C`,`Radiador: ${e.thermal.labels.radiator}`,`Prontidão: ${e.readiness}%`,`Equilíbrio: ${e.balance}%`,`Compatibilidade: ${e.ok?'OK':'FALHA'}`,`Montagem manual: ${state.assembly.enabled?(state.assembly.prepared?'ativa':'ativada'):'desativada'}`,`Encaixes corretos: ${state.assembly.successful} • tentativas inválidas: ${state.assembly.invalid}`,benchmark?`Benchmark ${benchmark.target}: ${benchmark.overall}/100`:'Benchmark: não executado','',...state.logs.map(item=>`[${new Date(item.time).toLocaleString('pt-BR')}] ${item.text}`)].join('\n'),native:JSON.stringify({state,context:hardwareContext(e)},null,2),backup:state,meta:[{label:'Compatibilidade',value:e.ok?'OK':'Falha'},{label:'Prontidão',value:`${e.readiness}%`},{label:'Benchmark',value:benchmark?`${benchmark.overall}/100`:'—'}]};}
-  function help(){return`<h3>Hardware Studio Premium 3D</h3><p><strong>Versão ${MODULE_VERSION}</strong> • atualizada em ${moduleDate()}.</p><p>Escolha perfis ou monte livremente. O laboratório valida socket, memória, formato, energia, refrigeração, armazenamento, monitor e periféricos. Agora também oferece montagem manual 3D por mouse ou toque, gabinetes com classes e dimensões próprias, painel lateral manipulável e um motor térmico por zonas com entrada/exaustão, pressão positiva ou negativa, filtros, carga de trabalho, temperatura ambiente, posição de radiador, estimativas separadas de CPU/GPU/gabinete e partículas direcionais de ar. Os modos Baixo, Médio, Alto e Ultra ajustam a qualidade da cena; Ultra ativa materiais PBR, vidro, sombras, shader de grade, RGB e partículas. Os benchmarks são didáticos e não representam medições oficiais.</p>`;}
+  function hardwareContext(e=evaluate()){const layout=calculateSetupLayout(e);return{case:e.parts.cs.label,board:e.parts.board.label,cpu:e.parts.cpu.label,ram:e.parts.ram.label,gpu:e.parts.gpu.label,storage:e.parts.storage.label,storage2:e.parts.storage2.label,psu:e.parts.psu.label,cooling:e.parts.cooler.label,monitor:e.parts.monitor.label,peripherals:[e.parts.keyboard.label,e.parts.mouse.label,e.parts.audio.label,e.parts.webcam.label,e.parts.printer.label],consumptionW:e.consumption,recommendedW:e.recommended,temperatureC:e.temperature,airflow:e.airflow,thermal:e.thermal,readiness:e.readiness,balance:e.balance,compatible:e.ok&&layout.safe,graphics:state.labGraphics,physicalLayout:{safe:layout.safe,status:layout.status,desk:layout.summary,camera:layout.camera,warnings:layout.warnings,errors:layout.errors},caseStructure:{class:e.parts.cs.caseClass,dimensionsMm:e.parts.cs.dimensionsMm,frontPanel:e.parts.cs.frontPanel,sidePanel:e.parts.cs.sidePanel,panelState:state.caseSidePanel,chambers:e.parts.cs.chambers,mounts:e.parts.cs.mounts},assembly:{enabled:state.assembly.enabled,prepared:state.assembly.prepared,progress:assemblyEngine?.progress?.()||null,attempts:state.assembly.attempts,successful:state.assembly.successful,invalid:state.assembly.invalid,placed:state.assembly.placed},warnings:[...layout.warnings,...e.warnings],errors:[...layout.errors,...e.errors]};}
+  function exportPayload(){const e=evaluate(),benchmark=state.benchmarkResults,layout=calculateSetupLayout(e);return{text:['HARDWARE STUDIO 3D',`Versão do módulo: ${MODULE_VERSION}`,`Atualizado em: ${moduleDate()}`,`Qualidade gráfica: ${state.labGraphics}`,`Modo: ${state.mode}`,`Studio: ${STUDIO_BACKDROPS[state.backdrop]} / ${DESK_FINISHES[state.deskFinish]} / ${AMBIENT_PRESETS[state.ambientPreset]}`,`Ferramentas: ${TOOL_LEVELS[state.toolkit]} • Destaque ${ACCENT_COLORS[state.accentColor]}`,`Gabinete: ${e.parts.cs.label} — ${e.parts.cs.caseClass} — ${state.caseColor}`,`Dimensões: ${CASE_API?.dimensionsText?.(e.parts.cs)||'—'}`,`Painel frontal: ${e.parts.cs.frontPanelLabel||e.parts.cs.frontPanel}`,`Painel lateral: ${CASE_API?.panelLabel?.(e.parts.cs,state.caseSidePanel)||state.caseSidePanel}`,`Montagens de radiador: ${CASE_API?.mountSummary?.(e.parts.cs)||'—'}`,`Placa-mãe: ${e.parts.board.label}`,`Processador: ${e.parts.cpu.label} (${e.parts.cpu.generation})`,`Memória: ${e.parts.ram.label}`,`GPU: ${e.parts.gpu.label} (${e.parts.gpu.generation})`,`Armazenamento principal: ${e.parts.storage.label}`,`Armazenamento secundário: ${e.parts.storage2.label}`,`Fonte: ${e.parts.psu.label}`,`Refrigeração: ${e.parts.cooler.label}`,`Monitor: ${e.parts.monitor.label}`,`Layout físico: ${layout.status} • bancada ${layout.summary.deskWidth.toFixed(1)} × ${layout.summary.deskDepth.toFixed(1)} u`,`Entrada: ${e.parts.keyboard.label} / ${e.parts.mouse.label}`,`Saída: ${e.parts.audio.label} / ${e.parts.printer.label}`,`Consumo: ${e.consumption} W`,`Temperatura CPU/GPU/Gabinete: ${e.thermal.cpuTemperature}/${e.thermal.gpuTemperature}/${e.thermal.caseTemperature} °C`,`Fluxo: ${e.thermal.effectiveCfm} CFM • ${e.thermal.pressure} • entrada ${e.thermal.intakeFans} / exaustão ${e.thermal.exhaustFans}`,`Filtro: ${e.thermal.labels.filter} • risco de poeira ${e.thermal.dustRisk}%`,`Carga térmica: ${e.thermal.labels.workload} • ambiente ${state.ambientTemperature} °C`,`Radiador: ${e.thermal.labels.radiator}`,`Prontidão: ${e.readiness}%`,`Equilíbrio: ${e.balance}%`,`Compatibilidade: ${e.ok?'OK':'FALHA'}`,`Montagem manual: ${state.assembly.enabled?(state.assembly.prepared?'ativa':'ativada'):'desativada'}`,`Encaixes corretos: ${state.assembly.successful} • tentativas inválidas: ${state.assembly.invalid}`,benchmark?`Benchmark ${benchmark.target}: ${benchmark.overall}/100`:'Benchmark: não executado','',...state.logs.map(item=>`[${new Date(item.time).toLocaleString('pt-BR')}] ${item.text}`)].join('\n'),native:JSON.stringify({state,context:hardwareContext(e)},null,2),backup:state,meta:[{label:'Compatibilidade',value:e.ok&&layout.safe?'OK':'Falha'},{label:'Prontidão',value:`${e.readiness}%`},{label:'Benchmark',value:benchmark?`${benchmark.overall}/100`:'—'}]};}
+  function help(){return`<h3>Hardware Studio Premium 3D</h3><p><strong>Versão ${MODULE_VERSION}</strong> • atualizada em ${moduleDate()}.</p><p>Escolha perfis ou monte livremente. O laboratório valida socket, memória, formato, energia, refrigeração, armazenamento, monitor e periféricos. Agora também oferece montagem manual 3D por mouse ou toque, gabinetes com classes e dimensões próprias, painel lateral manipulável, motor térmico por zonas e um motor de layout físico que dimensiona a bancada, apoia monitor e periféricos, impede sobreposição e mantém a câmera fora dos objetos. Os modos Baixo, Médio, Alto e Ultra ajustam a qualidade da cena; Ultra ativa materiais PBR, vidro, sombras, shader de grade, RGB e partículas. Os benchmarks são didáticos e não representam medições oficiais.</p>`;}
   async function unmount(){clearTimers();resizeObserver?.disconnect();resizeObserver=null;destroyThree();cancelAnimationFrame(lowRaf);$('#hardwareCanvas2d')?._cleanup?.();await persist();root=null;ctx=null;state=null;}
 
   window.LABDS_LABS['hardware-lab']={mount,unmount,exportPayload,help};

@@ -1,4 +1,4 @@
-/* Hardware Studio 3D — Lab Virtual DS v4.23.0 */
+/* Hardware Studio 3D — Lab Virtual DS v4.24.0 */
 .hardware-v421{display:grid;gap:12px;min-width:0;color:var(--v3-text)}
 .hardware-studio-header{display:flex;justify-content:space-between;align-items:flex-start;gap:18px;padding:16px 18px;border:1px solid var(--v3-border);border-radius:20px;background:linear-gradient(135deg,rgba(12,38,57,.96),rgba(8,20,34,.97));box-shadow:0 16px 50px rgba(0,0,0,.18)}
 .hardware-studio-header>div:first-child{display:grid;gap:5px;max-width:850px}.hardware-studio-header h2{margin:0;font-size:clamp(1.35rem,2.4vw,2rem)}.hardware-studio-header p{margin:0;color:var(--v3-muted);line-height:1.5}.hardware-studio-header .eyebrow{font-size:.62rem;letter-spacing:.12em;color:#64e5ff;font-weight:850}
@@ -59,3 +59,13 @@
 .hardware-v423 #hwAmbientOutput{min-width:44px}.hardware-v423 .hardware-render-overlay span:first-child::before{content:"●";margin-right:5px;color:#38d9ff}.hardware-v423 .hardware-render-overlay span:last-child::before{content:"●";margin-right:5px;color:#ff875c}
 @media(max-width:520px){.hardware-thermal-gauges{grid-template-columns:1fr}.hardware-v423 .hardware-thermal-panel dl{grid-template-columns:1fr}.hardware-v423 .hardware-thermal-panel header{display:grid}.hardware-v423 .hardware-thermal-panel header>b{justify-self:start}}
 @media(prefers-reduced-motion:reduce){.hardware-thermal-gauges i::after{transition:none}}
+
+
+/* Fase A5.1 — segurança física do setup, apoio, colisões e câmera (v4.24.0) */
+.hardware-v424 .hardware-layout-safety{display:grid;gap:9px;padding:12px;border:1px solid rgba(92,225,255,.28);border-radius:15px;background:linear-gradient(145deg,rgba(7,31,46,.97),rgba(9,19,31,.98));box-shadow:inset 0 0 30px rgba(45,226,255,.04)}
+.hardware-v424 .hardware-layout-safety[data-status="error"]{border-color:rgba(255,109,128,.5);box-shadow:inset 0 0 30px rgba(255,78,93,.07)}
+.hardware-v424 .hardware-layout-safety header{display:flex;align-items:flex-start;justify-content:space-between;gap:10px}.hardware-v424 .hardware-layout-safety header>div{display:grid;gap:3px}.hardware-v424 .hardware-layout-safety header span{font-size:.52rem;letter-spacing:.11em;color:#68e5ff;font-weight:850}.hardware-v424 .hardware-layout-safety header strong{font-size:.78rem}.hardware-v424 .hardware-layout-safety header>b{padding:5px 8px;border:1px solid rgba(100,235,183,.3);border-radius:8px;background:rgba(64,222,166,.08);color:#b8f8de;font-size:.62rem}.hardware-v424 .hardware-layout-safety[data-status="error"] header>b{border-color:rgba(255,113,135,.36);background:rgba(255,78,93,.09);color:#ffd1d8}
+.hardware-v424 .hardware-layout-safety dl{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px;margin:0}.hardware-v424 .hardware-layout-safety dl>div{display:grid;gap:2px;padding:7px;border-radius:9px;background:rgba(255,255,255,.03)}.hardware-v424 .hardware-layout-safety dt{font-size:.49rem;text-transform:uppercase;color:var(--v3-muted)}.hardware-v424 .hardware-layout-safety dd{margin:0;font-size:.64rem;font-weight:780;overflow-wrap:anywhere}.hardware-v424 .hardware-layout-safety>p{margin:0;padding:7px;border-left:3px solid rgba(91,221,255,.65);border-radius:7px;background:rgba(62,207,239,.05);color:var(--v3-muted);font-size:.62rem;line-height:1.45}
+.hardware-v424 .hardware-render-area{isolation:isolate}.hardware-v424 .hardware-render-area canvas{overscroll-behavior:contain}.hardware-v424 .hardware-canvas-help{z-index:3}.hardware-v424 .hardware-render-overlay{z-index:3}
+@media(max-width:700px){.hardware-v424 .hardware-layout-safety dl{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:420px){.hardware-v424 .hardware-layout-safety dl{grid-template-columns:1fr}.hardware-v424 .hardware-layout-safety header{display:grid}.hardware-v424 .hardware-layout-safety header>b{justify-self:start}}
