@@ -65,8 +65,8 @@ for(const marker of ['.printing-layout-v40','.printing-stage canvas','.printing-
 
 
 const hardwareManifest=JSON.parse(read(path.join(lab,'modules/hardware-lab/module.json')));
-assert(hardwareManifest.version==='4.27.0','Manifesto do Hardware Studio Premium 3D não está na V4.27.0.');
-assert(moduleIndex.modules.find(item=>item.id==='hardware-lab')?.version==='4.27.0','MODULE_INDEX não referencia Hardware V4.27.0.');
+assert(hardwareManifest.version==='4.28.0','Manifesto do Hardware Studio Premium 3D não está na V4.28.0.');
+assert(moduleIndex.modules.find(item=>item.id==='hardware-lab')?.version==='4.28.0','MODULE_INDEX não referencia Hardware V4.28.0.');
 const hardwareSource=read(path.join(lab,'modules/hardware-lab/index.js'));
 const hardwareCaseEngine=read(path.join(lab,'modules/hardware-lab/case-engine.js'));
 const hardwarePeripheralEngine=read(path.join(lab,'modules/hardware-lab/peripheral-engine.js'));
@@ -76,6 +76,8 @@ const hardwareMaterialEngine=read(path.join(lab,'modules/hardware-lab/material-e
 const hardwareFamilyEngine=read(path.join(lab,'modules/hardware-lab/computer-family-engine.js'));
 const hardwareInspectionEngine=read(path.join(lab,'modules/hardware-lab/inspection-engine.js'));
 const hardwareCinematicEngine=read(path.join(lab,'modules/hardware-lab/cinematic-engine.js'));
+const hardwareSystemEngine=read(path.join(lab,'modules/hardware-lab/system-runtime-engine.js'));
+const hardwareIncidentEngine=read(path.join(lab,'modules/hardware-lab/benchmark-incident-engine.js'));
 assert(hardwareManifest.scripts?.[1]==='modules/hardware-lab/peripheral-engine.js','Motor de periféricos deve carregar depois do motor estrutural.');
 assert(hardwareManifest.scripts?.[2]==='modules/hardware-lab/layout-engine.js','Motor de layout deve carregar depois do motor de periféricos.');
 assert(hardwareManifest.scripts?.[3]==='modules/hardware-lab/thermal-engine.js','Motor térmico deve carregar antes do módulo principal.');
@@ -83,18 +85,22 @@ assert(hardwareManifest.scripts?.[4]==='modules/hardware-lab/material-engine.js'
 assert(hardwareManifest.scripts?.[5]==='modules/hardware-lab/computer-family-engine.js','Motor de famílias deve carregar depois do pipeline gráfico.');
 assert(hardwareManifest.scripts?.[6]==='modules/hardware-lab/inspection-engine.js','Motor de inspeção deve carregar depois do motor de famílias.');
 assert(hardwareManifest.scripts?.[7]==='modules/hardware-lab/cinematic-engine.js','Motor de cinema deve carregar depois do motor de inspeção.');
-assert(hardwareManifest.scripts?.[8]==='modules/hardware-lab/assembly-engine.js','Motor de montagem deve carregar antes do módulo principal.');
-assert(hardwareManifest.scripts?.[9]==='modules/hardware-lab/index.js','O orquestrador principal deve ser o último script do Hardware.');
+assert(hardwareManifest.scripts?.[8]==='modules/hardware-lab/system-runtime-engine.js','Motor de sistema deve carregar depois do motor cinematográfico.');
+assert(hardwareManifest.scripts?.[9]==='modules/hardware-lab/benchmark-incident-engine.js','Motor de incidente deve carregar antes da montagem.');
+assert(hardwareManifest.scripts?.[10]==='modules/hardware-lab/assembly-engine.js','Motor de montagem deve carregar antes do módulo principal.');
+assert(hardwareManifest.scripts?.[11]==='modules/hardware-lab/index.js','O orquestrador principal deve ser o último script do Hardware.');
 for(const marker of ['LABDS_HARDWARE_PERIPHERALS','COUNTS','LAYOUTS','MOUNTS','buildMonitorPlan','compatibleLayouts','compatibleMounts'])assert(hardwarePeripheralEngine.includes(marker),`Motor de periféricos incompleto: ${marker}`);
 for(const marker of ['LABDS_HARDWARE_LAYOUT','calculate','monitorGeometry','overlaps','insideSurface','supported','clampCameraDistance','clampCameraPitch'])assert(hardwareLayoutEngine.includes(marker),`Motor de layout físico incompleto: ${marker}`);
 for(const marker of ['LABDS_HARDWARE_THERMAL','FAN_PROFILES','SPEED_PROFILES','FILTERS','WORKLOADS','simulate','pressure','dustRisk','chooseRadiatorLocation','buildPaths'])assert(hardwareThermalEngine.includes(marker),`Motor térmico incompleto: ${marker}`);
 for(const marker of ['LABDS_HARDWARE_FAMILIES','FAMILIES','supportsManualAssembly','availableInspectionTargets','estimate','mini_pc','all_in_one','notebook','gaming_notebook'])assert(hardwareFamilyEngine.includes(marker),`Motor de famílias incompleto: ${marker}`);
 for(const marker of ['LABDS_HARDWARE_INSPECTION','TARGETS','VIEWS','prepare','applyExploded','camera','dispose'])assert(hardwareInspectionEngine.includes(marker),`Motor de inspeção incompleto: ${marker}`);
 for(const marker of ['LABDS_HARDWARE_CINEMATIC','SHOTS','SPEEDS','cameraPose','tick','overview','hero'])assert(hardwareCinematicEngine.includes(marker),`Motor cinematográfico incompleto: ${marker}`);
+for(const marker of ['LABDS_HARDWARE_SYSTEM','OS_PROFILES','POST_STEPS','beginPost','beginInstall','installTick','bootTick','screenModel','windows11','linuxMint'])assert(hardwareSystemEngine.includes(marker),`Motor de sistema incompleto: ${marker}`);
+for(const marker of ['LABDS_HARDWARE_BENCHMARK_INCIDENT','STRESS_LEVELS','ENVIRONMENTS','PROTECTIONS','predict','faultScore','extinguish','educationalOverride'])assert(hardwareIncidentEngine.includes(marker),`Motor de incidente térmico incompleto: ${marker}`);
 for(const marker of ['LABDS_HARDWARE_MATERIALS','QUALITY_PROFILES','PRESETS','createMaterial','configureRenderer','createLighting','createEnvironmentMap','createContactShadow','addRgbGlow','glassFrosted','brushedMetal','carbon','pcb'])assert(hardwareMaterialEngine.includes(marker),`Motor de materiais PBR incompleto: ${marker}`);
 for(const marker of ['LABDS_HARDWARE_CASES','PROFILES','enrichCatalog','normalizePanel','nextPanel','canMountRadiator','sceneGeometry','structureSummary'])assert(hardwareCaseEngine.includes(marker),`Motor estrutural dos gabinetes incompleto: ${marker}`);
 assert(hardwareManifest.scripts?.[0]==='modules/hardware-lab/case-engine.js','Motor estrutural dos gabinetes deve carregar antes do módulo principal.');
-for(const marker of ['Hardware Studio Premium 3D','hardware-assembly-dock','hardware-case-structure','hardware-thermal-panel','hardware-layout-safety','hardware-graphics-panel','hardware-monitor-setup','PERIPHERAL_API','monitorCount','monitorLayout','monitorMount','monitor2','monitor3','LAYOUT_API','calculateSetupLayout','THERMAL_API','MATERIAL_API','CASE_FINISHES','GLASS_STYLES','RGB_INTENSITIES','materialDetail','contactShadows','buildVisualAccents','fanProfile','filterCondition','workload','ambientTemperature','radiatorPosition','thermalOverlay','cpuTemperature','gpuTemperature','pressureDelta','dustRisk','prepareManualAssembly','setupAssemblyEngine','validateAssemblyPart','cycleCasePanel','buildCaseChassis','addFrontPanel','addSidePanel','addInternalStructure','hwCasePanel','caseSidePanel','caseStructureVisible','hwUndoAssembly','hwRedoAssembly','hwSnapSelected','hardwareCanvas3d','hardwareCanvas2d','benchmarkSuite','runBenchmark','runDiagnostic','runAssemblyDemo','buildPCScene','buildStudioEnvironment','addCurvedTube','createFloor','ShaderMaterial','MeshPhysicalMaterial','data-hw-quality','labGraphics','componentOptions','storage2','webcams','controllers','ups','MODULE_UPDATED_AT'])assert(hardwareSource.includes(marker),`Hardware Studio Premium 3D V4.27.0 incompleto: ${marker}`);
+for(const marker of ['Hardware Studio Premium 3D','hardware-assembly-dock','hardware-case-structure','hardware-thermal-panel','hardware-layout-safety','hardware-graphics-panel','hardware-monitor-setup','PERIPHERAL_API','monitorCount','monitorLayout','monitorMount','monitor2','monitor3','LAYOUT_API','calculateSetupLayout','THERMAL_API','MATERIAL_API','CASE_FINISHES','GLASS_STYLES','RGB_INTENSITIES','materialDetail','contactShadows','buildVisualAccents','fanProfile','filterCondition','workload','ambientTemperature','radiatorPosition','thermalOverlay','cpuTemperature','gpuTemperature','pressureDelta','dustRisk','prepareManualAssembly','setupAssemblyEngine','validateAssemblyPart','cycleCasePanel','buildCaseChassis','addFrontPanel','addSidePanel','addInternalStructure','hwCasePanel','caseSidePanel','caseStructureVisible','hwUndoAssembly','hwRedoAssembly','hwSnapSelected','hardwareCanvas3d','hardwareCanvas2d','benchmarkSuite','runBenchmark','runDiagnostic','runAssemblyDemo','buildPCScene','buildStudioEnvironment','addCurvedTube','createFloor','ShaderMaterial','MeshPhysicalMaterial','data-hw-quality','labGraphics','componentOptions','storage2','webcams','controllers','ups','MODULE_UPDATED_AT','SYSTEM_API','INCIDENT_API','installSystem','requestBenchmarkDecision','useExtinguisher','hwInstallSystem','hwIncidentFx','benchmarkFaultInjection'])assert(hardwareSource.includes(marker),`Hardware Studio Premium 3D V4.28.0 incompleto: ${marker}`);
 assert(hardwareManifest.weight==='heavy','Hardware Studio 3D deve ser carregado como módulo pesado sob demanda.');
 assert(hardwareManifest.styles?.includes('modules/hardware-lab/styles.css'),'Hardware Studio 3D não referencia o CSS modular.');
 const hardwareAssemblyTest=spawnSync(process.execPath,[path.join(root,'tools/test-hardware-assembly.mjs')],{encoding:'utf8'});
@@ -107,8 +113,10 @@ const hardwareMaterialTest=spawnSync(process.execPath,[path.join(root,'tools/tes
 assert(hardwareMaterialTest.status===0,`Teste do motor de materiais PBR falhou: ${(hardwareMaterialTest.stderr||hardwareMaterialTest.stdout).trim()}`);
 const hardwareAdvancedTest=spawnSync(process.execPath,[path.join(root,'tools/test-hardware-family-inspection-cinema.mjs')],{encoding:'utf8'});
 assert(hardwareAdvancedTest.status===0,`Teste de famílias, inspeção e cinema falhou: ${(hardwareAdvancedTest.stderr||hardwareAdvancedTest.stdout).trim()}`);
+const hardwareSystemTest=spawnSync(process.execPath,[path.join(root,'tools/test-hardware-system-benchmark-incident.mjs')],{encoding:'utf8'});
+assert(hardwareSystemTest.status===0,`Teste de POST, sistema e incidente térmico falhou: ${(hardwareSystemTest.stderr||hardwareSystemTest.stdout).trim()}`);
 const hardwareStyles=read(path.join(lab,'modules/hardware-lab/styles.css'));
-for(const marker of ['.hardware-v421','.hardware-v4211','.hardware-assembly-dock','.hardware-assembly-actions','.hardware-assembly-parts','.hardware-render-area','.hardware-quality','.hardware-benchmark-bars','.hardware-control-grid','.hardware-layout-safety','.hardware-graphics-panel','.hardware-monitor-setup','.hardware-v426','.hardware-v427','.hardware-family-grid','.hardware-inspection-views','.hardware-cinema-track'])assert(hardwareStyles.includes(marker),`CSS modular do Hardware Studio incompleto: ${marker}`);
+for(const marker of ['.hardware-v421','.hardware-v4211','.hardware-assembly-dock','.hardware-assembly-actions','.hardware-assembly-parts','.hardware-render-area','.hardware-quality','.hardware-benchmark-bars','.hardware-control-grid','.hardware-layout-safety','.hardware-graphics-panel','.hardware-monitor-setup','.hardware-v426','.hardware-v427','.hardware-family-grid','.hardware-inspection-views','.hardware-cinema-track','.hardware-v428','.hardware-incident-fx','.pc-screen-progress','.hardware-incident-timeline'])assert(hardwareStyles.includes(marker),`CSS modular do Hardware Studio incompleto: ${marker}`);
 const engineManifest=JSON.parse(read(path.join(lab,'modules/game-engine-lab/module.json')));
 assert(engineManifest.version==='4.19.0','Manifesto do Laboratório de Engine não está na V4.19.0.');
 assert(moduleIndex.modules.find(item=>item.id==='game-engine-lab')?.version==='4.19.0','MODULE_INDEX não referencia Engine V4.19.0.');
@@ -194,7 +202,7 @@ assert(fs.existsSync(path.join(lab,'vendor/three/three.core.min.js')),'Núcleo l
 assert(voxelGame.includes("../../../vendor/three/three.module.min.js"),'VoxelCraft não aponta para o renderizador Three.js local.');
 assert(!/https:\/\/cdn\.jsdelivr\.net\/npm\/three/.test(voxelGame),'VoxelCraft ainda depende da CDN do Three.js.');
 const sw=read(path.join(lab,'service-worker.js'));
-assert(sw.includes("labds-v4.21.0-hardware-families-inspection-cinema-phase-a54"),'Service Worker não está no cache da Fase A5.4 de famílias, inspeção e cinema.');
+assert(sw.includes("labds-v4.21.0-hardware-system-benchmark-incident-phase-a55"),'Service Worker não está no cache da Fase A5.5 de sistema e incidente térmico.');
 const coreBlock=sw.match(/CORE_FILES=\[(.*?)\];/s)?.[1]||'';
 const coreRefs=[...coreBlock.matchAll(/['"](\.\/?[^'"]+)['"]/g)].map(match=>match[1]);
 for(const raw of coreRefs){const clean=raw==='./'?'index.html':raw.replace(/^\.\//,'');assert(fs.existsSync(path.join(lab,clean)),`Arquivo do núcleo ausente no Service Worker: ${raw}`);}

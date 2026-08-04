@@ -1,0 +1,21 @@
+import fs from 'node:fs';
+import vm from 'node:vm';
+import path from 'node:path';
+const root=path.resolve(path.dirname(new URL(import.meta.url).pathname),'..');
+const context={window:{},console,Date,Math};vm.createContext(context);
+for(const file of ['system-runtime-engine.js','benchmark-incident-engine.js'])vm.runInContext(fs.readFileSync(path.join(root,'lab/modules/hardware-lab',file),'utf8'),context,{filename:file});
+const system=context.window.LABDS_HARDWARE_SYSTEM,incident=context.window.LABDS_HARDWARE_BENCHMARK_INCIDENT;
+function assert(ok,msg){if(!ok)throw new Error(msg);}
+assert(system&&incident,'Motores A5.5 não foram registrados.');
+let runtime=system.normalize({os:'linuxMint',installed:false});system.beginPost(runtime);assert(runtime.phase==='post','POST não iniciou.');for(let i=0;i<system.POST_STEPS.length;i++)system.advancePost(runtime);assert(runtime.phase==='firmware','POST não chegou ao firmware.');system.beginInstall(runtime);for(let i=0;i<20&&runtime.phase==='install';i++)system.installTick(runtime,10);assert(runtime.installed&&runtime.phase==='boot','Instalação não finalizou em boot.');for(let i=0;i<20&&runtime.phase==='boot';i++)system.bootTick(runtime,10);assert(runtime.phase==='desktop','Boot não chegou ao desktop.');
+const thermal={cpuTemperature:62,gpuTemperature:58,caseTemperature:38,airflowScore:62,dustRisk:18,radiatorValid:true};
+let safe=incident.predict({thermal,state:{fans:4,ambientTemperature:25,filterCondition:'clean',fanSpeed:'auto',cpuPaste:true,coolerMounted:true},caseFront:'mesh',level:'extreme',environment:'hot',protection:'standard',progress:1,warningAcknowledged:true,continuedAfterWarning:true});
+assert(safe.stage==='shutdown','Proteção padrão deve desligar antes de fumaça/fogo.');
+let noConsent=incident.predict({thermal,state:{fans:1,ambientTemperature:35,filterCondition:'clogged',fanSpeed:'quiet',benchmarkFaultInjection:true,cpuPaste:false,coolerMounted:true},caseFront:'solid',level:'extreme',environment:'poor',protection:'educationalOverride',progress:1,warningAcknowledged:true,continuedAfterWarning:false});
+assert(!['smoke','fire'].includes(noConsent.stage),'Incidente não pode incendiar sem decisão de continuar.');
+let smoke=incident.predict({thermal,state:{fans:1,ambientTemperature:35,filterCondition:'clogged',fanSpeed:'quiet',benchmarkFaultInjection:true,cpuPaste:false,coolerMounted:true},caseFront:'solid',level:'extreme',environment:'poor',protection:'educationalOverride',progress:.86,warningAcknowledged:true,continuedAfterWarning:true});
+assert(smoke.stage==='smoke','Falha extrema controlada deveria produzir fumaça.');
+let fire=incident.predict({thermal,state:{fans:1,ambientTemperature:35,filterCondition:'clogged',fanSpeed:'quiet',benchmarkFaultInjection:true,cpuPaste:false,coolerMounted:true},caseFront:'solid',level:'extreme',environment:'poor',protection:'educationalOverride',progress:.98,warningAcknowledged:true,continuedAfterWarning:true});
+assert(fire.stage==='fire','Falha extrema controlada deveria alcançar fogo virtual.');
+let state=incident.normalize({...fire,stage:'fire'});incident.extinguish(state);assert(state.stage==='extinguished'&&state.extinguisherUsed,'Extintor virtual não conteve o incidente.');
+console.log('A5.5 OK: POST, instalação, boot, proteção térmica, fumaça, fogo condicionado e extintor validados.');
