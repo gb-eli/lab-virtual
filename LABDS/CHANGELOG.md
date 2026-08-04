@@ -1,5 +1,23 @@
 # Histórico de versões — Laboratório Virtual DS
 
+## Hardware Studio 4.27.0 — Fase A5.4 — 04/08/2026
+
+- nova área de famílias com 13 perfis: laboratório escolar, escritório, desenvolvimento, gamer de entrada, gamer extremo, criação, workstation, open bench, mini workstation, mini PC, all-in-one, notebook e notebook gamer;
+- perfis aplicam peças, gabinete, periféricos, layout, acabamento e faixa educativa de preço coerentes com cada categoria;
+- mini PC, all-in-one e notebooks recebem geometrias próprias e manutenção compacta guiada, sem reutilizar incorretamente a montagem livre de gabinete torre;
+- novo motor `computer-family-engine.js` para catálogo, geometria, compatibilidade de montagem, alvos de inspeção e estimativa educativa de custo;
+- novo motor `inspection-engine.js` com 16 alvos, sete vistas técnicas, zoom, centralização, clonagem segura da peça e modo explodido;
+- inspeção disponível para computador completo, gabinete, placa-mãe, CPU, RAM, GPU, armazenamento, fonte, refrigeração, monitor e periféricos;
+- novo motor `cinematic-engine.js` com nove tomadas automáticas, velocidade lenta/normal/rápida, pausa, navegação, repetição e interface limpa;
+- modo cinema apresenta ambiente, frente, interior, CPU, GPU, refrigeração, conexões traseiras, monitores e plano final;
+- modo Baixo/2.5D recebe representação própria para inspeção, mantendo fallback em aparelhos sem WebGL;
+- câmera de inspeção possui limites próprios e o modo cinema respeita o raio seguro calculado pelo motor físico;
+- montagem manual é bloqueada nas famílias compactas integradas, evitando estados impossíveis ou peças flutuantes;
+- exportação passa a registrar família, formato, preço educativo, estado da inspeção e estado do modo cinema;
+- novo teste automatizado valida 13 famílias, quatro famílias compactas, 16 alvos, sete vistas e nove tomadas cinematográficas;
+- validador geral atualizado para reconhecer motores auxiliares declarados no manifesto e verificar a versão 4.27.0;
+- cache principal renovado para publicar os novos motores sob demanda.
+
 ## Hardware Studio 4.26.0 — Fase A5.3 — 03/08/2026
 
 - inclusão do motor modular `peripheral-engine.js`, carregado antes do motor de layout físico;
