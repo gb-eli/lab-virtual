@@ -152,12 +152,12 @@
     {
       "id": "hardware-lab",
       "name": "Hardware Studio 3D",
-      "version": "4.24.0",
+      "version": "4.25.0",
       "weight": "heavy",
       "load": "on-demand",
       "cache": "runtime",
-      "description": "Hardware Studio 3D com montagem manual, estrutura térmica e motor físico de bancada, apoio, escala, colisões e câmera segura.",
-      "updatedAt": "2026-08-03T21:20:00-03:00"
+      "description": "Hardware Studio 3D com montagem manual, estrutura térmica, layout físico seguro e novo pipeline PBR com texturas procedurais, vidro, RGB, sombras de contato e modo Ultra otimizado.",
+      "updatedAt": "2026-08-03T21:46:00-03:00"
     },
     {
       "id": "help-center-lab",
