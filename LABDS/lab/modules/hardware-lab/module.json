@@ -1,7 +1,7 @@
 {
   "id": "hardware-lab",
   "name": "Hardware Studio 3D",
-  "version": "4.27.0",
+  "version": "4.28.0",
   "weight": "heavy",
   "load": "on-demand",
   "cache": "runtime",
@@ -14,6 +14,8 @@
     "modules/hardware-lab/computer-family-engine.js",
     "modules/hardware-lab/inspection-engine.js",
     "modules/hardware-lab/cinematic-engine.js",
+    "modules/hardware-lab/system-runtime-engine.js",
+    "modules/hardware-lab/benchmark-incident-engine.js",
     "modules/hardware-lab/assembly-engine.js",
     "modules/hardware-lab/index.js"
   ],
@@ -21,6 +23,6 @@
     "modules/hardware-lab/styles.css"
   ],
   "bundles": [],
-  "description": "Laboratório premium com montagem manual, materiais PBR, famílias completas de computadores, inspeção individual 360°, vista explodida, multitelas e modo cinema.",
-  "updatedAt": "2026-08-04T04:11:00-03:00"
+  "description": "Laboratório premium com famílias de computadores, montagem e inspeção 360°, modo cinema, POST, instalação simulada de sistemas operacionais, benchmark térmico progressivo e incidentes educativos controlados.",
+  "updatedAt": "2026-08-04T04:44:00-03:00"
 }
