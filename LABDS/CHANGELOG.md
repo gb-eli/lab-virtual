@@ -1,5 +1,20 @@
 # Histórico de versões — Laboratório Virtual DS
 
+## Hardware Studio 4.24.0 — Fase A5.1 — 03/08/2026
+
+- inclusão do motor modular `layout-engine.js`, carregado antes dos motores térmico e de montagem;
+- cálculo automático das dimensões da bancada conforme gabinete, monitor, teclado, mouse, áudio, impressora e acessórios;
+- objetos passam a receber apoio físico, limites de superfície e volumes de colisão antes de serem desenhados;
+- correção preventiva de monitor dentro do gabinete, periféricos sobrepostos, itens flutuando e objetos fora da mesa;
+- monitores recebem proporções físicas calculadas por polegadas, resolução e formato convencional ou ultrawide;
+- impressora, controle, webcam, headset, caixas de som, microfone e nobreak passam a ocupar zonas próprias;
+- nobreak é posicionado no piso e a bancada recebe tampo e pernas coerentes com sua altura;
+- câmera passa a respeitar alvo, distância mínima, distância máxima e inclinação segura calculados pelo volume do setup;
+- modo Baixo/2.5D passa a representar bancada, gabinete, monitor e periféricos usando o mesmo layout físico;
+- novo painel de segurança física informa dimensões da bancada, colisões, apoio, limites e distância segura da câmera;
+- teste automatizado valida 19.200 combinações de gabinete, monitor, periféricos e acessórios sem colisões ou flutuação;
+- cache principal renovado para entregar o novo motor físico e o manifesto 4.24.0.
+
 ## Hardware Studio 4.23.0 — Fase A3 — 03/08/2026
 
 - inclusão do motor modular `thermal-engine.js`, carregado antes da montagem e do módulo principal;
