@@ -65,27 +65,32 @@ for(const marker of ['.printing-layout-v40','.printing-stage canvas','.printing-
 
 
 const hardwareManifest=JSON.parse(read(path.join(lab,'modules/hardware-lab/module.json')));
-assert(hardwareManifest.version==='4.24.0','Manifesto do Hardware Studio Premium 3D não está na V4.24.0.');
-assert(moduleIndex.modules.find(item=>item.id==='hardware-lab')?.version==='4.24.0','MODULE_INDEX não referencia Hardware V4.24.0.');
+assert(hardwareManifest.version==='4.25.0','Manifesto do Hardware Studio Premium 3D não está na V4.25.0.');
+assert(moduleIndex.modules.find(item=>item.id==='hardware-lab')?.version==='4.25.0','MODULE_INDEX não referencia Hardware V4.25.0.');
 const hardwareSource=read(path.join(lab,'modules/hardware-lab/index.js'));
 const hardwareCaseEngine=read(path.join(lab,'modules/hardware-lab/case-engine.js'));
 const hardwareLayoutEngine=read(path.join(lab,'modules/hardware-lab/layout-engine.js'));
 const hardwareThermalEngine=read(path.join(lab,'modules/hardware-lab/thermal-engine.js'));
+const hardwareMaterialEngine=read(path.join(lab,'modules/hardware-lab/material-engine.js'));
 assert(hardwareManifest.scripts?.[1]==='modules/hardware-lab/layout-engine.js','Motor de layout deve carregar depois do motor estrutural.');
 assert(hardwareManifest.scripts?.[2]==='modules/hardware-lab/thermal-engine.js','Motor térmico deve carregar antes do módulo principal.');
+assert(hardwareManifest.scripts?.[3]==='modules/hardware-lab/material-engine.js','Motor de materiais deve carregar antes do motor de montagem e do módulo principal.');
 for(const marker of ['LABDS_HARDWARE_LAYOUT','calculate','monitorGeometry','overlaps','insideSurface','supported','clampCameraDistance','clampCameraPitch'])assert(hardwareLayoutEngine.includes(marker),`Motor de layout físico incompleto: ${marker}`);
 for(const marker of ['LABDS_HARDWARE_THERMAL','FAN_PROFILES','SPEED_PROFILES','FILTERS','WORKLOADS','simulate','pressure','dustRisk','chooseRadiatorLocation','buildPaths'])assert(hardwareThermalEngine.includes(marker),`Motor térmico incompleto: ${marker}`);
+for(const marker of ['LABDS_HARDWARE_MATERIALS','QUALITY_PROFILES','PRESETS','createMaterial','configureRenderer','createLighting','createEnvironmentMap','createContactShadow','addRgbGlow','glassFrosted','brushedMetal','carbon','pcb'])assert(hardwareMaterialEngine.includes(marker),`Motor de materiais PBR incompleto: ${marker}`);
 for(const marker of ['LABDS_HARDWARE_CASES','PROFILES','enrichCatalog','normalizePanel','nextPanel','canMountRadiator','sceneGeometry','structureSummary'])assert(hardwareCaseEngine.includes(marker),`Motor estrutural dos gabinetes incompleto: ${marker}`);
 assert(hardwareManifest.scripts?.[0]==='modules/hardware-lab/case-engine.js','Motor estrutural dos gabinetes deve carregar antes do módulo principal.');
-for(const marker of ['Hardware Studio Premium 3D','hardware-assembly-dock','hardware-case-structure','hardware-thermal-panel','hardware-layout-safety','LAYOUT_API','calculateSetupLayout','THERMAL_API','fanProfile','filterCondition','workload','ambientTemperature','radiatorPosition','thermalOverlay','cpuTemperature','gpuTemperature','pressureDelta','dustRisk','prepareManualAssembly','setupAssemblyEngine','validateAssemblyPart','cycleCasePanel','buildCaseChassis','addFrontPanel','addSidePanel','addInternalStructure','hwCasePanel','caseSidePanel','caseStructureVisible','hwUndoAssembly','hwRedoAssembly','hwSnapSelected','hardwareCanvas3d','hardwareCanvas2d','benchmarkSuite','runBenchmark','runDiagnostic','runAssemblyDemo','buildPCScene','buildStudioEnvironment','addCurvedTube','createFloor','ShaderMaterial','MeshPhysicalMaterial','data-hw-quality','labGraphics','componentOptions','storage2','webcams','controllers','ups','MODULE_UPDATED_AT'])assert(hardwareSource.includes(marker),`Hardware Studio Premium 3D V4.24.0 incompleto: ${marker}`);
+for(const marker of ['Hardware Studio Premium 3D','hardware-assembly-dock','hardware-case-structure','hardware-thermal-panel','hardware-layout-safety','hardware-graphics-panel','LAYOUT_API','calculateSetupLayout','THERMAL_API','MATERIAL_API','CASE_FINISHES','GLASS_STYLES','RGB_INTENSITIES','materialDetail','contactShadows','buildVisualAccents','fanProfile','filterCondition','workload','ambientTemperature','radiatorPosition','thermalOverlay','cpuTemperature','gpuTemperature','pressureDelta','dustRisk','prepareManualAssembly','setupAssemblyEngine','validateAssemblyPart','cycleCasePanel','buildCaseChassis','addFrontPanel','addSidePanel','addInternalStructure','hwCasePanel','caseSidePanel','caseStructureVisible','hwUndoAssembly','hwRedoAssembly','hwSnapSelected','hardwareCanvas3d','hardwareCanvas2d','benchmarkSuite','runBenchmark','runDiagnostic','runAssemblyDemo','buildPCScene','buildStudioEnvironment','addCurvedTube','createFloor','ShaderMaterial','MeshPhysicalMaterial','data-hw-quality','labGraphics','componentOptions','storage2','webcams','controllers','ups','MODULE_UPDATED_AT'])assert(hardwareSource.includes(marker),`Hardware Studio Premium 3D V4.25.0 incompleto: ${marker}`);
 assert(hardwareManifest.weight==='heavy','Hardware Studio 3D deve ser carregado como módulo pesado sob demanda.');
 assert(hardwareManifest.styles?.includes('modules/hardware-lab/styles.css'),'Hardware Studio 3D não referencia o CSS modular.');
 const hardwareAssemblyTest=spawnSync(process.execPath,[path.join(root,'tools/test-hardware-assembly.mjs')],{encoding:'utf8'});
 assert(hardwareAssemblyTest.status===0,`Teste do motor de montagem falhou: ${(hardwareAssemblyTest.stderr||hardwareAssemblyTest.stdout).trim()}`);
 const hardwareLayoutTest=spawnSync(process.execPath,[path.join(root,'tools/test-hardware-layout-engine.mjs')],{encoding:'utf8'});
 assert(hardwareLayoutTest.status===0,`Teste do motor de layout físico falhou: ${(hardwareLayoutTest.stderr||hardwareLayoutTest.stdout).trim()}`);
+const hardwareMaterialTest=spawnSync(process.execPath,[path.join(root,'tools/test-hardware-material-engine.mjs')],{encoding:'utf8'});
+assert(hardwareMaterialTest.status===0,`Teste do motor de materiais PBR falhou: ${(hardwareMaterialTest.stderr||hardwareMaterialTest.stdout).trim()}`);
 const hardwareStyles=read(path.join(lab,'modules/hardware-lab/styles.css'));
-for(const marker of ['.hardware-v421','.hardware-v4211','.hardware-assembly-dock','.hardware-assembly-actions','.hardware-assembly-parts','.hardware-render-area','.hardware-quality','.hardware-benchmark-bars','.hardware-control-grid','.hardware-layout-safety'])assert(hardwareStyles.includes(marker),`CSS modular do Hardware Studio incompleto: ${marker}`);
+for(const marker of ['.hardware-v421','.hardware-v4211','.hardware-assembly-dock','.hardware-assembly-actions','.hardware-assembly-parts','.hardware-render-area','.hardware-quality','.hardware-benchmark-bars','.hardware-control-grid','.hardware-layout-safety','.hardware-graphics-panel'])assert(hardwareStyles.includes(marker),`CSS modular do Hardware Studio incompleto: ${marker}`);
 const engineManifest=JSON.parse(read(path.join(lab,'modules/game-engine-lab/module.json')));
 assert(engineManifest.version==='4.19.0','Manifesto do Laboratório de Engine não está na V4.19.0.');
 assert(moduleIndex.modules.find(item=>item.id==='game-engine-lab')?.version==='4.19.0','MODULE_INDEX não referencia Engine V4.19.0.');
@@ -171,7 +176,7 @@ assert(fs.existsSync(path.join(lab,'vendor/three/three.core.min.js')),'Núcleo l
 assert(voxelGame.includes("../../../vendor/three/three.module.min.js"),'VoxelCraft não aponta para o renderizador Three.js local.');
 assert(!/https:\/\/cdn\.jsdelivr\.net\/npm\/three/.test(voxelGame),'VoxelCraft ainda depende da CDN do Three.js.');
 const sw=read(path.join(lab,'service-worker.js'));
-assert(sw.includes("labds-v4.21.0-hardware-layout-safety-phase-a51"),'Service Worker não está no cache da Fase A5.1 de segurança física do setup.');
+assert(sw.includes("labds-v4.21.0-hardware-pbr-ultra-phase-a52"),'Service Worker não está no cache da Fase A5.2 de PBR e Ultra.');
 const coreBlock=sw.match(/CORE_FILES=\[(.*?)\];/s)?.[1]||'';
 const coreRefs=[...coreBlock.matchAll(/['"](\.\/?[^'"]+)['"]/g)].map(match=>match[1]);
 for(const raw of coreRefs){const clean=raw==='./'?'index.html':raw.replace(/^\.\//,'');assert(fs.existsSync(path.join(lab,clean)),`Arquivo do núcleo ausente no Service Worker: ${raw}`);}
