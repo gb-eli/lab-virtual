@@ -1,3 +1,20 @@
+# Changelog
+
+## Hardware Studio 3D 4.28.0 — Fase A5.5 — 04/08/2026
+
+- POST detalhado com sete etapas e diagnóstico visual no monitor.
+- Instalação e inicialização simuladas de Windows 11 e Linux Mint.
+- Área de trabalho educativa e monitor com telemetria de CPU, GPU, carga e FPS.
+- Benchmark leve, médio, pesado e extremo.
+- Ambientes térmicos climatizado, comum, quente e abafado.
+- Proteções normais com throttling e desligamento antes de dano.
+- Alerta interativo para pausar ou insistir no benchmark.
+- Cenário extremo condicionado a falhas múltiplas, proteção desativada e decisão explícita de continuar.
+- Fumaça por três segundos, princípio de incêndio virtual e extintor interativo.
+- Linha do tempo térmica, logs semânticos e exportação do incidente.
+- Efeitos visuais responsivos com fallback 2.5D e respeito a movimento reduzido.
+- Regressão completa das fases A1 a A5.4.
+
 # Histórico de versões — Laboratório Virtual DS
 
 ## Hardware Studio 4.27.0 — Fase A5.4 — 04/08/2026
