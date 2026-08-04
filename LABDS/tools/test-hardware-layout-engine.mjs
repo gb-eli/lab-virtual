@@ -4,9 +4,11 @@ import vm from 'node:vm';
 import {fileURLToPath} from 'node:url';
 
 const here=path.dirname(fileURLToPath(import.meta.url));
+const peripheralSource=fs.readFileSync(path.join(here,'../lab/modules/hardware-lab/peripheral-engine.js'),'utf8');
 const source=fs.readFileSync(path.join(here,'../lab/modules/hardware-lab/layout-engine.js'),'utf8');
 const context={window:{}};
 vm.createContext(context);
+vm.runInContext(peripheralSource,context,{filename:'peripheral-engine.js'});
 vm.runInContext(source,context,{filename:'layout-engine.js'});
 const API=context.window.LABDS_HARDWARE_LAYOUT;
 
@@ -26,14 +28,14 @@ function fixture(overrides={}){
   };
 }
 
-assert(API?.VERSION==='1.0.0','Motor de layout não foi carregado.');
+assert(API?.VERSION==='1.1.0','Motor de layout não foi carregado.');
 
 const standard=API.calculate(fixture());
 assert(standard.safe,'Setup padrão deveria ser seguro.');
 assert(standard.summary.collisions===0,'Setup padrão não pode ter colisões.');
 assert(standard.summary.unsupported===0,'Setup padrão não pode ter objetos flutuando.');
 assert(standard.summary.outOfBounds===0,'Setup padrão deve respeitar a bancada.');
-assert(standard.objects.some(item=>item.id==='monitor-screen'),'Monitor deve ser criado.');
+assert(standard.objects.some(item=>item.id==='monitor-screen-1'),'Monitor deve ser criado.');
 assert(standard.camera.minDistance>=9,'Câmera deve ter distância mínima segura.');
 
 const demanding=API.calculate(fixture({
@@ -48,7 +50,7 @@ assert(demanding.safe,`Setup completo deveria ser seguro: ${demanding.errors.joi
 assert(demanding.summary.deskWidth>standard.summary.deskWidth,'Bancada deve crescer para ultrawide e impressora.');
 assert(demanding.objects.some(item=>item.id==='printer'),'Impressora deve ocupar zona dedicada.');
 assert(demanding.objects.some(item=>item.id==='ups'),'Nobreak deve ficar no piso.');
-assert(demanding.warnings.some(item=>item.includes('ultrawide')),'Ultrawide deve gerar recomendação de espaço.');
+assert(demanding.warnings.some(item=>item.includes('Conjunto de telas')||item.includes('larga')),'Ultrawide deve gerar recomendação de espaço.');
 
 const headset=API.calculate(fixture({audio:{label:'Headset com microfone',type:'Headset USB'}}));
 assert(headset.safe,'Headset e suporte não podem ser tratados como colisão inválida.');
