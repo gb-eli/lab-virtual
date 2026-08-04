@@ -1,5 +1,5 @@
 'use strict';
-const VERSION='labds-v4.21.0-hardware-pbr-ultra-phase-a52';
+const VERSION='labds-v4.21.0-hardware-multimonitor-phase-a53';
 const CORE=`${VERSION}-core`,RUNTIME=`${VERSION}-runtime`,EXTERNAL=`${VERSION}-external`;
 const CORE_FILES=[
   './','./index.html','./offline.html','./manifest.webmanifest','./assets/icon.svg','./assets/hero-tech-lab.svg','./css/boot.css',
